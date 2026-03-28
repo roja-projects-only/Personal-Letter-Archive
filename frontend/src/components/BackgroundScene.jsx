@@ -1,7 +1,32 @@
+import { useEffect, useRef, useState } from 'react'
+
 /**
  * Full-viewport decorative botanical layer (fixed, non-interactive).
- * Bold, visible roses and vines — cream base still reads through.
+ * Bold roses/vines; scattered petals drift via CSS (GPU-friendly) and
+ * subtle mouse parallax on fine-pointer desktops only.
  */
+
+const PETALS = [
+  { x: 320, y: 220, r: 10, rot: 22, drift: 0, duration: 11, delay: 0 },
+  { x: 580, y: 180, r: 9, rot: -15, drift: 1, duration: 14, delay: 1.2 },
+  { x: 720, y: 280, r: 12, rot: 48, drift: 2, duration: 9, delay: 0.4 },
+  { x: 900, y: 200, r: 8, rot: -40, drift: 0, duration: 16, delay: 2.1 },
+  { x: 1050, y: 340, r: 11, rot: 12, drift: 1, duration: 10, delay: 3 },
+  { x: 480, y: 420, r: 8, rot: 65, drift: 2, duration: 13, delay: 0.8 },
+  { x: 650, y: 520, r: 9, rot: -22, drift: 0, duration: 12, delay: 4.2 },
+  { x: 820, y: 480, r: 10, rot: 30, drift: 1, duration: 15, delay: 1.5 },
+  { x: 400, y: 650, r: 9, rot: -55, drift: 2, duration: 11, delay: 2.8 },
+  { x: 1000, y: 620, r: 8, rot: 18, drift: 0, duration: 14, delay: 5 },
+  { x: 250, y: 380, r: 11, rot: -30, drift: 1, duration: 10, delay: 0.2 },
+  { x: 1180, y: 320, r: 10, rot: 55, drift: 2, duration: 12, delay: 3.6 },
+  { x: 520, y: 720, r: 9, rot: -12, drift: 0, duration: 13, delay: 1.8 },
+  { x: 920, y: 680, r: 12, rot: 40, drift: 1, duration: 9, delay: 4.8 },
+  { x: 200, y: 560, r: 8, rot: 72, drift: 2, duration: 16, delay: 0.6 },
+  { x: 1280, y: 180, r: 9, rot: -48, drift: 0, duration: 11, delay: 2.4 },
+]
+
+const DRIFT_NAMES = ['petalDrift1', 'petalDrift2', 'petalDrift3']
+
 function RoseBloom({ cx, cy, scale = 1 }) {
   const petals = 8
   const s = 28 * scale
@@ -67,21 +92,65 @@ function BranchSpray({ x, y, rot }) {
   )
 }
 
-function MicroPetal({ x, y, r, rot }) {
+function MicroPetal({ x, y, r, rot, driftIndex, durationSec, delaySec, allowMotion }) {
+  const name = DRIFT_NAMES[driftIndex % 3]
+  const motionStyle =
+    allowMotion ?
+      {
+        animation: `${name} ${durationSec}s ease-in-out infinite`,
+        animationDelay: `${delaySec}s`,
+        willChange: 'transform',
+        transformBox: 'fill-box',
+        transformOrigin: 'center',
+      }
+    : undefined
+
   return (
-    <ellipse
-      cx={x}
-      cy={y}
-      rx={r}
-      ry={r * 1.6}
-      fill="#c97b84"
-      transform={`rotate(${rot} ${x} ${y})`}
-      opacity={0.3}
-    />
+    <g transform={`translate(${x},${y}) rotate(${rot})`}>
+      <ellipse cx={0} cy={0} rx={r} ry={r * 1.6} fill="#c97b84" opacity={0.3} style={motionStyle} />
+    </g>
   )
 }
 
 export default function BackgroundScene() {
+  const [parallax, setParallax] = useState({ x: 0, y: 0 })
+  const [allowDrift] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+  const rafRef = useRef(0)
+  const pendingRef = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+    if (window.matchMedia('(pointer: coarse)').matches) return undefined
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+
+    const apply = () => {
+      rafRef.current = 0
+      const { x: nx, y: ny } = pendingRef.current
+      setParallax({ x: nx, y: ny })
+    }
+
+    const onMove = (e) => {
+      const cx = window.innerWidth / 2
+      const cy = window.innerHeight / 2
+      const px = (e.clientX - cx) / Math.max(cx, 1)
+      const py = (e.clientY - cy) / Math.max(cy, 1)
+      pendingRef.current = { x: px * 14, y: py * 10 }
+      if (!rafRef.current) {
+        rafRef.current = requestAnimationFrame(apply)
+      }
+    }
+
+    window.addEventListener('mousemove', onMove, { passive: true })
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
+
   return (
     <div
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
@@ -213,23 +282,22 @@ export default function BackgroundScene() {
           />
         </g>
 
-        {/* Scattered petals — middle field (larger, bolder) */}
-        <MicroPetal x={320} y={220} r={10} rot={22} />
-        <MicroPetal x={580} y={180} r={9} rot={-15} />
-        <MicroPetal x={720} y={280} r={12} rot={48} />
-        <MicroPetal x={900} y={200} r={8} rot={-40} />
-        <MicroPetal x={1050} y={340} r={11} rot={12} />
-        <MicroPetal x={480} y={420} r={8} rot={65} />
-        <MicroPetal x={650} y={520} r={9} rot={-22} />
-        <MicroPetal x={820} y={480} r={10} rot={30} />
-        <MicroPetal x={400} y={650} r={9} rot={-55} />
-        <MicroPetal x={1000} y={620} r={8} rot={18} />
-        <MicroPetal x={250} y={380} r={11} rot={-30} />
-        <MicroPetal x={1180} y={320} r={10} rot={55} />
-        <MicroPetal x={520} y={720} r={9} rot={-12} />
-        <MicroPetal x={920} y={680} r={12} rot={40} />
-        <MicroPetal x={200} y={560} r={8} rot={72} />
-        <MicroPetal x={1280} y={180} r={9} rot={-48} />
+        {/* Scattered petals — drift + optional desktop parallax */}
+        <g transform={`translate(${parallax.x},${parallax.y})`}>
+          {PETALS.map((p, i) => (
+            <MicroPetal
+              key={i}
+              x={p.x}
+              y={p.y}
+              r={p.r}
+              rot={p.rot}
+              driftIndex={p.drift}
+              durationSec={p.duration}
+              delaySec={p.delay}
+              allowMotion={allowDrift}
+            />
+          ))}
+        </g>
       </svg>
     </div>
   )

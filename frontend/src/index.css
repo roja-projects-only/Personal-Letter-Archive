@@ -135,6 +135,48 @@
   }
 }
 
+/* Scattered background petals — only when user allows motion */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes petalDrift1 {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    30% {
+      transform: translate(12px, -18px) rotate(22deg);
+    }
+    60% {
+      transform: translate(-8px, 10px) rotate(-12deg);
+    }
+  }
+
+  @keyframes petalDrift2 {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(-14px, 14px) rotate(-18deg);
+    }
+    55% {
+      transform: translate(10px, -8px) rotate(15deg);
+    }
+  }
+
+  @keyframes petalDrift3 {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    40% {
+      transform: translate(16px, 12px) rotate(-10deg);
+    }
+    75% {
+      transform: translate(-6px, -16px) rotate(8deg);
+    }
+  }
+}
+
 /* ─── Animation utilities ────────────────────────────────────────────────── */
 
 .animate-fade-up {
