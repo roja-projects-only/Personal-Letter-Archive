@@ -1,37 +1,56 @@
 @import "tailwindcss";
 
 @theme {
+  /* Base palette — cream foundation */
   --color-cream: #fdf6f0;
+  --color-cream-dark: #f5ebe0;
+  --color-parchment: #f2e6d4;
   --color-blush: #f5d5ce;
   --color-rose: #c97b84;
   --color-rose-deep: #a55a66;
   --color-rose-light: #fff0ee;
   --color-amber: #d4956a;
+  --color-amber-soft: #f5dfc5;
   --color-ink: #3d2b1f;
   --color-ink-muted: #9b7b6f;
+  --color-ink-faint: #d8c9c1;
   --color-card: #fffaf8;
   --color-border: #edd8d0;
+  --color-gold: #c8a96e;
+  --color-gold-soft: #ede0c8;
+  --color-gold-faint: #f7f0e3;
   --color-green-soft: #eef5ee;
   --color-green-text: #5a8a5a;
 
+  /* Typography */
   --font-serif: "EB Garamond", Georgia, serif;
   --font-sans: Lato, ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
 }
 
 :root {
   --cream: #fdf6f0;
+  --cream-dark: #f5ebe0;
+  --parchment: #f2e6d4;
   --blush: #f5d5ce;
   --rose: #c97b84;
   --rose-deep: #a55a66;
   --rose-light: #fff0ee;
   --amber: #d4956a;
+  --amber-soft: #f5dfc5;
   --ink: #3d2b1f;
   --ink-muted: #9b7b6f;
+  --ink-faint: #d8c9c1;
   --card: #fffaf8;
   --border: #edd8d0;
+  --gold: #c8a96e;
+  --gold-soft: #ede0c8;
+  --gold-faint: #f7f0e3;
   --green-soft: #eef5ee;
   --green-text: #5a8a5a;
 }
+
+/* ─── Keyframes ─────────────────────────────────────────────────────────── */
 
 @keyframes fadeUp {
   from {
@@ -73,6 +92,41 @@
   }
 }
 
+@keyframes letterReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInCard {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sealAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.75) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* ─── Animation utilities ────────────────────────────────────────────────── */
+
 .animate-fade-up {
   animation: fadeUp 0.4s ease both;
 }
@@ -85,9 +139,33 @@
   animation: pulsePop 0.2s ease;
 }
 
+.animate-letter-reveal {
+  animation: letterReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-slide-in-card {
+  animation: slideInCard 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-seal-appear {
+  animation: sealAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ─── Paper texture overlay ──────────────────────────────────────────────── */
+
+/* A repeating micro-grain pattern layered on parchment cards */
+.paper-texture {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+    linear-gradient(160deg, #faf3e8 0%, #f5ebe0 100%);
+}
+
+/* ─── Base styles ────────────────────────────────────────────────────────── */
+
 @layer base {
   body {
     @apply m-0 min-h-screen bg-cream font-sans text-ink antialiased;
+    background-image: radial-gradient(ellipse 80% 60% at 50% 0%, #f5d5ce22 0%, transparent 70%);
   }
 
   #root {
@@ -95,13 +173,38 @@
   }
 }
 
-/* Tiptap / letter prose */
+/* ─── Page watermark ─────────────────────────────────────────────────────── */
+
+/* Applied via .page-watermark class on PageShell's root div */
+.page-watermark {
+  position: relative;
+}
+
+.page-watermark::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' width='420' height='420'%3E%3Cg opacity='0.03' fill='%23a55a66'%3E%3Ccircle cx='60' cy='60' r='36' stroke='%23a55a66' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='60' cy='60' r='26' stroke='%23a55a66' stroke-width='0.8' fill='none'/%3E%3Cellipse cx='60' cy='40' rx='8' ry='14' transform='rotate(0 60 60)'/%3E%3Cellipse cx='60' cy='40' rx='8' ry='14' transform='rotate(45 60 60)'/%3E%3Cellipse cx='60' cy='40' rx='8' ry='14' transform='rotate(90 60 60)'/%3E%3Cellipse cx='60' cy='40' rx='8' ry='14' transform='rotate(135 60 60)'/%3E%3Cellipse cx='60' cy='40' rx='8' ry='14' transform='rotate(180 60 60)'/%3E%3Cellipse cx='60' cy='40' rx='8' ry='14' transform='rotate(225 60 60)'/%3E%3Cellipse cx='60' cy='40' rx='8' ry='14' transform='rotate(270 60 60)'/%3E%3Cellipse cx='60' cy='40' rx='8' ry='14' transform='rotate(315 60 60)'/%3E%3Ccircle cx='60' cy='60' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 420px 420px;
+}
+
+.page-watermark > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Tiptap / letter prose ──────────────────────────────────────────────── */
+
 .letter-content .ProseMirror {
-  @apply min-h-[320px] font-serif text-sm leading-[1.9] text-ink outline-none;
+  @apply min-h-[320px] font-serif text-base leading-[2] text-ink outline-none;
 }
 
 .letter-content .ProseMirror p {
-  @apply mb-3;
+  @apply mb-4;
 }
 
 .letter-content .ProseMirror p.is-editor-empty:first-child::before {
@@ -111,14 +214,48 @@
 }
 
 .letter-body h2 {
-  @apply mb-2 mt-4 font-serif text-lg text-ink;
+  @apply mb-2 mt-5 font-serif text-xl text-ink;
 }
 
 .letter-body blockquote {
-  @apply my-3 border-l-2 border-blush pl-3 italic text-ink-muted;
+  @apply my-4 border-l-2 border-gold pl-4 italic text-ink-muted;
 }
 
 .letter-body ul,
 .letter-body ol {
   @apply my-3 list-inside pl-2;
+}
+
+/* ─── Decorative divider ─────────────────────────────────────────────────── */
+
+.floral-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+}
+
+.floral-divider::before,
+.floral-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-soft), transparent);
+}
+
+/* ─── Paper card ─────────────────────────────────────────────────────────── */
+
+.paper-card {
+  background-color: var(--parchment);
+  border: 1px solid var(--gold-soft);
+  border-radius: 1rem;
+  box-shadow:
+    0 2px 8px rgba(61, 43, 31, 0.06),
+    0 1px 2px rgba(200, 169, 110, 0.1);
+}
+
+.paper-card-ribbon {
+  border-left: 3px solid var(--gold);
 }
