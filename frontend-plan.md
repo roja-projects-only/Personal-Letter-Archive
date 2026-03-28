@@ -133,13 +133,15 @@ Build these first before pages. They are used everywhere.
 - Padding: `p-4`, margin-bottom: `mb-2.5`
 - Hover: border changes to `--rose`
 - Transition: `border-color 0.2s`
-- Contains: title (italic EB Garamond 15px), timestamp (Lato 12px muted), excerpt (Lato 13px muted), optional tag
+- **`variant="vertical"` (default):** title (italic EB Garamond 15px), timestamp (Lato 12px muted), excerpt (Lato 13px muted), optional tag — used on recipient list
+- **`variant="horizontal"`:** flex row — left: title (italic 14px) + timestamp + reply count line; right: slot for `<GhostButton>` "edit" — used on writer dashboard. No excerpt in this variant.
+
+**Tag logic (recipient list):** show `<TagNew />` when `viewedAt` is null; show `<TagReplied />` when `replyCount > 0` (if both apply, prefer "replied" or show both per product choice — default: show "replied" if any replies, else "new" if unread).
 
 #### `<PageShell />`
 - Wraps all pages
-- Background: `--cream`
-- Min height: 100vh
-- Max width for content: `max-w-xl mx-auto` on recipient side, `max-w-3xl mx-auto` on writer side
+- Background: `--cream`, min height: 100vh
+- **`maxWidth` prop:** Tailwind max-width class for the inner content wrapper — default `max-w-xl` (recipient flows); writer pages pass `max-w-2xl` (matches dashboard / editor pages)
 
 ---
 
@@ -248,6 +250,7 @@ No top nav bar. Just a small discrete logout link at the bottom of the page: Lat
 
 ```
 [Letter number]             "letter no. 4" — Lato 11px uppercase, letter-spacing 2px, --rose
+                            Compute as 1-based index after sorting letters oldest→newest (same order as API chronological list); frontend derives from list position or backend may include `letterNumber`
 
 [Title]                     EB Garamond 26px italic, --ink
 
@@ -487,9 +490,13 @@ Each reply:
       <Route path="/write/new" element={<WriterNewLetter />} />
       <Route path="/write/letters/:id" element={<WriterLetterDetail />} />
     </Route>
+
+    <Route path="*" element={<NotFound />} />
   </Routes>
 </BrowserRouter>
 ```
+
+`<NotFound />` — minimal centered message (e.g. "nothing here") with link to `/` or `/write` as appropriate; keeps the SPA from rendering a blank screen.
 
 ---
 
@@ -501,6 +508,7 @@ src/
 │   ├── RecipientGate.jsx
 │   ├── RecipientLetterList.jsx
 │   ├── RecipientLetterDetail.jsx
+│   ├── NotFound.jsx
 │   ├── WriterLogin.jsx
 │   ├── WriterDashboard.jsx
 │   ├── WriterNewLetter.jsx
@@ -534,36 +542,55 @@ src/
 
 ---
 
-## Tailwind Config
+## Tailwind CSS v4 (Vite plugin)
 
-In `tailwind.config.js`, extend the theme to wire up the custom colors:
+Use **Tailwind v4** with the official Vite plugin — no `tailwind.config.js` or PostCSS pipeline required.
+
+**1. Install**
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+```
+
+**2. `vite.config.js`**
 
 ```js
-module.exports = {
-  content: ['./index.html', './src/**/*.{js,jsx}'],
-  theme: {
-    extend: {
-      colors: {
-        cream:      '#FDF6F0',
-        blush:      '#F5D5CE',
-        rose:       '#C97B84',
-        'rose-deep':'#A55A66',
-        'rose-light':'#FFF0EE',
-        amber:      '#D4956A',
-        ink:        '#3D2B1F',
-        'ink-muted':'#9B7B6F',
-        card:       '#FFFAF8',
-        border:     '#EDD8D0',
-      },
-      fontFamily: {
-        serif: ['"EB Garamond"', 'Georgia', 'serif'],
-        sans:  ['Lato', 'sans-serif'],
-      },
-    },
-  },
-  plugins: [],
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+```
+
+**3. `src/index.css` — import Tailwind and define design tokens with `@theme`**
+
+Custom colors become utilities (`bg-cream`, `text-ink`, `border-border`, etc.); fonts become `font-serif` / `font-sans`:
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #fdf6f0;
+  --color-blush: #f5d5ce;
+  --color-rose: #c97b84;
+  --color-rose-deep: #a55a66;
+  --color-rose-light: #fff0ee;
+  --color-amber: #d4956a;
+  --color-ink: #3d2b1f;
+  --color-ink-muted: #9b7b6f;
+  --color-card: #fffaf8;
+  --color-border: #edd8d0;
+  --color-green-soft: #eef5ee;
+  --color-green-text: #5a8a5a;
+
+  --font-serif: "EB Garamond", Georgia, serif;
+  --font-sans: Lato, ui-sans-serif, system-ui, sans-serif;
 }
 ```
+
+Keep the same `:root` CSS variables (for `var(--cream)` etc.) and animation classes in this file alongside `@theme` and `@layer base { ... }`.
 
 ---
 
@@ -602,16 +629,32 @@ Define these in `index.css`:
 
 ---
 
+## Local development — Vite proxy
+
+In `vite.config.js`, proxy `/api` to the Express server so the browser uses same-origin requests and cookies work predictably in dev:
+
+```js
+server: {
+  proxy: {
+    '/api': { target: 'http://localhost:3000', changeOrigin: true },
+  },
+},
+```
+
+With this, set `VITE_API_URL` to `''` (empty) in `.env.development` so axios uses relative `/api/...` URLs, or use `import.meta.env.DEV ? '' : import.meta.env.VITE_API_URL` in the API client.
+
+---
+
 ## Packages to Install
 
+From the repo root (creates `frontend/`):
+
 ```bash
-npm create vite@latest . -- --template react
-npm install react-router-dom
-npm install axios
-npm install @tiptap/react @tiptap/pm @tiptap/starter-kit @tiptap/extension-placeholder @tiptap/extension-blockquote @tiptap/extension-heading
-npm install dompurify
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+npm create vite@latest frontend -- --template react
+cd frontend
+npm install react-router-dom axios dompurify
+npm install @tiptap/react @tiptap/pm @tiptap/starter-kit @tiptap/extension-placeholder
+npm install -D tailwindcss @tailwindcss/vite
 ```
 
 ---
@@ -620,8 +663,8 @@ npx tailwindcss init -p
 
 Follow this sequence in Cursor to avoid building pages before their dependencies exist:
 
-1. `index.css` — set up all CSS custom properties and animation keyframes
-2. `tailwind.config.js` — extend with custom colors and fonts
+1. `vite.config.js` — add `@tailwindcss/vite` and dev proxy for `/api`
+2. `index.css` — `@import "tailwindcss"`, `@theme` tokens, `:root`, animation keyframes, `@layer base`
 3. `index.html` — add Google Fonts link
 4. All `components/ui/` — build the atomic components first
 5. `api/` files — set up all API call functions (can use placeholder URLs)
@@ -637,8 +680,8 @@ Follow this sequence in Cursor to avoid building pages before their dependencies
     - `RecipientLetterList.jsx`
     - `RecipientLetterDetail.jsx`
     - `WriterLetterDetail.jsx`
-11. `main.jsx` — wire up React Router last
+11. `main.jsx` — wire up React Router last (include `NotFound` route)
 
 ---
 
-*This document is the complete frontend plan. No backend logic lives here — all data comes from the Express API documented separately.*
+*This document is the complete frontend plan. No backend logic lives here — all data comes from the Express API documented in `project-plan.md`.*

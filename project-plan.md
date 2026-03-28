@@ -207,8 +207,8 @@ Each reply is linked to a specific letter and to the recipient.
 ## Letter Editor (Tiptap)
 
 The Tiptap editor will support:
-- **Bold**, *italic*, underline
-- Headings (H1, H2, H3)
+- **Bold**, *italic*
+- Headings (H1, H2, H3 via starter-kit)
 - Paragraph breaks
 - Blockquotes (good for reflective writing)
 - Bullet and numbered lists
@@ -224,7 +224,7 @@ The Tiptap editor will support:
 | JWT stolen from cookies | Cookies are `httpOnly` and `Secure` — inaccessible to JavaScript |
 | PIN brute force | Rate limited to 5 attempts per 5 minutes per IP via Upstash Redis |
 | Unauthorized letter access | Every API route checks JWT role — author vs recipient — server-side |
-| CORS | Backend only allows requests from the Vercel frontend domain |
+| CORS | Production: backend only allows the Vercel frontend origin. Development: allow `http://localhost:5173` or use a Vite dev proxy so the browser calls same-origin `/api` |
 | Environment secrets | All credentials (DB URL, JWT secret, Redis URL) stored in `.env`, never committed |
 
 ---
@@ -263,13 +263,13 @@ VITE_API_URL=https://your-backend.railway.app
 │   │   │   ├── RecipientLetterList.jsx
 │   │   │   └── RecipientLetterDetail.jsx
 │   │   ├── components/
+│   │   │   ├── ui/                 # PrimaryButton, GhostButton, tags, LetterCard, etc.
 │   │   │   ├── Editor.jsx          # Tiptap rich text editor
-│   │   │   ├── LetterCard.jsx
-│   │   │   ├── ReplyBox.jsx
-│   │   │   └── ProtectedRoute.jsx  # Auth guard component
-│   │   ├── api/                    # Axios/fetch wrappers
-│   │   ├── context/                # Auth context (stores JWT state)
-│   │   ├── App.jsx
+│   │   │   ├── PinInput.jsx
+│   │   │   ├── RequireAuthor.jsx
+│   │   │   └── RequireRecipient.jsx
+│   │   ├── api/                    # Axios wrappers
+│   │   ├── hooks/                  # useAuthorSession, useRecipientSession
 │   │   └── main.jsx
 │   ├── index.html
 │   └── vite.config.js
@@ -309,4 +309,4 @@ VITE_API_URL=https://your-backend.railway.app
 
 ---
 
-*This document covers the full planning scope of the project. No implementation has been started yet.*
+*This document covers the full planning scope of the project. Frontend implementation lives under `frontend/`; backend is separate.*
