@@ -10,7 +10,7 @@ function ToolbarButton({ active, onClick, children, title }) {
       title={title}
       onMouseDown={(e) => e.preventDefault()}
       onClick={onClick}
-      className={`flex h-7 w-7 items-center justify-center rounded-full text-ink transition-colors ${
+      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors ${
         active ? 'bg-blush text-rose-deep' : 'hover:bg-rose-light'
       }`}
     >
@@ -84,7 +84,7 @@ export default function Editor({
     <div className={`relative ${className}`}>
       {showToolbar && (
         <div className="mb-2 flex justify-center">
-          <div className="flex gap-1 rounded-full border border-border bg-card px-2 py-1 shadow-sm">
+          <div className="flex flex-wrap justify-center gap-1 rounded-full border border-border bg-card px-2 py-1.5 shadow-sm">
             <ToolbarButton
               title="Bold"
               active={editor.isActive('bold')}

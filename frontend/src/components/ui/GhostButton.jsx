@@ -2,7 +2,7 @@ export default function GhostButton({ children, className = '', type = 'button',
   return (
     <button
       type={type}
-      className={`rounded-full border border-gold-soft bg-transparent px-3 py-1.5 font-sans text-xs text-ink-muted tracking-wide transition-all duration-200 hover:border-rose hover:bg-rose-light hover:text-rose-deep ${className}`}
+      className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-gold-soft bg-transparent px-4 py-2.5 font-sans text-sm text-ink-muted tracking-wide transition-all duration-200 hover:border-rose hover:bg-rose-light hover:text-rose-deep ${className}`}
       {...rest}
     >
       {children}

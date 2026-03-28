@@ -87,7 +87,7 @@ export default function RecipientLetterList() {
         <button
           type="button"
           onClick={leave}
-          className="w-full text-center font-sans text-[11px] uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30"
+          className="min-h-[48px] w-full py-3 text-center font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30"
         >
           leave
         </button>

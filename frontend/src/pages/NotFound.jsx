@@ -12,7 +12,7 @@ export default function NotFound() {
         <FloralDivider className="mx-auto mb-5 w-32" />
         <Link
           to="/"
-          className="font-sans text-[11px] uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30"
+          className="inline-flex min-h-[48px] min-w-[120px] items-center justify-center px-4 py-3 font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30"
         >
           go home
         </Link>

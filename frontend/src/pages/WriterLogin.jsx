@@ -43,7 +43,7 @@ export default function WriterLogin() {
 
         <FloralDivider className="mb-7 w-36" />
 
-        <PaperCard ribbon corners className={`w-full p-6 ${shake ? 'animate-shake' : ''}`}>
+        <PaperCard ribbon corners className={`w-full p-6 pb-safe ${shake ? 'animate-shake' : ''}`}>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="w-email" className="mb-1.5 block font-sans text-[11px] uppercase tracking-widest text-ink-muted">
@@ -55,7 +55,7 @@ export default function WriterLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 autoComplete="username"
-                className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-2.5 font-sans text-sm text-ink outline-none transition-colors focus:border-rose focus:bg-cream"
+                className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream"
               />
             </div>
             <div>
@@ -69,13 +69,13 @@ export default function WriterLogin() {
                   onChange={(e) => setPassword(e.target.value)}
                   type={showPw ? 'text' : 'password'}
                   autoComplete="current-password"
-                  className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-2.5 pr-12 font-sans text-sm text-ink outline-none transition-colors focus:border-rose focus:bg-cream"
+                  className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 pr-14 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream"
                 />
                 <button
                   type="button"
-                  tabIndex={-1}
                   onClick={() => setShowPw((s) => !s)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 font-sans text-[11px] text-ink-muted hover:text-ink"
+                  className="absolute right-1 top-1/2 flex h-10 min-w-10 -translate-y-1/2 items-center justify-center rounded-lg px-2 font-sans text-sm text-ink-muted hover:bg-rose-light hover:text-ink"
+                  aria-label={showPw ? 'Hide password' : 'Show password'}
                 >
                   {showPw ? 'hide' : 'show'}
                 </button>
@@ -87,7 +87,7 @@ export default function WriterLogin() {
             </PrimaryButton>
 
             {error && (
-              <p className="text-center font-serif text-[13px] italic text-rose-deep">{error}</p>
+              <p className="text-center font-serif text-base italic text-rose-deep">{error}</p>
             )}
           </form>
         </PaperCard>

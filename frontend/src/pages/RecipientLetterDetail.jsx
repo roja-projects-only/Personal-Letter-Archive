@@ -149,9 +149,12 @@ export default function RecipientLetterDetail() {
           <textarea
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
+            onFocus={(e) => {
+              e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+            }}
             placeholder="say something…"
-            rows={3}
-            className="mb-3 min-h-[80px] w-full resize-y rounded-xl border border-gold-soft bg-parchment p-4 font-serif text-sm italic text-ink outline-none placeholder:text-ink-muted focus:border-rose focus:bg-cream"
+            rows={4}
+            className="mb-3 min-h-[100px] w-full scroll-mt-4 resize-y rounded-xl border border-gold-soft bg-parchment p-4 font-serif text-base italic leading-relaxed text-ink outline-none placeholder:text-ink-muted focus:border-rose focus:bg-cream"
           />
           {error && <p className="mb-2 font-sans text-xs text-rose-deep">{error}</p>}
           <div className="flex justify-end">

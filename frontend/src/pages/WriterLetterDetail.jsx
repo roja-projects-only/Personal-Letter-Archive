@@ -198,19 +198,29 @@ export default function WriterLetterDetail() {
                 <button
                   type="button"
                   onClick={() => setConfirmDelete(true)}
-                  className="font-sans text-[11px] text-rose-deep underline decoration-transparent transition-colors hover:decoration-rose-deep"
+                  className="min-h-[48px] py-3 font-sans text-sm text-rose-deep underline decoration-transparent transition-colors hover:decoration-rose-deep"
                 >
                   delete letter
                 </button>
               ) : (
-                <div className="flex flex-wrap items-center gap-3 font-sans text-[11px] text-ink-muted">
-                  <span>are you sure? this can&apos;t be undone.</span>
-                  <button type="button" className="text-rose-deep underline" onClick={doDelete}>
-                    confirm
-                  </button>
-                  <button type="button" className="underline" onClick={() => setConfirmDelete(false)}>
-                    cancel
-                  </button>
+                <div className="flex flex-col gap-3 font-sans text-sm text-ink-muted sm:flex-row sm:flex-wrap sm:items-center">
+                  <span className="py-1">are you sure? this can&apos;t be undone.</span>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      className="min-h-[44px] rounded-lg px-4 py-2 text-rose-deep underline"
+                      onClick={doDelete}
+                    >
+                      confirm
+                    </button>
+                    <button
+                      type="button"
+                      className="min-h-[44px] rounded-lg px-4 py-2 underline"
+                      onClick={() => setConfirmDelete(false)}
+                    >
+                      cancel
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

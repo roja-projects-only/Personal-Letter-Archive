@@ -36,7 +36,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
         value={value}
         onChange={(e) => setFromString(e.target.value)}
         aria-label="PIN"
-        className="absolute inset-0 z-20 h-[56px] w-full cursor-text opacity-0"
+        className="absolute inset-0 z-20 h-[56px] w-full cursor-text text-base opacity-0"
       />
 
       {/* Visual cells (non-interactive; taps hit the overlay input) */}

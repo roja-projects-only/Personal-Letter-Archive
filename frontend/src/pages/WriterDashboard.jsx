@@ -127,7 +127,7 @@ export default function WriterDashboard() {
         <button
           type="button"
           onClick={signOut}
-          className="font-sans text-[11px] uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30"
+          className="min-h-[48px] w-full py-3 text-left font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 sm:w-auto"
         >
           sign out
         </button>

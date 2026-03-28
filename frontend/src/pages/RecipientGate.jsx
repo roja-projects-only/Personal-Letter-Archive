@@ -162,14 +162,14 @@ export default function RecipientGate() {
           </form>
 
           {locked && (
-            <p className="mt-4 text-center font-sans text-[11px] text-rose-deep">
+            <p className="mt-4 text-center font-sans text-sm text-rose-deep">
               too many attempts — try again in {fmtTime(lockSeconds)}.
             </p>
           )}
 
           {!locked && attemptsLeft < 5 && attemptsLeft > 0 && (
             <p
-              className={`mt-3 text-center font-sans text-[11px] ${
+              className={`mt-3 text-center font-sans text-sm ${
                 attemptsLeft <= 2 ? 'text-rose-deep' : 'text-ink-muted'
               }`}
             >
