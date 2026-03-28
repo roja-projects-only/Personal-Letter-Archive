@@ -1,12 +1,19 @@
 import { Link } from 'react-router-dom'
 import PageShell from '../components/PageShell'
+import WaxSeal from '../components/ui/WaxSeal'
+import FloralDivider from '../components/ui/FloralDivider'
 
 export default function NotFound() {
   return (
     <PageShell maxWidthClassName="max-w-sm">
-      <div className="animate-fade-up py-20 text-center">
-        <p className="mb-4 font-serif text-lg italic text-ink-muted">nothing here</p>
-        <Link to="/" className="font-sans text-sm text-rose underline decoration-transparent hover:decoration-rose">
+      <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-20 text-center">
+        <WaxSeal size={64} letter="?" className="mb-5" />
+        <p className="mb-2 font-display text-[28px] font-semibold italic text-ink">nothing here</p>
+        <FloralDivider className="mx-auto mb-5 w-32" />
+        <Link
+          to="/"
+          className="font-sans text-[11px] uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30"
+        >
           go home
         </Link>
       </div>
