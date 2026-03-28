@@ -57,7 +57,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
       role="group"
       aria-label="PIN"
       tabIndex={0}
-      className={`flex justify-center gap-2 outline-none ${shake ? 'animate-shake' : ''}`}
+      className={`flex justify-center gap-3 outline-none ${shake ? 'animate-shake' : ''}`}
     >
       {cells.map((i) => {
         const filled = i < value.length
@@ -65,8 +65,10 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
         return (
           <div
             key={i}
-            className={`flex h-[52px] w-11 select-none items-center justify-center rounded-[10px] border-[1.5px] font-sans text-xl text-rose transition-colors ${
-              filled ? 'border-rose bg-rose-light' : 'border-border bg-card'
+            className={`flex h-[56px] w-12 select-none items-center justify-center rounded-xl border-[1.5px] font-serif text-2xl text-rose-deep shadow-sm transition-all duration-200 ${
+              filled
+                ? 'border-rose bg-rose-light shadow-rose/10'
+                : 'border-gold-soft bg-parchment hover:border-gold'
             } ${pulsingIndex === i ? 'animate-pulse-pop' : ''}`}
           >
             {ch}
