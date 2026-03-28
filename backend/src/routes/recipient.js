@@ -4,11 +4,17 @@ import { prisma } from '../lib/prisma.js'
 import { signRecipientJwt, getCookieNames, cookieBaseOptions } from '../lib/jwt.js'
 import { requireRecipient } from '../middleware/requireRecipient.js'
 import { recordPinFailure, clearPinFailures, checkPinLocked } from '../middleware/rateLimit.js'
+import { logger } from '../lib/logger.js'
 
 const router = Router()
 const { recipient: RECIPIENT_COOKIE } = getCookieNames()
 
-router.post('/verify', async (req, res) => {
+function clientIp(req) {
+  return req.ip || req.connection?.remoteAddress || 'unknown'
+}
+
+router.post('/verify', async (req, res, next) => {
+  const log = req.log || logger
   try {
     const locked = await checkPinLocked(req)
     if (locked.locked) {
@@ -30,6 +36,7 @@ router.post('/verify', async (req, res) => {
           retryAfter: fail.retryAfter,
         })
       }
+      log.warn({ ip: clientIp(req), attemptCount: fail.count }, 'Recipient verify: invalid input')
       return res.status(401).json({ error: 'Invalid PIN or name' })
     }
 
@@ -50,6 +57,10 @@ router.post('/verify', async (req, res) => {
           retryAfter: fail.retryAfter,
         })
       }
+      log.warn(
+        { ip: clientIp(req), attemptCount: fail.count, nameOk: nameMatch, pinOk: pinMatch },
+        'Recipient verify: wrong PIN or name',
+      )
       return res.status(401).json({ error: 'Invalid PIN or name' })
     }
 
@@ -58,12 +69,13 @@ router.post('/verify', async (req, res) => {
     res.cookie(RECIPIENT_COOKIE, token, cookieBaseOptions())
     return res.json({ ok: true })
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'POST /api/recipient/verify' }, 'Recipient verify error')
+    next(e)
   }
 })
 
-router.get('/session', requireRecipient, async (req, res) => {
+router.get('/session', requireRecipient, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const recipient = await prisma.recipient.findUnique({
       where: { id: req.recipientId },
@@ -74,8 +86,8 @@ router.get('/session', requireRecipient, async (req, res) => {
     }
     return res.json(recipient)
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'GET /api/recipient/session', recipientId: req.recipientId }, 'Session read failed')
+    next(e)
   }
 })
 

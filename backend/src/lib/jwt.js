@@ -70,10 +70,12 @@ export async function getSessionFromRequest(req) {
 
 export function cookieBaseOptions() {
   const maxAgeSeconds = parseExpiresToSeconds(process.env.JWT_EXPIRES_IN || '7d')
+  const isProd = process.env.NODE_ENV === 'production'
   return {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    // Cross-origin (Vercel → Railway): SameSite=None + Secure required for cookies on API calls
+    sameSite: isProd ? 'none' : 'lax',
+    secure: isProd,
     path: '/',
     maxAge: maxAgeSeconds * 1000,
   }

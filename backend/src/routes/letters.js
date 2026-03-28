@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { prisma } from '../lib/prisma.js'
 import { getSessionFromRequest } from '../lib/jwt.js'
 import { requireAuthor } from '../middleware/requireAuthor.js'
+import { logger } from '../lib/logger.js'
 import repliesRouter from './replies.js'
 
 const router = Router()
@@ -18,19 +19,23 @@ function mapLetterListItem(row) {
 
 /** Require author or recipient JWT */
 async function requireReader(req, res, next) {
+  const log = req.log || logger
   try {
     const session = await getSessionFromRequest(req)
     if (!session) {
+      log.debug({ path: req.path }, 'requireReader: no session')
       return res.status(401).json({ error: 'Unauthorized' })
     }
     req.session = session
     next()
-  } catch {
+  } catch (err) {
+    log.debug({ err, path: req.path }, 'requireReader: session parse error')
     return res.status(401).json({ error: 'Unauthorized' })
   }
 }
 
-router.get('/', requireReader, async (req, res) => {
+router.get('/', requireReader, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const letters = await prisma.letter.findMany({
       orderBy: { createdAt: 'asc' },
@@ -44,12 +49,13 @@ router.get('/', requireReader, async (req, res) => {
 
     return res.json(letters.map(mapLetterListItem))
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'GET /api/letters' }, 'List letters failed')
+    next(e)
   }
 })
 
-router.get('/:id', requireReader, async (req, res) => {
+router.get('/:id', requireReader, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const letter = await prisma.letter.findUnique({
       where: { id: req.params.id },
@@ -81,8 +87,8 @@ router.get('/:id', requireReader, async (req, res) => {
 
     return res.json(mapDetail(letter))
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'GET /api/letters/:id', id: req.params.id }, 'Get letter failed')
+    next(e)
   }
 })
 
@@ -94,7 +100,8 @@ function mapDetail(letter) {
   }
 }
 
-router.post('/', requireAuthor, async (req, res) => {
+router.post('/', requireAuthor, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const { title, content } = req.body || {}
     if (content == null || String(content).trim() === '') {
@@ -110,12 +117,13 @@ router.post('/', requireAuthor, async (req, res) => {
     })
     return res.status(201).json(mapLetterListItem(letter))
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'POST /api/letters', userId: req.userId }, 'Create letter failed')
+    next(e)
   }
 })
 
-router.put('/:id', requireAuthor, async (req, res) => {
+router.put('/:id', requireAuthor, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const existing = await prisma.letter.findUnique({ where: { id: req.params.id } })
     if (!existing || existing.authorId !== req.userId) {
@@ -137,12 +145,13 @@ router.put('/:id', requireAuthor, async (req, res) => {
     })
     return res.json(mapDetail(letter))
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'PUT /api/letters/:id', id: req.params.id }, 'Update letter failed')
+    next(e)
   }
 })
 
-router.delete('/:id', requireAuthor, async (req, res) => {
+router.delete('/:id', requireAuthor, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const existing = await prisma.letter.findUnique({ where: { id: req.params.id } })
     if (!existing || existing.authorId !== req.userId) {
@@ -151,8 +160,8 @@ router.delete('/:id', requireAuthor, async (req, res) => {
     await prisma.letter.delete({ where: { id: req.params.id } })
     return res.json({ ok: true })
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'DELETE /api/letters/:id', id: req.params.id }, 'Delete letter failed')
+    next(e)
   }
 })
 

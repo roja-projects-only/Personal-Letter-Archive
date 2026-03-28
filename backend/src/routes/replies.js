@@ -2,10 +2,12 @@ import { Router } from 'express'
 import { prisma } from '../lib/prisma.js'
 import { requireAuthor } from '../middleware/requireAuthor.js'
 import { requireRecipient } from '../middleware/requireRecipient.js'
+import { logger } from '../lib/logger.js'
 
 const router = Router({ mergeParams: true })
 
-router.post('/', requireRecipient, async (req, res) => {
+router.post('/', requireRecipient, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const { letterId } = req.params
     const { content } = req.body || {}
@@ -27,12 +29,16 @@ router.post('/', requireRecipient, async (req, res) => {
     })
     return res.status(201).json(reply)
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error(
+      { err: e, route: 'POST /api/letters/:letterId/replies', letterId: req.params.letterId },
+      'Create reply failed',
+    )
+    next(e)
   }
 })
 
-router.get('/', requireAuthor, async (req, res) => {
+router.get('/', requireAuthor, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const { letterId } = req.params
     const letter = await prisma.letter.findUnique({ where: { id: letterId } })
@@ -46,8 +52,11 @@ router.get('/', requireAuthor, async (req, res) => {
     })
     return res.json(replies)
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error(
+      { err: e, route: 'GET /api/letters/:letterId/replies', letterId: req.params.letterId },
+      'List replies failed',
+    )
+    next(e)
   }
 })
 

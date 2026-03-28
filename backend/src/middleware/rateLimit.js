@@ -1,4 +1,5 @@
 import { getRedis } from '../lib/redis.js'
+import { logger } from '../lib/logger.js'
 
 const WINDOW_SEC = 300
 const MAX_ATTEMPTS = 5
@@ -7,13 +8,17 @@ function clientIp(req) {
   return req.ip || req.connection?.remoteAddress || 'unknown'
 }
 
+function log(req) {
+  return req?.log || logger
+}
+
 export function pinRateLimitKey(ip) {
   return `pin_attempts:${ip}`
 }
 
 /**
  * Call when PIN verification fails. Returns { locked, count, retryAfter }.
- * If Redis is unavailable, fails open (no lockout) but still returns count from memory — skip, simpler: fail open entirely.
+ * If Redis is unavailable, fails open (no lockout).
  */
 export async function recordPinFailure(req) {
   const ip = clientIp(req)
@@ -32,6 +37,7 @@ export async function recordPinFailure(req) {
   if (count >= MAX_ATTEMPTS) {
     const ttl = await redis.ttl(key)
     const retryAfter = ttl > 0 ? ttl : WINDOW_SEC
+    log(req).warn({ ip, count, retryAfter }, 'PIN rate limit: lockout after failures')
     return { locked: true, count, retryAfter }
   }
 
@@ -59,6 +65,7 @@ export async function checkPinLocked(req) {
   if (count >= MAX_ATTEMPTS) {
     const ttl = await redis.ttl(key)
     const retryAfter = ttl > 0 ? ttl : WINDOW_SEC
+    log(req).warn({ ip, count, retryAfter }, 'PIN verify blocked: existing lockout')
     return { locked: true, retryAfter }
   }
   return { locked: false, retryAfter: 0 }

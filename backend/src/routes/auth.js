@@ -3,11 +3,13 @@ import bcrypt from 'bcrypt'
 import { prisma } from '../lib/prisma.js'
 import { signAuthorJwt, getCookieNames, cookieBaseOptions } from '../lib/jwt.js'
 import { requireAuthor } from '../middleware/requireAuthor.js'
+import { logger } from '../lib/logger.js'
 
 const router = Router()
 const { author: AUTHOR_COOKIE } = getCookieNames()
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
+  const log = req.log || logger
   try {
     const { email, password } = req.body || {}
     if (!email || !password) {
@@ -25,8 +27,8 @@ router.post('/login', async (req, res) => {
     res.cookie(AUTHOR_COOKIE, token, cookieBaseOptions())
     return res.json({ ok: true })
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'POST /api/auth/login' }, 'Auth login failed')
+    next(e)
   }
 })
 
@@ -35,7 +37,8 @@ router.post('/logout', (req, res) => {
   return res.json({ ok: true })
 })
 
-router.get('/me', requireAuthor, async (req, res) => {
+router.get('/me', requireAuthor, async (req, res, next) => {
+  const log = req.log || logger
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.userId },
@@ -46,8 +49,8 @@ router.get('/me', requireAuthor, async (req, res) => {
     }
     return res.json(user)
   } catch (e) {
-    console.error(e)
-    return res.status(500).json({ error: 'Server error' })
+    log.error({ err: e, route: 'GET /api/auth/me', userId: req.userId }, 'Auth me failed')
+    next(e)
   }
 })
 
