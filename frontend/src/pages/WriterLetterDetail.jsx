@@ -7,6 +7,7 @@ import PrimaryButton from '../components/ui/PrimaryButton'
 import DecorativeLine from '../components/ui/DecorativeLine'
 import Editor from '../components/Editor'
 import { deleteLetter, getLetter, listReplies, updateLetter } from '../api/letters'
+import { useToast } from '../hooks/useToast'
 
 function formatTs(iso) {
   if (!iso) return ''
@@ -21,6 +22,7 @@ export default function WriterLetterDetail() {
   const { id } = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
+  const toast = useToast()
   const editMode = searchParams.get('mode') === 'edit'
 
   const [letter, setLetter] = useState(null)
@@ -48,8 +50,11 @@ export default function WriterLetterDetail() {
         const fromApi = Array.isArray(raw) ? raw : raw?.replies
         const merged = fromApi?.length ? fromApi : L.replies ?? []
         setReplies(merged)
-      } catch {
-        if (!cancelled) navigate('/write/dashboard', { replace: true })
+      } catch (err) {
+        if (!cancelled) {
+          toast.error(err.userMessage || 'Could not load this letter.')
+          navigate('/write/dashboard', { replace: true })
+        }
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -57,7 +62,7 @@ export default function WriterLetterDetail() {
     return () => {
       cancelled = true
     }
-  }, [id, navigate])
+  }, [id, navigate, toast])
 
   const sortedReplies = [...replies].sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
@@ -88,8 +93,8 @@ export default function WriterLetterDetail() {
         setReplies(L.replies ?? [])
       }
       setSearchParams({}, { replace: true })
-    } catch {
-      /* toast */
+    } catch (err) {
+      toast.error(err.userMessage || 'Could not save changes.')
     } finally {
       setSaving(false)
     }
@@ -99,8 +104,8 @@ export default function WriterLetterDetail() {
     try {
       await deleteLetter(id)
       navigate('/write/dashboard')
-    } catch {
-      /* ignore */
+    } catch (err) {
+      toast.error(err.userMessage || 'Could not delete letter.')
     }
   }
 

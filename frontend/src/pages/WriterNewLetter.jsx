@@ -6,6 +6,7 @@ import PrimaryButton from '../components/ui/PrimaryButton'
 import DecorativeLine from '../components/ui/DecorativeLine'
 import Editor from '../components/Editor'
 import { createLetter } from '../api/letters'
+import { useToast } from '../hooks/useToast'
 
 const DRAFT_KEY = 'pla-draft-new'
 
@@ -22,6 +23,7 @@ function readDraft() {
 
 export default function WriterNewLetter() {
   const navigate = useNavigate()
+  const toast = useToast()
   const initial = readDraft()
   const [title, setTitle] = useState(initial.title)
   const [content, setContent] = useState(initial.content)
@@ -63,8 +65,10 @@ export default function WriterNewLetter() {
       })
       localStorage.removeItem(DRAFT_KEY)
       navigate('/write/dashboard')
-    } catch {
-      setError('Could not save. Try again.')
+    } catch (err) {
+      const msg = err.userMessage || 'Could not save. Try again.'
+      setError(msg)
+      toast.error(msg)
     }
   }
 

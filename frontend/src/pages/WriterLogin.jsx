@@ -19,8 +19,8 @@ export default function WriterLogin() {
     try {
       await login(email, password)
       navigate('/write/dashboard', { replace: true })
-    } catch {
-      setError('incorrect email or password')
+    } catch (err) {
+      setError(err.userMessage || 'incorrect email or password')
       setShake(true)
       setTimeout(() => setShake(false), 450)
     }

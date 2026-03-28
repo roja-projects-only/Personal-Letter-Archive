@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
+import { ToastProvider } from './components/Toast'
 import RequireAuthor from './components/RequireAuthor'
 import RequireRecipient from './components/RequireRecipient'
 import RecipientGate from './pages/RecipientGate'
@@ -15,25 +16,27 @@ import NotFound from './pages/NotFound'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<RecipientGate />} />
+    <ToastProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<RecipientGate />} />
 
-        <Route element={<RequireRecipient />}>
-          <Route path="/letters" element={<RecipientLetterList />} />
-          <Route path="/letters/:id" element={<RecipientLetterDetail />} />
-        </Route>
+          <Route element={<RequireRecipient />}>
+            <Route path="/letters" element={<RecipientLetterList />} />
+            <Route path="/letters/:id" element={<RecipientLetterDetail />} />
+          </Route>
 
-        <Route path="/write" element={<WriterLogin />} />
+          <Route path="/write" element={<WriterLogin />} />
 
-        <Route element={<RequireAuthor />}>
-          <Route path="/write/dashboard" element={<WriterDashboard />} />
-          <Route path="/write/new" element={<WriterNewLetter />} />
-          <Route path="/write/letters/:id" element={<WriterLetterDetail />} />
-        </Route>
+          <Route element={<RequireAuthor />}>
+            <Route path="/write/dashboard" element={<WriterDashboard />} />
+            <Route path="/write/new" element={<WriterNewLetter />} />
+            <Route path="/write/letters/:id" element={<WriterLetterDetail />} />
+          </Route>
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </ToastProvider>
   </StrictMode>,
 )

@@ -7,6 +7,7 @@ import PrimaryButton from '../components/ui/PrimaryButton'
 import DecorativeLine from '../components/ui/DecorativeLine'
 import { getLetter, listLetters, postReply } from '../api/letters'
 import { letterNumberForId, normalizeLetterList } from '../lib/letters'
+import { useToast } from '../hooks/useToast'
 
 function formatDate(iso) {
   if (!iso) return ''
@@ -24,6 +25,7 @@ function formatDate(iso) {
 export default function RecipientLetterDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const toast = useToast()
   const [letter, setLetter] = useState(null)
   const [allLetters, setAllLetters] = useState([])
   const [replyText, setReplyText] = useState('')
@@ -40,8 +42,11 @@ export default function RecipientLetterDetail() {
         if (cancelled) return
         setLetter(lr.data)
         setAllLetters(normalizeLetterList(listRes.data))
-      } catch {
-        if (!cancelled) navigate('/letters', { replace: true })
+      } catch (err) {
+        if (!cancelled) {
+          toast.error(err.userMessage || 'Could not load this letter.')
+          navigate('/letters', { replace: true })
+        }
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -49,7 +54,7 @@ export default function RecipientLetterDetail() {
     return () => {
       cancelled = true
     }
-  }, [id, navigate])
+  }, [id, navigate, toast])
 
   const replies = letter?.replies ?? []
   const sortedReplies = [...replies].sort(
@@ -72,8 +77,10 @@ export default function RecipientLetterDetail() {
       setTimeout(() => setSentFlash(false), 2000)
       const lr = await getLetter(id)
       setLetter(lr.data)
-    } catch {
-      setError('Could not send. Try again.')
+    } catch (err) {
+      const msg = err.userMessage || 'Could not send. Try again.'
+      setError(msg)
+      toast.error(msg)
     } finally {
       setSending(false)
     }

@@ -6,9 +6,11 @@ import LetterCard from '../components/ui/LetterCard'
 import { listLetters } from '../api/letters'
 import { logout } from '../api/auth'
 import { normalizeLetterList } from '../lib/letters'
+import { useToast } from '../hooks/useToast'
 
 export default function WriterDashboard() {
   const navigate = useNavigate()
+  const toast = useToast()
   const [letters, setLetters] = useState([])
   const [loading, setLoading] = useState(true)
   const [now, setNow] = useState(() => Date.now())
@@ -21,9 +23,12 @@ export default function WriterDashboard() {
   useEffect(() => {
     listLetters()
       .then((res) => setLetters(normalizeLetterList(res.data)))
-      .catch(() => setLetters([]))
+      .catch((err) => {
+        setLetters([])
+        toast.error(err.userMessage || 'Could not load letters.')
+      })
       .finally(() => setLoading(false))
-  }, [])
+  }, [toast])
 
   const sortedNewest = [...letters].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
