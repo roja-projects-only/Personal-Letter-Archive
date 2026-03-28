@@ -5,7 +5,7 @@ import PrimaryButton from '../components/ui/PrimaryButton'
 import PinInput from '../components/PinInput'
 import WaxSeal from '../components/ui/WaxSeal'
 import FloralDivider from '../components/ui/FloralDivider'
-import PaperCard from '../components/ui/PaperCard'
+import CornerOrnament from '../components/ui/CornerOrnament'
 import { verifyRecipient } from '../api/recipient'
 
 export default function RecipientGate() {
@@ -90,24 +90,28 @@ export default function RecipientGate() {
   return (
     <PageShell maxWidthClassName="max-w-sm">
       <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-10">
+        <div className="paper-texture paper-card-ribbon relative flex w-full flex-col items-center gap-4 rounded-3xl border border-gold-soft/60 bg-card/80 px-8 py-10 shadow-xl backdrop-blur-sm">
+          <CornerOrnament position="tl" />
+          <CornerOrnament position="tr" />
+          <CornerOrnament position="bl" />
+          <CornerOrnament position="br" />
 
-        <WaxSeal size={80} letter="♡" className="mb-5" />
+          <WaxSeal size={80} letter="♡" />
 
-        <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
-          something made just
-        </p>
-        <h1 className="mb-4 font-display text-[38px] font-semibold italic leading-none text-ink">
-          for you
-        </h1>
+          <p className="font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
+            something made just
+          </p>
+          <h1 className="font-display text-[38px] font-semibold italic leading-none text-ink">
+            for you
+          </h1>
 
-        <FloralDivider className="mb-6 w-40" />
+          <FloralDivider className="w-40" />
 
-        <p className="mb-6 text-center font-serif text-base italic text-ink-muted">
-          {step === 'pin' ? 'enter your PIN' : 'now, your name'}
-        </p>
+          <p className="text-center font-serif text-base italic text-ink-muted">
+            {step === 'pin' ? 'enter your PIN' : 'now, your name'}
+          </p>
 
-        <PaperCard ribbon corners className="w-full p-6">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="w-full space-y-5">
             {step === 'pin' && (
               <div className="animate-fade-up space-y-4">
                 <PinInput
@@ -162,21 +166,21 @@ export default function RecipientGate() {
           </form>
 
           {locked && (
-            <p className="mt-4 text-center font-sans text-sm text-rose-deep">
+            <p className="text-center font-sans text-sm text-rose-deep">
               too many attempts — try again in {fmtTime(lockSeconds)}.
             </p>
           )}
 
           {!locked && attemptsLeft < 5 && attemptsLeft > 0 && (
             <p
-              className={`mt-3 text-center font-sans text-sm ${
+              className={`text-center font-sans text-sm ${
                 attemptsLeft <= 2 ? 'text-rose-deep' : 'text-ink-muted'
               }`}
             >
               {attemptsLeft} attempt{attemptsLeft !== 1 ? 's' : ''} remaining
             </p>
           )}
-        </PaperCard>
+        </div>
       </div>
     </PageShell>
   )
