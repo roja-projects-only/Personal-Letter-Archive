@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 
 export default function PinInput({ value, onChange, shake, onFilledPulseIndex, pulsingIndex = null }) {
-  const wrapRef = useRef(null)
+  const hiddenRef = useRef(null)
   const prevLen = useRef(value.length)
 
   const setFromString = useCallback(
@@ -19,62 +19,45 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
     prevLen.current = value.length
   }, [value, onFilledPulseIndex])
 
-  useEffect(() => {
-    const el = wrapRef.current
-    if (!el) return undefined
-    const onKeyDown = (e) => {
-      if (e.key >= '0' && e.key <= '9') {
-        e.preventDefault()
-        if (value.length < 4) {
-          setFromString(value + e.key)
-        }
-        return
-      }
-      if (e.key === 'Backspace') {
-        e.preventDefault()
-        setFromString(value.slice(0, -1))
-      }
-    }
-    const onPaste = (e) => {
-      const text = e.clipboardData?.getData('text') || ''
-      if (!/\d/.test(text)) return
-      e.preventDefault()
-      setFromString(`${value}${text}`)
-    }
-    el.addEventListener('keydown', onKeyDown)
-    el.addEventListener('paste', onPaste)
-    return () => {
-      el.removeEventListener('keydown', onKeyDown)
-      el.removeEventListener('paste', onPaste)
-    }
-  }, [value, setFromString])
-
   const cells = [0, 1, 2, 3]
 
   return (
     <div
-      ref={wrapRef}
-      role="group"
-      aria-label="PIN"
-      tabIndex={0}
-      className={`flex justify-center gap-3 outline-none ${shake ? 'animate-shake' : ''}`}
+      className={`relative mx-auto flex w-full max-w-[15rem] justify-center ${shake ? 'animate-shake' : ''}`}
     >
-      {cells.map((i) => {
-        const filled = i < value.length
-        const ch = filled ? '•' : ''
-        return (
-          <div
-            key={i}
-            className={`flex h-[56px] w-12 select-none items-center justify-center rounded-xl border-[1.5px] font-serif text-2xl text-rose-deep shadow-sm transition-all duration-200 ${
-              filled
-                ? 'border-rose bg-rose-light shadow-rose/10'
-                : 'border-gold-soft bg-parchment hover:border-gold'
-            } ${pulsingIndex === i ? 'animate-pulse-pop' : ''}`}
-          >
-            {ch}
-          </div>
-        )
-      })}
+      {/* Real input: opens numeric keyboard on mobile */}
+      <input
+        ref={hiddenRef}
+        type="tel"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        autoComplete="one-time-code"
+        maxLength={4}
+        value={value}
+        onChange={(e) => setFromString(e.target.value)}
+        aria-label="PIN"
+        className="absolute inset-0 z-20 h-[56px] w-full cursor-text opacity-0"
+      />
+
+      {/* Visual cells (non-interactive; taps hit the overlay input) */}
+      <div className="pointer-events-none relative z-10 flex justify-center gap-3">
+        {cells.map((i) => {
+          const filled = i < value.length
+          const ch = filled ? '•' : ''
+          return (
+            <div
+              key={i}
+              className={`flex h-14 w-12 select-none items-center justify-center rounded-xl border-[1.5px] font-serif text-2xl text-rose-deep shadow-sm transition-all duration-200 ${
+                filled
+                  ? 'border-rose bg-rose-light shadow-rose/10'
+                  : 'border-gold-soft bg-parchment'
+              } ${pulsingIndex === i ? 'animate-pulse-pop' : ''}`}
+            >
+              {ch}
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
