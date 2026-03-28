@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageShell from '../components/PageShell'
-import DecorativeLine from '../components/ui/DecorativeLine'
 import PrimaryButton from '../components/ui/PrimaryButton'
+import WaxSeal from '../components/ui/WaxSeal'
+import FloralDivider from '../components/ui/FloralDivider'
+import PaperCard from '../components/ui/PaperCard'
 import { login } from '../api/auth'
 
 export default function WriterLogin() {
@@ -29,15 +31,22 @@ export default function WriterLogin() {
   return (
     <PageShell maxWidthClassName="max-w-xs">
       <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-10">
-        <div className={`w-full rounded-xl ${shake ? 'animate-shake' : ''}`}>
-          <p className="mb-1 text-center font-sans text-[11px] uppercase tracking-[2px] text-ink-muted">
-            writer&apos;s entrance
-          </p>
-          <h1 className="mb-3 text-center font-serif text-[28px] italic text-ink">welcome back</h1>
-          <DecorativeLine className="my-3.5" />
-          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+
+        <WaxSeal size={72} letter="W" className="mb-5" />
+
+        <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
+          writer&apos;s entrance
+        </p>
+        <h1 className="mb-4 font-display text-[34px] font-semibold italic leading-none text-ink">
+          welcome back
+        </h1>
+
+        <FloralDivider className="mb-7 w-36" />
+
+        <PaperCard ribbon corners className={`w-full p-6 ${shake ? 'animate-shake' : ''}`}>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="w-email" className="mb-1 block font-sans text-xs text-ink-muted">
+              <label htmlFor="w-email" className="mb-1.5 block font-sans text-[11px] uppercase tracking-widest text-ink-muted">
                 email
               </label>
               <input
@@ -46,11 +55,11 @@ export default function WriterLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 autoComplete="username"
-                className="w-full rounded-[10px] border-[1.5px] border-border bg-card px-3 py-2.5 font-sans text-sm text-ink outline-none focus:border-rose"
+                className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-2.5 font-sans text-sm text-ink outline-none transition-colors focus:border-rose focus:bg-cream"
               />
             </div>
             <div>
-              <label htmlFor="w-password" className="mb-1 block font-sans text-xs text-ink-muted">
+              <label htmlFor="w-password" className="mb-1.5 block font-sans text-[11px] uppercase tracking-widest text-ink-muted">
                 password
               </label>
               <div className="relative">
@@ -60,24 +69,28 @@ export default function WriterLogin() {
                   onChange={(e) => setPassword(e.target.value)}
                   type={showPw ? 'text' : 'password'}
                   autoComplete="current-password"
-                  className="w-full rounded-[10px] border-[1.5px] border-border bg-card px-3 py-2.5 pr-10 font-sans text-sm text-ink outline-none focus:border-rose"
+                  className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-2.5 pr-12 font-sans text-sm text-ink outline-none transition-colors focus:border-rose focus:bg-cream"
                 />
                 <button
                   type="button"
                   tabIndex={-1}
                   onClick={() => setShowPw((s) => !s)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 font-sans text-[11px] text-ink-muted hover:text-ink"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 font-sans text-[11px] text-ink-muted hover:text-ink"
                 >
                   {showPw ? 'hide' : 'show'}
                 </button>
               </div>
             </div>
-            <PrimaryButton type="submit" className="mt-2 w-full">
+
+            <PrimaryButton type="submit" className="mt-1 w-full">
               enter
             </PrimaryButton>
-            {error && <p className="text-center font-sans text-[13px] text-rose-deep">{error}</p>}
+
+            {error && (
+              <p className="text-center font-serif text-[13px] italic text-rose-deep">{error}</p>
+            )}
           </form>
-        </div>
+        </PaperCard>
       </div>
     </PageShell>
   )

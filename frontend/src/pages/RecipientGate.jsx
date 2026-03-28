@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageShell from '../components/PageShell'
-import DecorativeLine from '../components/ui/DecorativeLine'
 import PrimaryButton from '../components/ui/PrimaryButton'
 import PinInput from '../components/PinInput'
+import WaxSeal from '../components/ui/WaxSeal'
+import FloralDivider from '../components/ui/FloralDivider'
+import PaperCard from '../components/ui/PaperCard'
 import { verifyRecipient } from '../api/recipient'
 
 export default function RecipientGate() {
@@ -60,52 +62,71 @@ export default function RecipientGate() {
   return (
     <PageShell maxWidthClassName="max-w-sm">
       <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-10">
-        <div className="mb-5 flex h-[52px] w-[52px] items-center justify-center rounded-full bg-blush font-serif text-2xl text-rose-deep">
-          ♡
-        </div>
-        <p className="mb-1 font-sans text-[11px] uppercase tracking-[2px] text-ink-muted">
+
+        {/* Wax seal */}
+        <WaxSeal size={80} letter="♡" className="mb-5" />
+
+        {/* Heading */}
+        <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
           something made just
         </p>
-        <h1 className="mb-3 font-serif text-[32px] italic text-ink">for you</h1>
-        <DecorativeLine className="my-3.5" />
-        <p className="mb-5 font-sans text-[13px] text-ink-muted">enter your pin to continue</p>
+        <h1
+          className="mb-4 font-display text-[38px] font-semibold italic leading-none text-ink"
+        >
+          for you
+        </h1>
 
-        <form onSubmit={handleSubmit} className="w-full space-y-6">
-          <PinInput
-            value={pin}
-            onChange={setPin}
-            shake={shake}
-            onFilledPulseIndex={setPulseIndex}
-            pulsingIndex={pulseIndex}
-          />
-          <p className="text-center font-sans text-xs text-ink-muted">and your name</p>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="your name..."
-            disabled={locked}
-            className="w-full rounded-[10px] border-[1.5px] border-border bg-card py-3 text-center font-sans text-sm text-ink outline-none placeholder:text-ink-muted focus:border-rose"
-          />
-          <PrimaryButton type="submit" disabled={locked || pin.length !== 4 || !name.trim()} className="w-full">
-            open ♡
-          </PrimaryButton>
-        </form>
+        <FloralDivider className="mb-6 w-40" />
 
-        {locked && (
-          <p className="mt-4 text-center font-sans text-[11px] text-rose-deep">
-            too many attempts. try again in {fmtTime(lockSeconds)}.
-          </p>
-        )}
+        <p className="mb-6 font-serif text-sm italic text-ink-muted">
+          enter your pin to continue
+        </p>
 
-        {!locked && attemptsLeft < 5 && attemptsLeft > 0 && (
-          <p
-            className={`mt-3 text-center font-sans text-[11px] ${
-              attemptsLeft <= 2 ? 'text-rose-deep' : 'text-blush'
-            }`}
-          >
-            {attemptsLeft} attempt{attemptsLeft !== 1 ? 's' : ''} remaining
-          </p>
-        )}
+        {/* Card */}
+        <PaperCard ribbon corners className="w-full p-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <PinInput
+              value={pin}
+              onChange={setPin}
+              shake={shake}
+              onFilledPulseIndex={setPulseIndex}
+              pulsingIndex={pulseIndex}
+            />
+
+            <div>
+              <p className="mb-2 text-center font-sans text-[11px] uppercase tracking-widest text-ink-muted">
+                and your name
+              </p>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="your name…"
+                disabled={locked}
+                className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3 text-center font-serif text-sm italic text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-rose focus:bg-cream"
+              />
+            </div>
+
+            <PrimaryButton type="submit" disabled={locked || pin.length !== 4 || !name.trim()} className="w-full">
+              open ♡
+            </PrimaryButton>
+          </form>
+
+          {locked && (
+            <p className="mt-4 text-center font-sans text-[11px] text-rose-deep">
+              too many attempts — try again in {fmtTime(lockSeconds)}.
+            </p>
+          )}
+
+          {!locked && attemptsLeft < 5 && attemptsLeft > 0 && (
+            <p
+              className={`mt-3 text-center font-sans text-[11px] ${
+                attemptsLeft <= 2 ? 'text-rose-deep' : 'text-ink-muted'
+              }`}
+            >
+              {attemptsLeft} attempt{attemptsLeft !== 1 ? 's' : ''} remaining
+            </p>
+          )}
+        </PaperCard>
       </div>
     </PageShell>
   )
