@@ -1,16 +1,33 @@
-# React + Vite
+# Personal Letter Archive — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React (Vite) app for the recipient flow and the writer (`/write`) area. API calls use Axios with `withCredentials: true` so session cookies work.
 
-Currently, two official plugins are available:
+See **[../README.md](../README.md)** for full project documentation and **[../docs/plain-english-overview.md](../docs/plain-english-overview.md)** for a non-technical overview.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Local development
 
-## React Compiler
+```bash
+npm install
+cp .env.example .env.development.local
+# Leave VITE_API_URL empty — Vite proxies /api to http://localhost:3000
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Run the **backend** on port 3000 at the same time (see `backend/README.md`).
 
-## Expanding the ESLint configuration
+## Production (e.g. Vercel)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Set **`VITE_API_URL`** to your API’s public base URL (no path), e.g. `https://your-service.up.railway.app`.
+
+```bash
+npm run build
+```
+
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run dev` | Dev server with HMR |
+| `npm run build` | Production bundle |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | ESLint |
