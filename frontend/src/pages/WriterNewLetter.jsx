@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import PageShell from '../components/PageShell'
 import GhostButton from '../components/ui/GhostButton'
 import PrimaryButton from '../components/ui/PrimaryButton'
-import DecorativeLine from '../components/ui/DecorativeLine'
+import FloralDivider from '../components/ui/FloralDivider'
 import Editor from '../components/Editor'
 import { createLetter } from '../api/letters'
 import { useToast } from '../hooks/useToast'
@@ -73,16 +73,21 @@ export default function WriterNewLetter() {
   }
 
   const saveLabel =
-    saveState === 'saving' ? 'saving…' : saveState === 'unsaved' ? 'unsaved changes' : 'saved'
+    saveState === 'saving'
+      ? '~ saving…'
+      : saveState === 'unsaved'
+        ? '~ unsaved changes'
+        : '~ saved'
 
   return (
     <PageShell maxWidthClassName="max-w-2xl">
       <div className="animate-fade-up">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        {/* Nav bar */}
+        <div className="mb-7 flex flex-wrap items-center justify-between gap-3 pt-2">
           <Link to="/write/dashboard">
             <GhostButton type="button">← dashboard</GhostButton>
           </Link>
-          <p className="order-3 w-full text-center font-sans text-[11px] text-ink-muted sm:order-none sm:w-auto">
+          <p className="order-3 w-full text-center font-serif text-[12px] italic text-gold sm:order-none sm:w-auto">
             {saveLabel}
           </p>
           <PrimaryButton type="button" onClick={handleSave}>
@@ -90,15 +95,21 @@ export default function WriterNewLetter() {
           </PrimaryButton>
         </div>
 
+        {/* Title */}
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="a title, if you'd like..."
-          className="mb-2 w-full border-0 bg-transparent font-serif text-[26px] italic text-ink outline-none placeholder:text-ink-muted"
+          placeholder="a title, if you'd like…"
+          className="mb-3 w-full border-0 bg-transparent font-display text-[28px] font-semibold italic text-ink outline-none placeholder:text-ink-muted"
         />
-        <DecorativeLine className="mb-4" />
-        <Editor content={content} onChange={setContent} placeholder="begin here..." />
-        {error && <p className="mt-3 font-sans text-sm text-rose-deep">{error}</p>}
+        <FloralDivider ornament="❧" className="mb-5" />
+
+        {/* Editor */}
+        <div className="paper-card paper-texture rounded-2xl p-5 sm:p-7">
+          <Editor content={content} onChange={setContent} placeholder="begin here…" />
+        </div>
+
+        {error && <p className="mt-3 font-serif text-sm italic text-rose-deep">{error}</p>}
       </div>
     </PageShell>
   )

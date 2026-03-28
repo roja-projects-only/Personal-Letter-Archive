@@ -4,7 +4,8 @@ import DOMPurify from 'dompurify'
 import PageShell from '../components/PageShell'
 import GhostButton from '../components/ui/GhostButton'
 import PrimaryButton from '../components/ui/PrimaryButton'
-import DecorativeLine from '../components/ui/DecorativeLine'
+import FloralDivider from '../components/ui/FloralDivider'
+import PaperCard from '../components/ui/PaperCard'
 import Editor from '../components/Editor'
 import { deleteLetter, getLetter, listReplies, updateLetter } from '../api/letters'
 import { useToast } from '../hooks/useToast'
@@ -13,6 +14,19 @@ function formatTs(iso) {
   if (!iso) return ''
   try {
     return new Date(iso).toLocaleString()
+  } catch {
+    return ''
+  }
+}
+
+function formatDate(iso) {
+  if (!iso) return ''
+  try {
+    return new Date(iso).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
   } catch {
     return ''
   }
@@ -112,7 +126,7 @@ export default function WriterLetterDetail() {
   if (loading || !letter) {
     return (
       <PageShell maxWidthClassName="max-w-2xl">
-        <p className="font-sans text-sm text-ink-muted">Loading…</p>
+        <p className="py-16 text-center font-serif text-sm italic text-ink-muted">Loading…</p>
       </PageShell>
     )
   }
@@ -120,8 +134,10 @@ export default function WriterLetterDetail() {
   return (
     <PageShell maxWidthClassName="max-w-2xl">
       <div className="animate-fade-up">
+
+        {/* Nav row */}
         {!editMode ? (
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-7 flex items-center justify-between pt-2">
             <Link to="/write/dashboard">
               <GhostButton type="button">← dashboard</GhostButton>
             </Link>
@@ -130,7 +146,7 @@ export default function WriterLetterDetail() {
             </GhostButton>
           </div>
         ) : (
-          <div className="mb-6 flex items-center justify-between gap-2">
+          <div className="mb-7 flex items-center justify-between gap-2 pt-2">
             <GhostButton
               type="button"
               onClick={() => {
@@ -147,70 +163,82 @@ export default function WriterLetterDetail() {
           </div>
         )}
 
+        {/* View mode */}
         {!editMode ? (
           <>
-            <h1 className="mb-3 font-serif text-[26px] italic text-ink">
+            <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-gold">
+              {formatDate(letter.createdAt)}
+            </p>
+            <h1 className="mb-3 font-display text-[28px] font-semibold italic leading-snug text-ink">
               {letter.title?.trim() || 'Letter'}
             </h1>
-            <DecorativeLine className="mb-6" />
-            <div
-              className="letter-body font-serif text-sm leading-[1.9] text-ink [&_p]:mb-3"
-              dangerouslySetInnerHTML={{ __html: sanitized }}
-            />
+            <FloralDivider ornament="❧" className="mb-7" />
+            <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
+              <div
+                className="letter-body font-serif text-base leading-[2] text-ink [&_p]:mb-4"
+                dangerouslySetInnerHTML={{ __html: sanitized }}
+              />
+            </PaperCard>
           </>
         ) : (
+          /* Edit mode */
           <>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="a title, if you'd like..."
-              className="mb-2 w-full border-0 bg-transparent font-serif text-[26px] italic text-ink outline-none placeholder:text-ink-muted"
+              placeholder="a title, if you'd like…"
+              className="mb-3 w-full border-0 bg-transparent font-display text-[28px] font-semibold italic text-ink outline-none placeholder:text-ink-muted"
             />
-            <DecorativeLine className="mb-4" />
-            <Editor content={content} onChange={setContent} placeholder="begin here..." />
-            {!confirmDelete ? (
-              <button
-                type="button"
-                onClick={() => setConfirmDelete(true)}
-                className="mt-6 font-sans text-[11px] text-rose-deep underline decoration-transparent hover:decoration-rose-deep"
-              >
-                delete letter
-              </button>
-            ) : (
-              <div className="mt-6 flex flex-wrap items-center gap-3 font-sans text-[11px] text-ink-muted">
-                <span>are you sure? this can&apos;t be undone.</span>
-                <button type="button" className="text-rose-deep underline" onClick={doDelete}>
-                  confirm
+            <FloralDivider ornament="❧" className="mb-5" />
+            <div className="paper-card paper-texture rounded-2xl p-5 sm:p-7">
+              <Editor content={content} onChange={setContent} placeholder="begin here…" />
+            </div>
+            <div className="mt-6">
+              {!confirmDelete ? (
+                <button
+                  type="button"
+                  onClick={() => setConfirmDelete(true)}
+                  className="font-sans text-[11px] text-rose-deep underline decoration-transparent transition-colors hover:decoration-rose-deep"
+                >
+                  delete letter
                 </button>
-                <button type="button" className="underline" onClick={() => setConfirmDelete(false)}>
-                  cancel
-                </button>
-              </div>
-            )}
+              ) : (
+                <div className="flex flex-wrap items-center gap-3 font-sans text-[11px] text-ink-muted">
+                  <span>are you sure? this can&apos;t be undone.</span>
+                  <button type="button" className="text-rose-deep underline" onClick={doDelete}>
+                    confirm
+                  </button>
+                  <button type="button" className="underline" onClick={() => setConfirmDelete(false)}>
+                    cancel
+                  </button>
+                </div>
+              )}
+            </div>
           </>
         )}
 
+        {/* Her replies */}
         {!editMode && (
           <section className="mt-10">
-            <p className="mb-3 font-sans text-[11px] uppercase tracking-[1.5px] text-ink-muted">
+            <FloralDivider ornament="✦" className="mb-6 opacity-60" />
+            <p className="mb-4 font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
               her replies
             </p>
             {sortedReplies.length === 0 ? (
               <p className="font-serif text-sm italic text-ink-muted">no replies yet.</p>
             ) : (
-              <ul className="space-y-3">
+              <div className="space-y-3">
                 {sortedReplies.map((r) => (
-                  <li
-                    key={r.id}
-                    className="rounded-r-xl border-l-2 border-blush bg-rose-light py-3 pl-3.5 pr-3.5"
-                  >
-                    <p className="mb-1 font-sans text-[11px] text-ink-muted">{formatTs(r.createdAt)}</p>
-                    <p className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed text-ink">
+                  <PaperCard key={r.id} className="p-4">
+                    <p className="font-sans text-[10px] text-gold tracking-wide">
+                      {formatTs(r.createdAt)}
+                    </p>
+                    <p className="mt-1.5 font-serif text-sm italic leading-relaxed text-ink-muted">
                       {r.content}
                     </p>
-                  </li>
+                  </PaperCard>
                 ))}
-              </ul>
+              </div>
             )}
           </section>
         )}
