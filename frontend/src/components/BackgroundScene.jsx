@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 /**
  * Full-viewport decorative botanical layer (fixed, non-interactive).
- * Bold roses/vines; scattered petals drift via CSS (GPU-friendly) and
- * subtle mouse parallax on fine-pointer desktops only.
+ * Bold roses/vines; scattered petals drift via CSS only (GPU-friendly).
  */
 
 const PETALS = [
@@ -113,43 +112,11 @@ function MicroPetal({ x, y, r, rot, driftIndex, durationSec, delaySec, allowMoti
 }
 
 export default function BackgroundScene() {
-  const [parallax, setParallax] = useState({ x: 0, y: 0 })
   const [allowDrift] = useState(
     () =>
       typeof window !== 'undefined' &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
-  const rafRef = useRef(0)
-  const pendingRef = useRef({ x: 0, y: 0 })
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return undefined
-    if (window.matchMedia('(pointer: coarse)').matches) return undefined
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
-
-    const apply = () => {
-      rafRef.current = 0
-      const { x: nx, y: ny } = pendingRef.current
-      setParallax({ x: nx, y: ny })
-    }
-
-    const onMove = (e) => {
-      const cx = window.innerWidth / 2
-      const cy = window.innerHeight / 2
-      const px = (e.clientX - cx) / Math.max(cx, 1)
-      const py = (e.clientY - cy) / Math.max(cy, 1)
-      pendingRef.current = { x: px * 14, y: py * 10 }
-      if (!rafRef.current) {
-        rafRef.current = requestAnimationFrame(apply)
-      }
-    }
-
-    window.addEventListener('mousemove', onMove, { passive: true })
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    }
-  }, [])
 
   return (
     <div
@@ -282,22 +249,20 @@ export default function BackgroundScene() {
           />
         </g>
 
-        {/* Scattered petals — drift + optional desktop parallax */}
-        <g transform={`translate(${parallax.x},${parallax.y})`}>
-          {PETALS.map((p, i) => (
-            <MicroPetal
-              key={i}
-              x={p.x}
-              y={p.y}
-              r={p.r}
-              rot={p.rot}
-              driftIndex={p.drift}
-              durationSec={p.duration}
-              delaySec={p.delay}
-              allowMotion={allowDrift}
-            />
-          ))}
-        </g>
+        {/* Scattered petals — CSS drift only */}
+        {PETALS.map((p, i) => (
+          <MicroPetal
+            key={i}
+            x={p.x}
+            y={p.y}
+            r={p.r}
+            rot={p.rot}
+            driftIndex={p.drift}
+            durationSec={p.duration}
+            delaySec={p.delay}
+            allowMotion={allowDrift}
+          />
+        ))}
       </svg>
     </div>
   )
