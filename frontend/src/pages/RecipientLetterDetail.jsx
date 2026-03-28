@@ -4,7 +4,8 @@ import DOMPurify from 'dompurify'
 import PageShell from '../components/PageShell'
 import GhostButton from '../components/ui/GhostButton'
 import PrimaryButton from '../components/ui/PrimaryButton'
-import DecorativeLine from '../components/ui/DecorativeLine'
+import FloralDivider from '../components/ui/FloralDivider'
+import PaperCard from '../components/ui/PaperCard'
 import { getLetter, listLetters, postReply } from '../api/letters'
 import { letterNumberForId, normalizeLetterList } from '../lib/letters'
 import { useToast } from '../hooks/useToast'
@@ -89,49 +90,68 @@ export default function RecipientLetterDetail() {
   if (loading || !letter) {
     return (
       <PageShell maxWidthClassName="max-w-lg">
-        <p className="font-sans text-sm text-ink-muted">Loading…</p>
+        <p className="py-16 text-center font-serif text-sm italic text-ink-muted">Loading…</p>
       </PageShell>
     )
   }
 
   return (
     <PageShell maxWidthClassName="max-w-lg">
-      <div className="animate-fade-up px-2 pb-10 sm:px-4">
-        <div className="mb-6 flex items-center justify-between">
+      <div className="animate-fade-up pb-10">
+
+        {/* Nav row */}
+        <div className="mb-8 flex items-center justify-between pt-2">
           <Link to="/letters">
             <GhostButton type="button">← back</GhostButton>
           </Link>
           <p className="font-sans text-xs text-ink-muted">{formatDate(letter.createdAt)}</p>
         </div>
 
-        <p className="mb-1 font-sans text-[11px] uppercase tracking-[2px] text-rose">letter no. {letterNo}</p>
-        <h1 className="mb-3 font-serif text-[26px] italic text-ink">
+        {/* Letter number + title */}
+        <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-gold">
+          letter no. {letterNo}
+        </p>
+        <h1 className="mb-3 font-display text-[30px] font-semibold italic leading-snug text-ink">
           {letter.title?.trim() || 'Letter'}
         </h1>
-        <DecorativeLine className="mb-6" />
+        <FloralDivider ornament="❧" className="mb-7" />
 
-        <div
-          className="letter-body font-serif text-sm leading-[1.9] text-ink [&_p]:mb-3"
-          dangerouslySetInnerHTML={{ __html: sanitized }}
-        />
+        {/* Letter body */}
+        <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
+          <div
+            className="letter-body font-serif text-base leading-[2] text-ink [&_p]:mb-4"
+            dangerouslySetInnerHTML={{ __html: sanitized }}
+          />
+        </PaperCard>
 
-        <div className="mt-8 border-t border-border pt-5">
-          {sortedReplies.map((r) => (
-            <blockquote
-              key={r.id}
-              className="mb-4 border-l-2 border-blush pl-3 font-serif text-[13px] italic text-ink-muted"
-            >
-              {r.content}
-            </blockquote>
-          ))}
+        {/* Replies + reply box */}
+        <div className="mt-10">
+          <FloralDivider ornament="✦" className="mb-7 opacity-60" />
 
-          <p className="mb-2 font-sans text-xs tracking-wide text-ink-muted">write something back</p>
+          {sortedReplies.length > 0 && (
+            <div className="mb-6 space-y-3">
+              {sortedReplies.map((r) => (
+                <PaperCard key={r.id} className="p-4">
+                  <p className="font-serif text-sm italic leading-relaxed text-ink-muted">
+                    {r.content}
+                  </p>
+                  <p className="mt-2 font-sans text-[10px] text-gold tracking-wide">
+                    {formatDate(r.createdAt)}
+                  </p>
+                </PaperCard>
+              ))}
+            </div>
+          )}
+
+          <p className="mb-2 font-sans text-[11px] uppercase tracking-widest text-ink-muted">
+            write something back
+          </p>
           <textarea
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
-            placeholder="say something..."
+            placeholder="say something…"
             rows={3}
-            className="mb-3 w-full min-h-[72px] resize-y rounded-xl border-[1.5px] border-blush bg-rose-light p-3 font-sans text-[13px] text-ink outline-none placeholder:text-ink-muted focus:border-rose"
+            className="mb-3 min-h-[80px] w-full resize-y rounded-xl border border-gold-soft bg-parchment p-4 font-serif text-sm italic text-ink outline-none placeholder:text-ink-muted focus:border-rose focus:bg-cream"
           />
           {error && <p className="mb-2 font-sans text-xs text-rose-deep">{error}</p>}
           <div className="flex justify-end">
@@ -139,9 +159,7 @@ export default function RecipientLetterDetail() {
               type="button"
               disabled={sending || !replyText.trim()}
               onClick={sendReply}
-              className={
-                sentFlash ? '!bg-green-text !hover:bg-green-text hover:!bg-green-text' : ''
-              }
+              className={sentFlash ? '!bg-green-text' : ''}
             >
               {sending ? (
                 <span className="inline-flex items-center gap-2">
