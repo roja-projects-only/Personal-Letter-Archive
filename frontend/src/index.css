@@ -109,3 +109,16 @@
   content: attr(data-placeholder);
   font-style: italic;
 }
+
+.letter-body h2 {
+  @apply mb-2 mt-4 font-serif text-lg text-ink;
+}
+
+.letter-body blockquote {
+  @apply my-3 border-l-2 border-blush pl-3 italic text-ink-muted;
+}
+
+.letter-body ul,
+.letter-body ol {
+  @apply my-3 list-inside pl-2;
+}

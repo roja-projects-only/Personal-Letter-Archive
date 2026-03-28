@@ -21,8 +21,24 @@ export function useRecipientSession() {
   }, [])
 
   useEffect(() => {
-    refresh()
-  }, [refresh])
+    let cancelled = false
+    recipientSession()
+      .then((res) => {
+        if (!cancelled) {
+          setRecipient(res.data)
+          setStatus('authed')
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setRecipient(null)
+          setStatus('anon')
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   return {
     status,

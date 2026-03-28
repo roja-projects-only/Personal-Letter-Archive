@@ -21,8 +21,24 @@ export function useAuthorSession() {
   }, [])
 
   useEffect(() => {
-    refresh()
-  }, [refresh])
+    let cancelled = false
+    me()
+      .then((res) => {
+        if (!cancelled) {
+          setUser(res.data)
+          setStatus('authed')
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setUser(null)
+          setStatus('anon')
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   return { status, user, refresh, isLoading: status === 'loading', isAuthed: status === 'authed' }
 }

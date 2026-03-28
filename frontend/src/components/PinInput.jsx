@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-export default function PinInput({ value, onChange, shake, onFilledPulseIndex }) {
+export default function PinInput({ value, onChange, shake, onFilledPulseIndex, pulsingIndex = null }) {
   const wrapRef = useRef(null)
   const prevLen = useRef(value.length)
 
@@ -37,10 +37,9 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex })
     }
     const onPaste = (e) => {
       const text = e.clipboardData?.getData('text') || ''
-      if (/\d/.test(text)) {
-        e.preventDefault()
-        setFromString(value + text)
-      }
+      if (!/\d/.test(text)) return
+      e.preventDefault()
+      setFromString(`${value}${text}`)
     }
     el.addEventListener('keydown', onKeyDown)
     el.addEventListener('paste', onPaste)
@@ -68,7 +67,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex })
             key={i}
             className={`flex h-[52px] w-11 select-none items-center justify-center rounded-[10px] border-[1.5px] font-sans text-xl text-rose transition-colors ${
               filled ? 'border-rose bg-rose-light' : 'border-border bg-card'
-            }`}
+            } ${pulsingIndex === i ? 'animate-pulse-pop' : ''}`}
           >
             {ch}
           </div>
