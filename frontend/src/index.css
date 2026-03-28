@@ -165,10 +165,11 @@
 @layer base {
   body {
     @apply m-0 min-h-screen bg-cream font-sans text-ink antialiased;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     background-image:
-      radial-gradient(ellipse 120% 100% at 50% 50%, transparent 55%, #e8d0c044 100%),
-      radial-gradient(ellipse 70% 40% at 50% 0%, #f5d5ce55 0%, transparent 60%),
-      radial-gradient(ellipse 60% 30% at 50% 100%, #edd8d050 0%, transparent 60%);
+      radial-gradient(ellipse 130% 110% at 50% 50%, transparent 45%, #d4a89044 100%),
+      radial-gradient(ellipse 80% 50% at 50% 0%, #f5d5ce88 0%, transparent 55%),
+      radial-gradient(ellipse 70% 40% at 50% 100%, #edd8d070 0%, transparent 55%);
   }
 
   #root {
@@ -180,6 +181,12 @@
 .page-watermark {
   position: relative;
   isolation: isolate;
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* ─── Tiptap / letter prose ──────────────────────────────────────────────── */

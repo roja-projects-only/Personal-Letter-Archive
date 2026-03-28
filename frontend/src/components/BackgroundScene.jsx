@@ -1,6 +1,6 @@
 /**
  * Full-viewport decorative botanical layer (fixed, non-interactive).
- * Keeps cream base visible while adding visible roses, branches, and petals.
+ * Bold, visible roses and vines — cream base still reads through.
  */
 function RoseBloom({ cx, cy, scale = 1 }) {
   const petals = 8
@@ -76,7 +76,7 @@ function MicroPetal({ x, y, r, rot }) {
       ry={r * 1.6}
       fill="#c97b84"
       transform={`rotate(${rot} ${x} ${y})`}
-      opacity={0.11}
+      opacity={0.3}
     />
   )
 }
@@ -95,13 +95,66 @@ export default function BackgroundScene() {
       >
         <defs>
           <linearGradient id="bgRoseFade" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#c97b84" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#a55a66" stopOpacity="0.08" />
+            <stop offset="0%" stopColor="#c97b84" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#a55a66" stopOpacity="0.2" />
           </linearGradient>
         </defs>
 
+        {/* Large soft blooms — visible depth */}
+        <circle cx={200} cy={450} r={180} fill="#f5d5ce" opacity={0.26} />
+        <circle cx={1240} cy={500} r={200} fill="#edd8d0" opacity={0.24} />
+        <circle cx={720} cy={120} r={140} fill="#f5d5ce" opacity={0.22} />
+
+        {/* Top vine border */}
+        <path
+          d="M0 40 Q180 20 360 45 T720 35 T1080 50 T1440 38"
+          fill="none"
+          stroke="#a55a66"
+          strokeWidth={1.2}
+          strokeLinecap="round"
+          opacity={0.35}
+        />
+        <path
+          d="M0 55 Q200 75 400 50 T800 60 T1200 48 T1440 58"
+          fill="none"
+          stroke="#c97b84"
+          strokeWidth={0.9}
+          strokeLinecap="round"
+          opacity={0.28}
+        />
+
+        {/* Bottom vine border */}
+        <path
+          d="M0 860 Q220 880 440 855 T880 865 T1320 850 L1440 862"
+          fill="none"
+          stroke="#a55a66"
+          strokeWidth={1.2}
+          strokeLinecap="round"
+          opacity={0.35}
+        />
+        <path
+          d="M0 845 Q240 820 480 840 T960 830 T1440 848"
+          fill="none"
+          stroke="#c97b84"
+          strokeWidth={0.9}
+          strokeLinecap="round"
+          opacity={0.28}
+        />
+
+        {/* Left-center and right-center large roses */}
+        <g opacity={0.4} transform="translate(50, 420) rotate(-12)">
+          <RoseBloom cx={0} cy={0} scale={1.5} />
+          <Leaf x={-50} y={20} rot={-30} />
+          <Leaf x={45} y={15} rot={40} flip />
+        </g>
+        <g opacity={0.4} transform="translate(1390, 460) rotate(8)">
+          <RoseBloom cx={0} cy={0} scale={1.45} />
+          <Leaf x={-40} y={-25} rot={-140} />
+          <Leaf x={35} y={28} rot={50} flip />
+        </g>
+
         {/* Top-left cluster */}
-        <g opacity={0.2} transform="translate(80, 70) rotate(-8)">
+        <g opacity={0.55} transform="translate(80, 70) rotate(-8)">
           <RoseBloom cx={0} cy={0} scale={1.35} />
           <Leaf x={-45} y={25} rot={-40} />
           <Leaf x={38} y={18} rot={55} flip />
@@ -109,21 +162,21 @@ export default function BackgroundScene() {
         </g>
 
         {/* Top-right cluster */}
-        <g opacity={0.19} transform="translate(1360, 90) rotate(12)">
+        <g opacity={0.55} transform="translate(1360, 90) rotate(12)">
           <RoseBloom cx={0} cy={0} scale={1.25} />
           <Leaf x={-42} y={22} rot={-35} />
           <Leaf x={35} y={30} rot={48} flip />
         </g>
 
         {/* Bottom-left cluster */}
-        <g opacity={0.18} transform="translate(100, 820) rotate(5)">
+        <g opacity={0.55} transform="translate(100, 820) rotate(5)">
           <RoseBloom cx={0} cy={0} scale={1.15} />
           <Leaf x={40} y={-35} rot={140} flip />
           <Leaf x={-35} y={-28} rot={-120} />
         </g>
 
         {/* Bottom-right cluster */}
-        <g opacity={0.2} transform="translate(1320, 780) rotate(-6)">
+        <g opacity={0.55} transform="translate(1320, 780) rotate(-6)">
           <RoseBloom cx={0} cy={0} scale={1.3} />
           <Leaf x={-40} y={-30} rot={-135} />
           <Leaf x={38} y={-22} rot={125} flip />
@@ -131,51 +184,52 @@ export default function BackgroundScene() {
         </g>
 
         {/* Left edge spray */}
-        <g opacity={0.17}>
+        <g opacity={0.45}>
           <BranchSpray x={-20} y={380} rot={8} />
         </g>
 
         {/* Right edge spray */}
-        <g opacity={0.17}>
+        <g opacity={0.45}>
           <BranchSpray x={1460} y={420} rot={172} />
         </g>
 
         {/* Upper side accents */}
-        <g opacity={0.14} transform="translate(0, 200)">
+        <g opacity={0.35} transform="translate(0, 200)">
           <path
             d="M40 0 Q120 30 180 0 Q140 80 60 100 Q20 50 40 0"
             fill="url(#bgRoseFade)"
             stroke="#a55a66"
-            strokeWidth={0.8}
-            opacity={0.6}
+            strokeWidth={0.9}
+            opacity={0.65}
           />
         </g>
-        <g opacity={0.14} transform="translate(1260, 240)">
+        <g opacity={0.35} transform="translate(1260, 240)">
           <path
             d="M180 0 Q100 40 40 0 Q80 90 160 110 Q200 60 180 0"
             fill="url(#bgRoseFade)"
             stroke="#a55a66"
-            strokeWidth={0.8}
-            opacity={0.6}
+            strokeWidth={0.9}
+            opacity={0.65}
           />
         </g>
 
-        {/* Scattered micro-petals — middle field */}
-        <MicroPetal x={320} y={220} r={6} rot={22} />
-        <MicroPetal x={580} y={180} r={5} rot={-15} />
-        <MicroPetal x={720} y={280} r={7} rot={48} />
-        <MicroPetal x={900} y={200} r={5} rot={-40} />
-        <MicroPetal x={1050} y={340} r={6} rot={12} />
-        <MicroPetal x={480} y={420} r={4} rot={65} />
-        <MicroPetal x={650} y={520} r={5} rot={-22} />
-        <MicroPetal x={820} y={480} r={6} rot={30} />
-        <MicroPetal x={400} y={650} r={5} rot={-55} />
-        <MicroPetal x={1000} y={620} r={4} rot={18} />
-
-        {/* Soft large blooms — very low opacity for depth */}
-        <circle cx={200} cy={450} r={180} fill="#f5d5ce" opacity={0.12} />
-        <circle cx={1240} cy={500} r={200} fill="#edd8d0" opacity={0.1} />
-        <circle cx={720} cy={120} r={140} fill="#f5d5ce" opacity={0.08} />
+        {/* Scattered petals — middle field (larger, bolder) */}
+        <MicroPetal x={320} y={220} r={10} rot={22} />
+        <MicroPetal x={580} y={180} r={9} rot={-15} />
+        <MicroPetal x={720} y={280} r={12} rot={48} />
+        <MicroPetal x={900} y={200} r={8} rot={-40} />
+        <MicroPetal x={1050} y={340} r={11} rot={12} />
+        <MicroPetal x={480} y={420} r={8} rot={65} />
+        <MicroPetal x={650} y={520} r={9} rot={-22} />
+        <MicroPetal x={820} y={480} r={10} rot={30} />
+        <MicroPetal x={400} y={650} r={9} rot={-55} />
+        <MicroPetal x={1000} y={620} r={8} rot={18} />
+        <MicroPetal x={250} y={380} r={11} rot={-30} />
+        <MicroPetal x={1180} y={320} r={10} rot={55} />
+        <MicroPetal x={520} y={720} r={9} rot={-12} />
+        <MicroPetal x={920} y={680} r={12} rot={40} />
+        <MicroPetal x={200} y={560} r={8} rot={72} />
+        <MicroPetal x={1280} y={180} r={9} rot={-48} />
       </svg>
     </div>
   )
