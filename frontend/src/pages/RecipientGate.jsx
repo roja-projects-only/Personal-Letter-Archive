@@ -88,8 +88,8 @@ export default function RecipientGate() {
   }
 
   return (
-    <PageShell maxWidthClassName="max-w-sm">
-      <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-10">
+    <PageShell maxWidthClassName="max-w-sm" centered>
+      <div className="animate-fade-up flex flex-col items-center py-6">
         <div className="paper-texture paper-card-ribbon relative flex w-full flex-col items-center gap-4 rounded-3xl border border-gold-soft/60 bg-card/80 px-8 py-10 shadow-xl backdrop-blur-sm">
           <CornerOrnament position="tl" />
           <CornerOrnament position="tr" />

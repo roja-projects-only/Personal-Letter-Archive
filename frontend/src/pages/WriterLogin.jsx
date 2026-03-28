@@ -29,8 +29,8 @@ export default function WriterLogin() {
   }
 
   return (
-    <PageShell maxWidthClassName="max-w-xs">
-      <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-10">
+    <PageShell maxWidthClassName="max-w-xs" centered>
+      <div className="animate-fade-up flex flex-col items-center py-6">
 
         <WaxSeal size={72} letter="W" className="mb-5" />
 

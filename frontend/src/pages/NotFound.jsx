@@ -5,8 +5,8 @@ import FloralDivider from '../components/ui/FloralDivider'
 
 export default function NotFound() {
   return (
-    <PageShell maxWidthClassName="max-w-sm">
-      <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-20 text-center">
+    <PageShell maxWidthClassName="max-w-sm" centered>
+      <div className="animate-fade-up flex flex-col items-center py-8 text-center">
         <WaxSeal size={64} letter="?" className="mb-5" />
         <p className="mb-2 font-display text-[28px] font-semibold italic text-ink">nothing here</p>
         <FloralDivider className="mx-auto mb-5 w-32" />
