@@ -120,7 +120,7 @@ export default function RecipientLetterDetail() {
         {/* Letter body */}
         <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
           <div
-            className="letter-body font-serif text-base leading-[1.8] text-ink [&_p]:mb-4"
+            className="letter-body font-serif text-base leading-[1.8] text-ink"
             dangerouslySetInnerHTML={{ __html: sanitized }}
           />
         </PaperCard>
