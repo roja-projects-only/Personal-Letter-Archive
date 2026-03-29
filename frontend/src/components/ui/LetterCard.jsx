@@ -36,20 +36,15 @@ export default function LetterCard({
   if (variant === 'horizontal') {
     return (
       <div
-        role="button"
-        tabIndex={0}
-        onClick={onCardClick}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            onCardClick?.()
-          }
-        }}
-        className={`paper-card paper-card-ribbon paper-texture animate-slide-in-card relative mb-3 flex cursor-pointer items-center justify-between gap-3 p-4 transition-all duration-200 hover:shadow-md hover:border-gold ${className}`}
+        className={`paper-card paper-card-ribbon paper-texture animate-slide-in-card relative mb-3 flex items-stretch gap-0 overflow-hidden transition-all duration-200 hover:shadow-md hover:border-gold ${className}`}
         style={delayStyle}
       >
         <CornerOrnament position="tr" size={22} />
-        <div className="min-w-0 flex-1 text-left">
+        <button
+          type="button"
+          onClick={onCardClick}
+          className="min-w-0 flex-1 cursor-pointer p-4 text-left transition-colors hover:bg-white/25 focus-visible:z-[1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-rose/50"
+        >
           <p className="font-serif text-sm italic text-ink">
             {title?.trim() || 'Untitled letter'}
           </p>
@@ -66,16 +61,18 @@ export default function LetterCard({
               'no replies yet'
             )}
           </p>
+        </button>
+        <div className="flex shrink-0 items-center border-l border-gold-soft/60 pr-2 pl-1">
+          <GhostButton
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              onEditClick?.()
+            }}
+          >
+            edit
+          </GhostButton>
         </div>
-        <GhostButton
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation()
-            onEditClick?.()
-          }}
-        >
-          edit
-        </GhostButton>
       </div>
     )
   }
@@ -84,7 +81,7 @@ export default function LetterCard({
     <button
       type="button"
       onClick={onCardClick}
-      className={`paper-card paper-texture animate-slide-in-card relative mb-3 w-full p-5 text-left transition-all duration-200 hover:shadow-md hover:border-gold ${className}`}
+      className={`paper-card paper-texture animate-slide-in-card relative mb-3 w-full p-5 text-left transition-all duration-200 hover:shadow-md hover:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${className}`}
       style={delayStyle}
     >
       <CornerOrnament position="tr" size={24} />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageShell from '../components/PageShell'
+import LoadingIndicator from '../components/LoadingIndicator'
 import LetterCard from '../components/ui/LetterCard'
 import FloralDivider from '../components/ui/FloralDivider'
 import WaxSeal from '../components/ui/WaxSeal'
@@ -40,7 +41,7 @@ export default function RecipientLetterList() {
 
         {/* Header */}
         <header className="mb-8 pt-4 text-center">
-          <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
+          <p className="mb-1 font-sans text-xs uppercase tracking-[3px] text-ink-muted">
             letters written
           </p>
           <h1 className="font-display text-[34px] font-semibold italic leading-tight text-ink">
@@ -53,7 +54,7 @@ export default function RecipientLetterList() {
         </header>
 
         {loading && (
-          <p className="py-8 text-center font-serif text-sm italic text-ink-muted">Loading…</p>
+          <LoadingIndicator message="Gathering your letters…" className="py-8" />
         )}
 
         {/* Empty state */}
@@ -87,7 +88,7 @@ export default function RecipientLetterList() {
         <button
           type="button"
           onClick={leave}
-          className="min-h-[48px] w-full py-3 text-center font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30"
+          className="min-h-[48px] w-full py-3 text-center font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         >
           leave
         </button>

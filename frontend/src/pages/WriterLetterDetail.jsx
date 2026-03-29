@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import DOMPurify from 'dompurify'
 import PageShell from '../components/PageShell'
+import LoadingIndicator from '../components/LoadingIndicator'
 import GhostButton from '../components/ui/GhostButton'
 import PrimaryButton from '../components/ui/PrimaryButton'
 import FloralDivider from '../components/ui/FloralDivider'
@@ -126,7 +127,7 @@ export default function WriterLetterDetail() {
   if (loading || !letter) {
     return (
       <PageShell maxWidthClassName="max-w-2xl">
-        <p className="py-16 text-center font-serif text-sm italic text-ink-muted">Loading…</p>
+        <LoadingIndicator message="Gathering this letter…" />
       </PageShell>
     )
   }
@@ -166,7 +167,7 @@ export default function WriterLetterDetail() {
         {/* View mode */}
         {!editMode ? (
           <>
-            <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-gold">
+            <p className="mb-1 font-sans text-xs uppercase tracking-[3px] text-gold">
               {formatDate(letter.createdAt)}
             </p>
             <h1 className="mb-3 font-display text-[28px] font-semibold italic leading-snug text-ink">
@@ -175,7 +176,7 @@ export default function WriterLetterDetail() {
             <FloralDivider ornament="❧" className="mb-7" />
             <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
               <div
-                className="letter-body font-serif text-base leading-[2] text-ink [&_p]:mb-4"
+                className="letter-body font-serif text-base leading-[1.8] text-ink [&_p]:mb-4"
                 dangerouslySetInnerHTML={{ __html: sanitized }}
               />
             </PaperCard>
@@ -187,7 +188,7 @@ export default function WriterLetterDetail() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="a title, if you'd like…"
-              className="mb-3 w-full border-0 bg-transparent font-display text-[28px] font-semibold italic text-ink outline-none placeholder:text-ink-muted"
+              className="mb-3 w-full border-0 bg-transparent font-display text-[28px] font-semibold italic text-ink outline-none placeholder:text-ink-muted focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             />
             <FloralDivider ornament="❧" className="mb-5" />
             <div className="paper-card paper-texture rounded-2xl p-5 sm:p-7">
@@ -198,7 +199,7 @@ export default function WriterLetterDetail() {
                 <button
                   type="button"
                   onClick={() => setConfirmDelete(true)}
-                  className="min-h-[48px] py-3 font-sans text-sm text-rose-deep underline decoration-transparent transition-colors hover:decoration-rose-deep"
+                  className="min-h-[48px] rounded-lg py-3 font-sans text-sm text-rose-deep underline decoration-transparent transition-colors hover:decoration-rose-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   delete letter
                 </button>
@@ -208,14 +209,14 @@ export default function WriterLetterDetail() {
                   <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
-                      className="min-h-[44px] rounded-lg px-4 py-2 text-rose-deep underline"
+                      className="min-h-[44px] rounded-lg px-4 py-2 text-rose-deep underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                       onClick={doDelete}
                     >
                       confirm
                     </button>
                     <button
                       type="button"
-                      className="min-h-[44px] rounded-lg px-4 py-2 underline"
+                      className="min-h-[44px] rounded-lg px-4 py-2 underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                       onClick={() => setConfirmDelete(false)}
                     >
                       cancel
@@ -231,7 +232,7 @@ export default function WriterLetterDetail() {
         {!editMode && (
           <section className="mt-10">
             <FloralDivider ornament="✦" className="mb-6 opacity-60" />
-            <p className="mb-4 font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
+            <p className="mb-4 font-sans text-xs uppercase tracking-[3px] text-ink-muted">
               her replies
             </p>
             {sortedReplies.length === 0 ? (
@@ -240,7 +241,7 @@ export default function WriterLetterDetail() {
               <div className="space-y-3">
                 {sortedReplies.map((r) => (
                   <PaperCard key={r.id} className="p-4">
-                    <p className="font-sans text-[10px] text-gold tracking-wide">
+                    <p className="font-sans text-[11px] text-gold tracking-wide">
                       {formatTs(r.createdAt)}
                     </p>
                     <p className="mt-1.5 font-serif text-sm italic leading-relaxed text-ink-muted">

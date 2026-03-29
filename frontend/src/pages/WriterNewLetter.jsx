@@ -28,6 +28,8 @@ export default function WriterNewLetter() {
   const [title, setTitle] = useState(initial.title)
   const [content, setContent] = useState(initial.content)
   const [savingTick, setSavingTick] = useState(false)
+  const [saveFlash, setSaveFlash] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const savedRef = useRef(initial)
   const titleRef = useRef(title)
@@ -57,18 +59,24 @@ export default function WriterNewLetter() {
   }, [])
 
   const handleSave = async () => {
+    if (submitting || saveFlash) return
     setError('')
+    setSubmitting(true)
     try {
       await createLetter({
         title: title.trim() || null,
         content: content || '<p></p>',
       })
       localStorage.removeItem(DRAFT_KEY)
-      navigate('/write/dashboard')
+      setSaveFlash(true)
+      window.setTimeout(() => {
+        navigate('/write/dashboard')
+      }, 750)
     } catch (err) {
       const msg = err.userMessage || 'Could not save. Try again.'
       setError(msg)
       toast.error(msg)
+      setSubmitting(false)
     }
   }
 
@@ -82,17 +90,30 @@ export default function WriterNewLetter() {
   return (
     <PageShell maxWidthClassName="max-w-2xl">
       <div className="animate-fade-up">
-        {/* Nav bar */}
-        <div className="mb-7 flex flex-wrap items-center justify-between gap-3 pt-2">
-          <Link to="/write/dashboard">
+        {/* Nav bar — stacks on narrow screens; status centered on sm+ */}
+        <div className="mb-7 grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 pt-2 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center sm:gap-y-0">
+          <Link to="/write/dashboard" className="order-1 min-w-0 justify-self-start">
             <GhostButton type="button">← dashboard</GhostButton>
           </Link>
-          <p className="order-3 w-full text-center font-serif text-[12px] italic text-gold sm:order-none sm:w-auto">
+          <PrimaryButton
+            type="button"
+            disabled={submitting || saveFlash}
+            onClick={handleSave}
+            className={`order-2 justify-self-end sm:order-3 sm:justify-self-end ${saveFlash ? '!bg-green-text' : ''}`}
+          >
+            {saveFlash ? (
+              'saved ♡'
+            ) : submitting ? (
+              <span className="inline-flex items-center gap-2">
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              </span>
+            ) : (
+              'save letter'
+            )}
+          </PrimaryButton>
+          <p className="order-3 col-span-2 text-center font-serif text-xs italic text-gold sm:col-span-1 sm:order-2 sm:min-w-0 sm:px-2">
             {saveLabel}
           </p>
-          <PrimaryButton type="button" onClick={handleSave}>
-            save letter
-          </PrimaryButton>
         </div>
 
         {/* Title */}
@@ -100,7 +121,7 @@ export default function WriterNewLetter() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="a title, if you'd like…"
-          className="mb-3 w-full border-0 bg-transparent font-display text-[28px] font-semibold italic text-ink outline-none placeholder:text-ink-muted"
+          className="mb-3 w-full border-0 bg-transparent font-display text-[28px] font-semibold italic text-ink outline-none placeholder:text-ink-muted focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
         />
         <FloralDivider ornament="❧" className="mb-5" />
 

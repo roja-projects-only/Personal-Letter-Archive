@@ -10,7 +10,7 @@ function ToolbarButton({ active, onClick, children, title }) {
       title={title}
       onMouseDown={(e) => e.preventDefault()}
       onClick={onClick}
-      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors ${
+      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${
         active ? 'bg-blush text-rose-deep' : 'hover:bg-rose-light'
       }`}
     >
@@ -111,7 +111,7 @@ export default function Editor({
               active={editor.isActive('heading', { level: 2 })}
               onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             >
-              <span className="font-sans text-[10px] uppercase tracking-wide">H2</span>
+              <span className="font-sans text-[11px] uppercase tracking-wide">H2</span>
             </ToolbarButton>
             <ToolbarButton
               title="Bullet list"

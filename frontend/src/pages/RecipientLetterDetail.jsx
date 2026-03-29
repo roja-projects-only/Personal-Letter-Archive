@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import DOMPurify from 'dompurify'
 import PageShell from '../components/PageShell'
+import LoadingIndicator from '../components/LoadingIndicator'
 import GhostButton from '../components/ui/GhostButton'
 import PrimaryButton from '../components/ui/PrimaryButton'
 import FloralDivider from '../components/ui/FloralDivider'
@@ -90,7 +91,7 @@ export default function RecipientLetterDetail() {
   if (loading || !letter) {
     return (
       <PageShell maxWidthClassName="max-w-lg">
-        <p className="py-16 text-center font-serif text-sm italic text-ink-muted">Loading…</p>
+        <LoadingIndicator message="Gathering this letter…" />
       </PageShell>
     )
   }
@@ -108,7 +109,7 @@ export default function RecipientLetterDetail() {
         </div>
 
         {/* Letter number + title */}
-        <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-gold">
+        <p className="mb-1 font-sans text-xs uppercase tracking-[3px] text-gold">
           letter no. {letterNo}
         </p>
         <h1 className="mb-3 font-display text-[30px] font-semibold italic leading-snug text-ink">
@@ -119,7 +120,7 @@ export default function RecipientLetterDetail() {
         {/* Letter body */}
         <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
           <div
-            className="letter-body font-serif text-base leading-[2] text-ink [&_p]:mb-4"
+            className="letter-body font-serif text-base leading-[1.8] text-ink [&_p]:mb-4"
             dangerouslySetInnerHTML={{ __html: sanitized }}
           />
         </PaperCard>
@@ -135,7 +136,7 @@ export default function RecipientLetterDetail() {
                   <p className="font-serif text-sm italic leading-relaxed text-ink-muted">
                     {r.content}
                   </p>
-                  <p className="mt-2 font-sans text-[10px] text-gold tracking-wide">
+                  <p className="mt-2 font-sans text-[11px] text-gold tracking-wide">
                     {formatDate(r.createdAt)}
                   </p>
                 </PaperCard>
@@ -154,7 +155,7 @@ export default function RecipientLetterDetail() {
             }}
             placeholder="say something…"
             rows={4}
-            className="mb-3 min-h-[100px] w-full scroll-mt-4 resize-y rounded-xl border border-gold-soft bg-parchment p-4 font-serif text-base italic leading-relaxed text-ink outline-none placeholder:text-ink-muted focus:border-rose focus:bg-cream"
+            className="mb-3 min-h-[120px] w-full scroll-mt-4 resize-y rounded-xl border border-gold-soft/90 bg-parchment/95 p-5 font-serif text-base italic leading-[1.75] text-ink shadow-inner outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-ink-muted focus:border-rose focus:bg-cream focus:shadow-md focus-visible:ring-2 focus-visible:ring-rose/45 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment"
           />
           {error && <p className="mb-2 font-sans text-xs text-rose-deep">{error}</p>}
           <div className="flex justify-end">

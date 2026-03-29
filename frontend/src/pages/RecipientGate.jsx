@@ -98,7 +98,7 @@ export default function RecipientGate() {
 
           <WaxSeal size={80} letter="♡" />
 
-          <p className="font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
+          <p className="font-sans text-xs uppercase tracking-[3px] text-ink-muted">
             something made just
           </p>
           <h1 className="font-display text-[38px] font-semibold italic leading-none text-ink">
@@ -147,7 +147,7 @@ export default function RecipientGate() {
                     placeholder="your name…"
                     disabled={locked}
                     autoComplete="name"
-                    className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 text-center font-serif text-base italic text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-rose focus:bg-cream"
+                    className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 text-center font-serif text-base italic text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-dark"
                   />
                 </div>
                 <PrimaryButton type="submit" disabled={locked || !name.trim()} className="w-full">
@@ -157,7 +157,7 @@ export default function RecipientGate() {
                   type="button"
                   onClick={goBackToPin}
                   disabled={locked}
-                  className="w-full py-3 text-center font-sans text-sm text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 disabled:opacity-50"
+                  className="w-full py-3 text-center font-sans text-sm text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card disabled:opacity-50"
                 >
                   ← change PIN
                 </button>

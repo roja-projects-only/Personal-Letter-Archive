@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PageShell from '../components/PageShell'
+import LoadingIndicator from '../components/LoadingIndicator'
 import PrimaryButton from '../components/ui/PrimaryButton'
 import LetterCard from '../components/ui/LetterCard'
 import FloralDivider from '../components/ui/FloralDivider'
@@ -67,7 +68,7 @@ export default function WriterDashboard() {
         <header className="mb-8 pt-2">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
+              <p className="mb-1 font-sans text-xs uppercase tracking-[3px] text-ink-muted">
                 your letters
               </p>
               <h1 className="font-display text-[28px] font-semibold italic leading-none text-ink">
@@ -91,7 +92,7 @@ export default function WriterDashboard() {
             <PaperCard key={label} className="relative p-4 text-center">
               <CornerOrnament position="tr" size={20} />
               <p className={`font-display text-3xl font-semibold italic ${color}`}>{value}</p>
-              <p className="mt-1 font-sans text-[10px] uppercase tracking-widest text-ink-muted">
+              <p className="mt-1 font-sans text-[11px] uppercase tracking-widest text-ink-muted">
                 {label}
               </p>
             </PaperCard>
@@ -100,14 +101,31 @@ export default function WriterDashboard() {
 
         {/* Recent letters */}
         <div className="mb-2 flex items-center gap-3">
-          <p className="font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">recent</p>
+          <p className="font-sans text-xs uppercase tracking-[3px] text-ink-muted">recent</p>
         </div>
 
         <div>
           {loading && (
-            <p className="py-6 text-center font-serif text-sm italic text-ink-muted">Loading…</p>
+            <LoadingIndicator message="Gathering your letters…" className="py-6" />
+          )}
+          {!loading && letters.length === 0 && (
+            <div className="flex flex-col items-center py-14 text-center">
+              <PaperCard ribbon className="max-w-sm p-8">
+                <p className="font-serif text-base italic leading-relaxed text-ink-muted">
+                  your desk is quiet — begin with a first letter.
+                </p>
+                <PrimaryButton
+                  type="button"
+                  className="mt-6"
+                  onClick={() => navigate('/write/new')}
+                >
+                  + new letter
+                </PrimaryButton>
+              </PaperCard>
+            </div>
           )}
           {!loading &&
+            letters.length > 0 &&
             recent.map((l, i) => (
               <LetterCard
                 key={l.id}
@@ -127,7 +145,7 @@ export default function WriterDashboard() {
         <button
           type="button"
           onClick={signOut}
-          className="min-h-[48px] w-full py-3 text-left font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 sm:w-auto"
+          className="min-h-[48px] w-full py-3 text-left font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto"
         >
           sign out
         </button>

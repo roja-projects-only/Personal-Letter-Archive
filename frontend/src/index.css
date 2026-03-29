@@ -12,11 +12,11 @@
   --color-amber: #d4956a;
   --color-amber-soft: #f5dfc5;
   --color-ink: #3d2b1f;
-  --color-ink-muted: #9b7b6f;
+  --color-ink-muted: #6f5348;
   --color-ink-faint: #d8c9c1;
   --color-card: #fffaf8;
   --color-border: #edd8d0;
-  --color-gold: #c8a96e;
+  --color-gold: #9a7a3d;
   --color-gold-soft: #ede0c8;
   --color-gold-faint: #f7f0e3;
   --color-green-soft: #eef5ee;
@@ -39,11 +39,11 @@
   --amber: #d4956a;
   --amber-soft: #f5dfc5;
   --ink: #3d2b1f;
-  --ink-muted: #9b7b6f;
+  --ink-muted: #6f5348;
   --ink-faint: #d8c9c1;
   --card: #fffaf8;
   --border: #edd8d0;
-  --gold: #c8a96e;
+  --gold: #9a7a3d;
   --gold-soft: #ede0c8;
   --gold-faint: #f7f0e3;
   --green-soft: #eef5ee;
@@ -207,6 +207,28 @@
   animation: blink 1s step-start infinite;
 }
 
+@keyframes sealPulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.animate-seal-pulse {
+  animation: sealPulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-seal-pulse {
+    animation: none;
+  }
+}
+
 /* ─── Paper texture overlay ──────────────────────────────────────────────── */
 
 /* A repeating micro-grain pattern layered on parchment cards */
@@ -248,7 +270,7 @@
 /* ─── Tiptap / letter prose ──────────────────────────────────────────────── */
 
 .letter-content .ProseMirror {
-  @apply min-h-[320px] font-serif text-base leading-[2] text-ink outline-none;
+  @apply min-h-[320px] font-serif text-base leading-[1.8] text-ink outline-none;
 }
 
 .letter-content .ProseMirror p {
@@ -315,8 +337,14 @@
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: 1.25rem;
-  padding: 1.5rem 1.5rem 2rem;
+  padding: 1.25rem 1.25rem 1.75rem;
   box-shadow:
     0 4px 40px rgba(61, 43, 31, 0.13),
     0 1px 6px rgba(200, 169, 110, 0.15);
+}
+
+@media (min-width: 640px) {
+  .page-panel {
+    padding: 1.5rem 1.5rem 2rem;
+  }
 }

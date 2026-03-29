@@ -34,7 +34,7 @@ export default function WriterLogin() {
 
         <WaxSeal size={72} letter="W" className="mb-5" />
 
-        <p className="mb-1 font-sans text-[10px] uppercase tracking-[3px] text-ink-muted">
+        <p className="mb-1 font-sans text-xs uppercase tracking-[3px] text-ink-muted">
           writer&apos;s entrance
         </p>
         <h1 className="mb-4 font-display text-[34px] font-semibold italic leading-none text-ink">
@@ -55,7 +55,7 @@ export default function WriterLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 autoComplete="username"
-                className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream"
+                className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-dark"
               />
             </div>
             <div>
@@ -69,12 +69,12 @@ export default function WriterLogin() {
                   onChange={(e) => setPassword(e.target.value)}
                   type={showPw ? 'text' : 'password'}
                   autoComplete="current-password"
-                  className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 pr-14 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream"
+                  className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 pr-14 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-dark"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPw((s) => !s)}
-                  className="absolute right-1 top-1/2 flex h-10 min-w-10 -translate-y-1/2 items-center justify-center rounded-lg px-2 font-sans text-sm text-ink-muted hover:bg-rose-light hover:text-ink"
+                  className="absolute right-1 top-1/2 flex h-10 min-w-10 -translate-y-1/2 items-center justify-center rounded-lg px-2 font-sans text-sm text-ink-muted hover:bg-rose-light hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-dark"
                   aria-label={showPw ? 'Hide password' : 'Show password'}
                 >
                   {showPw ? 'hide' : 'show'}
