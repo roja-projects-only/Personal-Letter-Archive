@@ -21,6 +21,7 @@ export default function WriterDashboard() {
   const [letters, setLetters] = useState([])
   const [loading, setLoading] = useState(true)
   const [now, setNow] = useState(() => Date.now())
+  const [confirmSignOut, setConfirmSignOut] = useState(false)
 
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 60_000)
@@ -145,13 +146,33 @@ export default function WriterDashboard() {
 
         <FloralDivider className="my-10 opacity-40" />
 
-        <button
-          type="button"
-          onClick={signOut}
-          className="min-h-[48px] w-full py-3 text-left font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto"
-        >
-          sign out
-        </button>
+        {confirmSignOut ? (
+          <div className="flex items-center gap-4">
+            <span className="font-sans text-sm text-ink-muted">sign out?</span>
+            <button
+              type="button"
+              onClick={signOut}
+              className="font-sans text-sm text-rose-deep underline underline-offset-2 transition-colors hover:text-rose focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              yes, sign out
+            </button>
+            <button
+              type="button"
+              onClick={() => setConfirmSignOut(false)}
+              className="font-sans text-sm text-ink-muted underline underline-offset-2 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              cancel
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setConfirmSignOut(true)}
+            className="min-h-[48px] w-full py-3 text-left font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:w-auto"
+          >
+            sign out
+          </button>
+        )}
       </div>
     </PageShell>
   )

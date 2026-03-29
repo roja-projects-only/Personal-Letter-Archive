@@ -14,10 +14,13 @@ export default function WriterLogin() {
   const [showPw, setShowPw] = useState(false)
   const [error, setError] = useState('')
   const [shake, setShake] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (submitting) return
     setError('')
+    setSubmitting(true)
     try {
       await login(email, password)
       navigate('/write/dashboard', { replace: true })
@@ -25,6 +28,8 @@ export default function WriterLogin() {
       setError(err.userMessage || 'incorrect email or password')
       setShake(true)
       setTimeout(() => setShake(false), 450)
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -44,7 +49,17 @@ export default function WriterLogin() {
         <FloralDivider className="mb-7 w-36" />
 
         <PaperCard ribbon corners className={`w-full p-6 pb-safe ${shake ? 'animate-shake' : ''}`}>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} noValidate className="space-y-4">
+            {error && (
+              <div
+                role="alert"
+                className="flex items-start gap-2.5 rounded-lg border border-rose/40 bg-rose-light/60 px-4 py-3"
+              >
+                <span className="mt-px select-none text-rose-deep" aria-hidden="true">✕</span>
+                <p className="font-sans text-sm leading-snug text-rose-deep">{error}</p>
+              </div>
+            )}
+
             <div>
               <label htmlFor="w-email" className="mb-1.5 block font-sans text-[11px] uppercase tracking-widest text-ink-muted">
                 email
@@ -59,7 +74,8 @@ export default function WriterLogin() {
                 autoCorrect="off"
                 spellCheck={false}
                 enterKeyHint="next"
-                className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                disabled={submitting}
+                className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-60"
               />
             </div>
             <div>
@@ -74,12 +90,14 @@ export default function WriterLogin() {
                   type={showPw ? 'text' : 'password'}
                   autoComplete="current-password"
                   enterKeyHint="go"
-                  className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 pr-14 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  disabled={submitting}
+                  className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 pr-14 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-60"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPw((s) => !s)}
-                  className="absolute right-1 top-1/2 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-lg px-2 font-sans text-sm text-ink-muted hover:bg-rose-light hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  disabled={submitting}
+                  className="absolute right-1 top-1/2 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-lg px-2 font-sans text-sm text-ink-muted hover:bg-rose-light hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-50"
                   aria-label={showPw ? 'Hide password' : 'Show password'}
                 >
                   {showPw ? 'hide' : 'show'}
@@ -87,13 +105,16 @@ export default function WriterLogin() {
               </div>
             </div>
 
-            <PrimaryButton type="submit" className="mt-1 w-full">
-              enter
+            <PrimaryButton type="submit" disabled={submitting} className="mt-1 w-full">
+              {submitting ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  entering…
+                </span>
+              ) : (
+                'enter'
+              )}
             </PrimaryButton>
-
-            {error && (
-              <p className="text-center font-serif text-base italic text-rose-deep">{error}</p>
-            )}
           </form>
         </PaperCard>
       </div>

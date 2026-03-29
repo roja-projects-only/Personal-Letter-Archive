@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-const baseURL =
-  import.meta.env.DEV ? '' : import.meta.env.VITE_API_URL || ''
+// In production the Vercel rewrite proxies /api/* to Railway, so relative URLs
+// are always correct. VITE_API_URL is only used in local dev to point at a
+// local or remote backend directly.
+const baseURL = import.meta.env.DEV ? (import.meta.env.VITE_API_URL || '') : ''
 
 export const api = axios.create({
   baseURL,

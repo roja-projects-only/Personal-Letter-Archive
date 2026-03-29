@@ -15,6 +15,7 @@ export default function RecipientLetterList() {
   const navigate = useNavigate()
   const [letters, setLetters] = useState([])
   const [loading, setLoading] = useState(true)
+  const [confirmLeave, setConfirmLeave] = useState(false)
 
   useEffect(() => {
     listLetters()
@@ -86,13 +87,33 @@ export default function RecipientLetterList() {
 
         <FloralDivider className="my-10 opacity-50" />
 
-        <button
-          type="button"
-          onClick={leave}
-          className="min-h-[48px] w-full py-3 text-center font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-        >
-          leave
-        </button>
+        {confirmLeave ? (
+          <div className="flex items-center justify-center gap-4">
+            <span className="font-sans text-sm text-ink-muted">leave?</span>
+            <button
+              type="button"
+              onClick={leave}
+              className="font-sans text-sm text-rose-deep underline underline-offset-2 transition-colors hover:text-rose focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              yes, leave
+            </button>
+            <button
+              type="button"
+              onClick={() => setConfirmLeave(false)}
+              className="font-sans text-sm text-ink-muted underline underline-offset-2 transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              cancel
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setConfirmLeave(true)}
+            className="min-h-[48px] w-full py-3 text-center font-sans text-sm uppercase tracking-widest text-ink-muted underline decoration-transparent transition-colors hover:text-rose hover:decoration-rose/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+          >
+            leave
+          </button>
+        )}
       </div>
     </PageShell>
   )

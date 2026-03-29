@@ -20,7 +20,7 @@ export async function signAuthorJwt(userId) {
     .setProtectedHeader({ alg: 'HS256' })
     .setSubject(userId)
     .setIssuedAt()
-    .setExpirationTime(process.env.JWT_EXPIRES_IN || '7d')
+    .setExpirationTime(process.env.JWT_EXPIRES_IN || '1d')
     .sign(getSecret())
 }
 
@@ -29,7 +29,7 @@ export async function signRecipientJwt(recipientId) {
     .setProtectedHeader({ alg: 'HS256' })
     .setSubject(recipientId)
     .setIssuedAt()
-    .setExpirationTime(process.env.JWT_EXPIRES_IN || '7d')
+    .setExpirationTime(process.env.JWT_EXPIRES_IN || '1d')
     .sign(getSecret())
 }
 
@@ -69,7 +69,7 @@ export async function getSessionFromRequest(req) {
 }
 
 export function cookieBaseOptions() {
-  const maxAgeSeconds = parseExpiresToSeconds(process.env.JWT_EXPIRES_IN || '7d')
+  const maxAgeSeconds = parseExpiresToSeconds(process.env.JWT_EXPIRES_IN || '1d')
   const isProd = process.env.NODE_ENV === 'production'
   return {
     httpOnly: true,
@@ -83,7 +83,7 @@ export function cookieBaseOptions() {
 
 function parseExpiresToSeconds(exp) {
   const m = String(exp).trim().match(/^(\d+)([smhd])$/i)
-  if (!m) return 7 * 24 * 60 * 60
+  if (!m) return 1 * 24 * 60 * 60
   const n = parseInt(m[1], 10)
   const u = m[2].toLowerCase()
   if (u === 's') return n
