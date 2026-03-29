@@ -1,20 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageShell from '../components/PageShell'
 import PrimaryButton from '../components/ui/PrimaryButton'
 import WaxSeal from '../components/ui/WaxSeal'
 import FloralDivider from '../components/ui/FloralDivider'
 import PaperCard from '../components/ui/PaperCard'
-import { login } from '../api/auth'
+import LoadingIndicator from '../components/LoadingIndicator'
+import { login, me } from '../api/auth'
 
 export default function WriterLogin() {
   const navigate = useNavigate()
+  const [checking, setChecking] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
   const [error, setError] = useState('')
   const [shake, setShake] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+
+  useEffect(() => {
+    me()
+      .then(() => navigate('/write/dashboard', { replace: true }))
+      .catch(() => {})
+      .finally(() => setChecking(false))
+  }, [navigate])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,6 +40,14 @@ export default function WriterLogin() {
     } finally {
       setSubmitting(false)
     }
+  }
+
+  if (checking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <LoadingIndicator message="" />
+      </div>
+    )
   }
 
   return (

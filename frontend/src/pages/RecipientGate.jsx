@@ -6,10 +6,12 @@ import PrimaryButton from '../components/ui/PrimaryButton'
 import PinInput from '../components/PinInput'
 import WaxSeal from '../components/ui/WaxSeal'
 import FloralDivider from '../components/ui/FloralDivider'
-import { verifyRecipient } from '../api/recipient'
+import LoadingIndicator from '../components/LoadingIndicator'
+import { verifyRecipient, recipientSession } from '../api/recipient'
 
 export default function RecipientGate() {
   const navigate = useNavigate()
+  const [checking, setChecking] = useState(true)
   const [step, setStep] = useState('pin')
   const [pin, setPin] = useState('')
   const [name, setName] = useState('')
@@ -18,6 +20,13 @@ export default function RecipientGate() {
   const [lockSeconds, setLockSeconds] = useState(null)
   const [pulseIndex, setPulseIndex] = useState(null)
   const nameInputRef = useRef(null)
+
+  useEffect(() => {
+    recipientSession()
+      .then(() => navigate('/letters', { replace: true }))
+      .catch(() => {})
+      .finally(() => setChecking(false))
+  }, [navigate])
 
   useEffect(() => {
     if (lockSeconds == null || lockSeconds <= 0) return undefined
@@ -85,6 +94,14 @@ export default function RecipientGate() {
     const m = Math.floor(s / 60)
     const r = s % 60
     return `${m}:${r.toString().padStart(2, '0')}`
+  }
+
+  if (checking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <LoadingIndicator message="" />
+      </div>
+    )
   }
 
   return (
