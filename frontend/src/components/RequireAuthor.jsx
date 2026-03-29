@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { me } from '../api/auth'
+import LoadingIndicator from './LoadingIndicator'
 
 export default function RequireAuthor() {
   const [state, setState] = useState('loading')
@@ -13,8 +14,8 @@ export default function RequireAuthor() {
 
   if (state === 'loading') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-cream font-sans text-sm text-ink-muted">
-        …
+      <div className="flex min-h-screen items-center justify-center">
+        <LoadingIndicator message="" />
       </div>
     )
   }

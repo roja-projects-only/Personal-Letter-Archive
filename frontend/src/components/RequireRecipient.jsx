@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { recipientSession } from '../api/recipient'
+import LoadingIndicator from './LoadingIndicator'
 
 export default function RequireRecipient() {
   const [state, setState] = useState('loading')
@@ -13,8 +14,8 @@ export default function RequireRecipient() {
 
   if (state === 'loading') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-cream font-sans text-sm text-ink-muted">
-        …
+      <div className="flex min-h-screen items-center justify-center">
+        <LoadingIndicator message="" />
       </div>
     )
   }

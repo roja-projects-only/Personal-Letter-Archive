@@ -25,7 +25,7 @@ export default function PageShell({
       <div
         className={`relative z-10 mx-auto w-full px-4 ${centered ? '' : 'py-6 sm:py-8'} ${maxWidthClassName}`}
       >
-        <div className="page-panel pb-safe">{children}</div>
+        <div className="page-panel animate-panel-in pb-safe">{children}</div>
       </div>
     </div>
   )
