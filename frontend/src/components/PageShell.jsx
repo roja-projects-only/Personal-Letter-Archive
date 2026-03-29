@@ -7,7 +7,7 @@ export default function PageShell({
 }) {
   return (
     <div
-      className={`page-watermark bg-cream ${
+      className={`page-watermark ${
         centered
           ? 'flex min-h-screen flex-col items-center justify-center py-6 sm:py-8'
           : 'min-h-screen'

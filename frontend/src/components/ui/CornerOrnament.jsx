@@ -29,17 +29,17 @@ export default function CornerOrnament({ position = 'tl', size = 28 }) {
       style={style}
     >
       {/* Elegant vine corner: two curved strokes meeting at top-left */}
-      <g fill="none" stroke="#9a7a3d" strokeWidth="1.4" strokeLinecap="round">
+      <g fill="none" stroke="#8a6820" strokeWidth="1.4" strokeLinecap="round">
         {/* Horizontal curl */}
         <path d="M4 4 Q4 4 14 4 Q20 4 22 8 Q24 12 20 14" />
         {/* Vertical curl */}
         <path d="M4 4 Q4 4 4 14 Q4 20 8 22 Q12 24 14 20" />
         {/* Leaf on horizontal */}
-        <path d="M18 5 Q22 2 24 6 Q20 8 18 5Z" fill="#9a7a3d" opacity="0.6" />
+        <path d="M18 5 Q22 2 24 6 Q20 8 18 5Z" fill="#8a6820" opacity="0.6" />
         {/* Leaf on vertical */}
-        <path d="M5 18 Q2 22 6 24 Q8 20 5 18Z" fill="#9a7a3d" opacity="0.6" />
+        <path d="M5 18 Q2 22 6 24 Q8 20 5 18Z" fill="#8a6820" opacity="0.6" />
         {/* Small dot at corner */}
-        <circle cx="4" cy="4" r="1.2" fill="#9a7a3d" />
+        <circle cx="4" cy="4" r="1.2" fill="#8a6820" />
       </g>
     </svg>
   )

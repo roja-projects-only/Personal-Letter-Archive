@@ -90,7 +90,7 @@ export default function RecipientGate() {
   return (
     <PageShell maxWidthClassName="max-w-sm" centered>
       <div className="animate-fade-up flex flex-col items-center py-6">
-        <div className="paper-texture paper-card-ribbon relative flex w-full flex-col items-center gap-4 rounded-3xl border border-gold-soft/60 bg-card/80 px-8 py-10 shadow-xl backdrop-blur-sm">
+        <div className="paper-texture paper-card-ribbon relative flex w-full flex-col items-center gap-4 rounded-3xl border border-gold-soft px-8 py-10 shadow-xl" style={{backgroundColor: '#ede0c6'}}>
           <CornerOrnament position="tl" />
           <CornerOrnament position="tr" />
           <CornerOrnament position="bl" />
@@ -147,7 +147,7 @@ export default function RecipientGate() {
                     placeholder="your name…"
                     disabled={locked}
                     autoComplete="name"
-                    className="w-full rounded-xl border border-gold-soft bg-cream-dark px-4 py-3.5 text-center font-serif text-base italic text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-dark"
+                    className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 text-center font-serif text-base italic text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   />
                 </div>
                 <PrimaryButton type="submit" disabled={locked || !name.trim()} className="w-full">

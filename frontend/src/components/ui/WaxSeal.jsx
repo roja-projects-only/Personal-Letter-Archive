@@ -15,12 +15,12 @@ export default function WaxSeal({ size = 72, letter = '✦', className = '' }) {
       >
         <defs>
           <radialGradient id="sealGrad" cx="40%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#d4956a" />
-            <stop offset="60%" stopColor="#c97b84" />
-            <stop offset="100%" stopColor="#a55a66" />
+            <stop offset="0%" stopColor="#c86858" />
+            <stop offset="60%" stopColor="#b85468" />
+            <stop offset="100%" stopColor="#8c3a4e" />
           </radialGradient>
           <filter id="sealShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#3d2b1f" floodOpacity="0.2" />
+            <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#1e100a" floodOpacity="0.35" />
           </filter>
         </defs>
 

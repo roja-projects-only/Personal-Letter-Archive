@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* Base palette — cream foundation */
+  /* Base palette — deep wine-rose system */
   --color-cream: #fdf6f0;
-  --color-cream-dark: #f5ebe0;
-  --color-parchment: #f2e6d4;
+  --color-cream-dark: #f0e6d8;
+  --color-parchment: #ede0c6;
   --color-blush: #f5d5ce;
-  --color-rose: #c97b84;
-  --color-rose-deep: #a55a66;
-  --color-rose-light: #fff0ee;
-  --color-amber: #d4956a;
-  --color-amber-soft: #f5dfc5;
-  --color-ink: #3d2b1f;
-  --color-ink-muted: #6f5348;
-  --color-ink-faint: #d8c9c1;
-  --color-card: #fffaf8;
-  --color-border: #edd8d0;
-  --color-gold: #9a7a3d;
-  --color-gold-soft: #ede0c8;
-  --color-gold-faint: #f7f0e3;
-  --color-green-soft: #eef5ee;
-  --color-green-text: #5a8a5a;
+  --color-rose: #b85468;
+  --color-rose-deep: #8c3a4e;
+  --color-rose-light: #fde8ec;
+  --color-amber: #c8844e;
+  --color-amber-soft: #f0d4b0;
+  --color-ink: #1e100a;
+  --color-ink-muted: #6b4840;
+  --color-ink-faint: #c8b4a8;
+  --color-card: #fdf6f0;
+  --color-border: #d4b896;
+  --color-gold: #8a6820;
+  --color-gold-soft: #d4a860;
+  --color-gold-faint: #f0e4c8;
+  --color-green-soft: #e4f0e4;
+  --color-green-text: #3d7048;
 
   /* Typography */
   --font-serif: "EB Garamond", Georgia, serif;
@@ -30,24 +30,24 @@
 
 :root {
   --cream: #fdf6f0;
-  --cream-dark: #f5ebe0;
-  --parchment: #f2e6d4;
+  --cream-dark: #f0e6d8;
+  --parchment: #ede0c6;
   --blush: #f5d5ce;
-  --rose: #c97b84;
-  --rose-deep: #a55a66;
-  --rose-light: #fff0ee;
-  --amber: #d4956a;
-  --amber-soft: #f5dfc5;
-  --ink: #3d2b1f;
-  --ink-muted: #6f5348;
-  --ink-faint: #d8c9c1;
-  --card: #fffaf8;
-  --border: #edd8d0;
-  --gold: #9a7a3d;
-  --gold-soft: #ede0c8;
-  --gold-faint: #f7f0e3;
-  --green-soft: #eef5ee;
-  --green-text: #5a8a5a;
+  --rose: #b85468;
+  --rose-deep: #8c3a4e;
+  --rose-light: #fde8ec;
+  --amber: #c8844e;
+  --amber-soft: #f0d4b0;
+  --ink: #1e100a;
+  --ink-muted: #6b4840;
+  --ink-faint: #c8b4a8;
+  --card: #fdf6f0;
+  --border: #d4b896;
+  --gold: #8a6820;
+  --gold-soft: #d4a860;
+  --gold-faint: #f0e4c8;
+  --green-soft: #e4f0e4;
+  --green-text: #3d7048;
 }
 
 /* ─── Keyframes ─────────────────────────────────────────────────────────── */
@@ -234,20 +234,20 @@
 /* A repeating micro-grain pattern layered on parchment cards */
 .paper-texture {
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
-    linear-gradient(160deg, #faf3e8 0%, #f5ebe0 100%);
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    linear-gradient(160deg, #f2dfc4 0%, #e8d4b2 100%);
 }
 
 /* ─── Base styles ────────────────────────────────────────────────────────── */
 
 @layer base {
   body {
-    @apply m-0 min-h-screen bg-cream font-sans text-ink antialiased;
+    @apply m-0 min-h-screen font-sans text-ink antialiased;
     padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-color: #3c1a28;
     background-image:
-      radial-gradient(ellipse 130% 110% at 50% 50%, transparent 45%, #d4a89044 100%),
-      radial-gradient(ellipse 80% 50% at 50% 0%, #f5d5ce88 0%, transparent 55%),
-      radial-gradient(ellipse 70% 40% at 50% 100%, #edd8d070 0%, transparent 55%);
+      radial-gradient(ellipse 80% 60% at 15% 15%, #5a2840 0%, transparent 65%),
+      radial-gradient(ellipse 70% 50% at 85% 85%, #2c1020 0%, transparent 60%);
   }
 
   #root {
@@ -302,7 +302,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--gold);
+  color: var(--rose);
   font-size: 0.75rem;
   letter-spacing: 0.2em;
 }
@@ -318,29 +318,28 @@
 /* ─── Paper card ─────────────────────────────────────────────────────────── */
 
 .paper-card {
-  background-color: var(--parchment);
-  border: 1px solid var(--gold-soft);
+  background-color: #ede0c6;
+  border: 1px solid #d4b896;
   border-radius: 1rem;
   box-shadow:
-    0 2px 8px rgba(61, 43, 31, 0.06),
-    0 1px 2px rgba(200, 169, 110, 0.1);
+    0 2px 10px rgba(30, 16, 10, 0.1),
+    0 1px 3px rgba(180, 120, 60, 0.14);
 }
 
 .paper-card-ribbon {
   border-left: 3px solid var(--gold);
 }
 
-/* Main content surface — separates page from decorative background */
+/* Main content surface — cream panel lifted off the dark wine background */
 .page-panel {
-  background-color: rgba(255, 255, 255, 0.93);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
+  background-color: #fdf6f0;
+  border: 1px solid rgba(212, 184, 150, 0.5);
   border-radius: 1.25rem;
   padding: 1.25rem 1.25rem 1.75rem;
   box-shadow:
-    0 4px 40px rgba(61, 43, 31, 0.13),
-    0 1px 6px rgba(200, 169, 110, 0.15);
+    0 8px 60px rgba(20, 6, 14, 0.55),
+    0 2px 16px rgba(184, 84, 104, 0.18),
+    0 1px 4px rgba(20, 6, 14, 0.3);
 }
 
 @media (min-width: 640px) {
