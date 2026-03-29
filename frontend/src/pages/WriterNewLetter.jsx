@@ -66,7 +66,7 @@ export default function WriterNewLetter() {
     try {
       await createLetter({
         title: title.trim() || null,
-        content: content || '<p></p>',
+        content: content.trim(),
       })
       localStorage.removeItem(DRAFT_KEY)
       setSaveFlash(true)
@@ -98,7 +98,7 @@ export default function WriterNewLetter() {
           </Link>
           <PrimaryButton
             type="button"
-            disabled={submitting || saveFlash}
+            disabled={submitting || saveFlash || !content.trim()}
             onClick={handleSave}
             className={`order-2 justify-self-end sm:order-3 sm:justify-self-end ${saveFlash ? '!bg-green-text' : ''}`}
           >

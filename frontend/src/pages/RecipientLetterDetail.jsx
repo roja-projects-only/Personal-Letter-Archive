@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import DOMPurify from 'dompurify'
 import PageShell from '../components/PageShell'
 import LoadingIndicator from '../components/LoadingIndicator'
 import GhostButton from '../components/ui/GhostButton'
@@ -64,10 +63,6 @@ export default function RecipientLetterDetail() {
   )
   const letterNo = letter ? letterNumberForId(allLetters, letter.id) : 1
 
-  const sanitized = letter?.content
-    ? DOMPurify.sanitize(letter.content, { USE_PROFILES: { html: true } })
-    : ''
-
   const sendReply = async () => {
     if (!replyText.trim()) return
     setError('')
@@ -119,10 +114,9 @@ export default function RecipientLetterDetail() {
 
         {/* Letter body */}
         <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
-          <div
-            className="letter-body font-serif text-base leading-[1.8] text-ink"
-            dangerouslySetInnerHTML={{ __html: sanitized }}
-          />
+          <div className="font-serif text-base leading-[1.8] text-ink whitespace-pre-wrap">
+            {letter.content}
+          </div>
         </PaperCard>
 
         {/* Replies + reply box */}

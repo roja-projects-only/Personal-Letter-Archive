@@ -130,6 +130,9 @@ router.put('/:id', requireAuthor, async (req, res, next) => {
       return res.status(404).json({ error: 'Not found' })
     }
     const { title, content } = req.body || {}
+    if (content !== undefined && String(content).trim() === '') {
+      return res.status(400).json({ error: 'Content is required' })
+    }
     const letter = await prisma.letter.update({
       where: { id: req.params.id },
       data: {

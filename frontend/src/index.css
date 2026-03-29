@@ -306,73 +306,18 @@
   }
 }
 
-/* ─── Letter prose — shared by editor and read views ────────────────────── */
-/*
- * .letter-prose is the canonical type block applied to:
- *   - .letter-content .ProseMirror  (TipTap editor)
- *   - .letter-body                  (dangerouslySetInnerHTML read wrapper)
- * Both targets get identical heading, blockquote, and list treatment.
- */
+/* ─── Letter textarea editor ─────────────────────────────────────────────── */
 
-/* Editor shell */
-.letter-content .ProseMirror {
-  @apply min-h-[320px] font-serif text-base leading-[1.8] text-ink outline-none;
+.letter-editor {
+  @apply w-full min-h-[320px] resize-y rounded-xl border border-gold-soft/90 bg-parchment/95 p-5 font-serif text-base italic leading-[1.8] text-ink shadow-inner outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-ink-muted;
 }
 
-/* Placeholder */
-.letter-content .ProseMirror p.is-editor-empty:first-child::before {
-  @apply float-left text-ink-muted pointer-events-none h-0;
-  content: attr(data-placeholder);
-  font-style: italic;
+.letter-editor:focus {
+  @apply border-rose bg-cream shadow-md;
 }
 
-/* ── Shared prose rules — identical in editor and read mode ── */
-
-.letter-content .ProseMirror p,
-.letter-body p {
-  @apply mb-4;
-}
-
-.letter-content .ProseMirror h2,
-.letter-body h2 {
-  @apply mb-2 mt-6 font-display text-xl font-semibold italic text-ink;
-}
-
-.letter-content .ProseMirror h3,
-.letter-body h3 {
-  @apply mb-1.5 mt-5 font-serif text-lg italic text-ink;
-}
-
-.letter-content .ProseMirror blockquote,
-.letter-body blockquote {
-  @apply my-4 border-l-2 border-gold pl-4 italic text-ink-muted;
-}
-
-.letter-content .ProseMirror ul,
-.letter-body ul {
-  @apply my-3 list-disc list-inside pl-2 font-serif text-base text-ink;
-}
-
-.letter-content .ProseMirror ol,
-.letter-body ol {
-  @apply my-3 list-decimal list-inside pl-2 font-serif text-base text-ink;
-}
-
-.letter-content .ProseMirror li,
-.letter-body li {
-  @apply mb-1 leading-relaxed;
-}
-
-/* Horizontal rule (StarterKit emits <hr>) */
-.letter-content .ProseMirror hr,
-.letter-body hr {
-  @apply my-6 border-0 border-t border-gold-soft;
-}
-
-/* Inline code */
-.letter-content .ProseMirror code,
-.letter-body code {
-  @apply rounded bg-parchment px-1 py-0.5 font-sans text-sm text-ink-muted;
+.letter-editor:focus-visible {
+  @apply ring-2 ring-rose/45 ring-offset-2 ring-offset-parchment;
 }
 
 /* ─── Decorative divider ─────────────────────────────────────────────────── */
@@ -429,10 +374,7 @@
 
 /* ─── Themed scrollbars ──────────────────────────────────────────────────── */
 /*
- * Phase 1 — pure CSS. No library required.
  * thumb: gold-soft with rose hover; track: transparent.
- * Scoped to the page panel and the TipTap editor surface.
- *
  * Firefox uses scrollbar-color (two-value: thumb track).
  * Chromium/Safari use ::-webkit-scrollbar pseudo-elements.
  */
@@ -462,25 +404,25 @@ html {
   background-color: var(--rose);
 }
 
-/* Editor surface — slightly thinner, more intimate */
-.letter-content .ProseMirror {
+/* Editor textarea — slightly thinner, more intimate scrollbar */
+.letter-editor {
   scrollbar-color: var(--gold-soft) transparent;
   scrollbar-width: thin;
 }
 
-.letter-content .ProseMirror::-webkit-scrollbar {
+.letter-editor::-webkit-scrollbar {
   width: 4px;
 }
 
-.letter-content .ProseMirror::-webkit-scrollbar-track {
+.letter-editor::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.letter-content .ProseMirror::-webkit-scrollbar-thumb {
+.letter-editor::-webkit-scrollbar-thumb {
   background-color: var(--gold-soft);
   border-radius: 999px;
 }
 
-.letter-content .ProseMirror::-webkit-scrollbar-thumb:hover {
+.letter-editor::-webkit-scrollbar-thumb:hover {
   background-color: var(--rose);
 }

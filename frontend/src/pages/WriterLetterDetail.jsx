@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import DOMPurify from 'dompurify'
 import PageShell from '../components/PageShell'
 import LoadingIndicator from '../components/LoadingIndicator'
 import GhostButton from '../components/ui/GhostButton'
@@ -83,16 +82,12 @@ export default function WriterLetterDetail() {
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
   )
 
-  const sanitized = letter?.content
-    ? DOMPurify.sanitize(letter.content, { USE_PROFILES: { html: true } })
-    : ''
-
   const saveEdit = async () => {
     setSaving(true)
     try {
       await updateLetter(id, {
         title: title.trim() || null,
-        content: content || '<p></p>',
+        content: content.trim(),
       })
       const lr = await getLetter(id)
       const L = lr.data
@@ -158,7 +153,7 @@ export default function WriterLetterDetail() {
             >
               cancel
             </GhostButton>
-            <PrimaryButton type="button" disabled={saving} onClick={saveEdit}>
+            <PrimaryButton type="button" disabled={saving || !content.trim()} onClick={saveEdit}>
               update letter
             </PrimaryButton>
           </div>
@@ -175,10 +170,9 @@ export default function WriterLetterDetail() {
             </h1>
             <FloralDivider ornament="❧" className="mb-7" />
             <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
-              <div
-                className="letter-body font-serif text-base leading-[1.8] text-ink"
-                dangerouslySetInnerHTML={{ __html: sanitized }}
-              />
+              <div className="font-serif text-base leading-[1.8] text-ink whitespace-pre-wrap">
+                {letter.content}
+              </div>
             </PaperCard>
           </>
         ) : (
