@@ -292,6 +292,27 @@
   #root {
     @apply min-h-screen;
   }
+
+  /* ─── WebKit / iOS form normalization ───────────────────────────────────── */
+  /* Remove inner-shadow and rounded quirks Safari applies to form controls */
+  input,
+  textarea,
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Guard: all text inputs and textareas must render at 16px+ so iOS Safari
+     does not auto-zoom on focus. Tailwind text-base is 1rem but a future
+     responsive override could break this—make it explicit. */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="search"],
+  textarea {
+    font-size: max(16px, 1rem);
+  }
 }
 
 /* PageShell root: stacking context for BackgroundScene (fixed) + content (z-10) */
@@ -304,12 +325,21 @@
   .pb-safe {
     padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
   }
+
+  /* Horizontal padding that respects iPhone notch/home-bar insets */
+  .px-safe {
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
 }
 
 /* ─── Letter textarea editor ─────────────────────────────────────────────── */
 
 .letter-editor {
   @apply w-full min-h-[320px] resize-y rounded-xl border border-gold-soft/90 bg-parchment/95 p-5 font-serif text-base italic leading-[1.8] text-ink shadow-inner outline-none transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-ink-muted;
+  /* Momentum scrolling and stable caret rendering on iOS */
+  -webkit-overflow-scrolling: touch;
+  line-height: 1.8;
 }
 
 .letter-editor:focus {

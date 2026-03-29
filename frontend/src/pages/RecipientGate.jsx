@@ -143,6 +143,9 @@ export default function RecipientGate() {
                     placeholder="your name…"
                     disabled={locked}
                     autoComplete="name"
+                    autoCapitalize="words"
+                    autoCorrect="off"
+                    enterKeyHint="done"
                     className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 text-center font-serif text-base italic text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   />
                 </div>

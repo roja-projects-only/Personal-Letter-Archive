@@ -19,7 +19,11 @@ export default function Editor({
     <textarea
       value={content}
       onChange={(e) => onChange?.(e.target.value)}
+      onFocus={(e) => e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest' })}
       placeholder={placeholder}
+      autoCapitalize="sentences"
+      autoCorrect="on"
+      spellCheck
       className={`letter-editor font-serif text-base leading-[1.8] text-ink ${className}`}
     />
   )

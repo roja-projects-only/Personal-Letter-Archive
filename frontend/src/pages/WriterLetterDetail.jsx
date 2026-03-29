@@ -182,6 +182,9 @@ export default function WriterLetterDetail() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="a title, if you'd like…"
+              autoCapitalize="sentences"
+              autoCorrect="on"
+              enterKeyHint="next"
               className="mb-3 w-full border-0 bg-transparent font-display text-[28px] font-semibold italic text-ink outline-none placeholder:text-ink-muted focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             />
             <FloralDivider ornament="❧" className="mb-5" />
