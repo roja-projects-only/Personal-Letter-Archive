@@ -54,4 +54,24 @@ router.get('/me', requireAuthor, async (req, res, next) => {
   }
 })
 
+/** Diagnostic endpoint — returns non-sensitive session info to help debug cookie issues.
+ *  Safe to call from Safari Web Inspector or a proxy tool.
+ *  Example: open https://your-api.up.railway.app/api/auth/cookie-check in Safari.
+ */
+router.get('/cookie-check', (req, res) => {
+  const cookieNames = getCookieNames()
+  const cookieOpts = cookieBaseOptions()
+  return res.json({
+    receivedCookies: Object.keys(req.cookies || {}),
+    hasAuthorCookie: Boolean(req.cookies?.[cookieNames.author]),
+    hasRecipientCookie: Boolean(req.cookies?.[cookieNames.recipient]),
+    cookieConfig: {
+      sameSite: cookieOpts.sameSite,
+      secure: cookieOpts.secure,
+    },
+    nodeEnv: process.env.NODE_ENV || 'development',
+    frontendUrl: process.env.FRONTEND_URL || '(not set)',
+  })
+})
+
 export default router

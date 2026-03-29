@@ -4,6 +4,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import pinoHttp from 'pino-http'
 import { logger } from './lib/logger.js'
+import { cookieBaseOptions } from './lib/jwt.js'
 import authRouter from './routes/auth.js'
 import recipientRouter from './routes/recipient.js'
 import lettersRouter from './routes/letters.js'
@@ -66,11 +67,13 @@ app.use((err, req, res, next) => {
 
 const port = Number(process.env.PORT) || 3000
 app.listen(port, () => {
+  const cookieOpts = cookieBaseOptions()
   logger.info(
     {
       port,
       nodeEnv: process.env.NODE_ENV || 'development',
       frontendUrl: frontendOrigin,
+      cookie: { sameSite: cookieOpts.sameSite, secure: cookieOpts.secure },
       hasJwtSecret: Boolean(process.env.JWT_SECRET && process.env.JWT_SECRET.length >= 16),
       hasDatabaseUrl: Boolean(process.env.DATABASE_URL),
       hasUpstashRedis: Boolean(

@@ -83,9 +83,9 @@ Seed overrides (optional): `SEED_AUTHOR_EMAIL`, `SEED_AUTHOR_PASSWORD`, `SEED_RE
 
 | Variable | Notes |
 |----------|--------|
-| `VITE_API_URL` | Full backend URL **without** a path, e.g. `https://your-service.up.railway.app`. In dev, leave empty to use the Vite proxy. |
+| `VITE_API_URL` | Leave **empty** when using the Vercel `/api` proxy (recommended). Set to your full Railway URL only if you intentionally skip the proxy. |
 
-Production builds call the API cross-origin; the browser sends cookies only if the backend sets `SameSite=None; Secure` (done when `NODE_ENV=production`) and CORS allows your frontend origin with credentials.
+**Recommended production setup: Vercel `/api` proxy.** In `frontend/vercel.json`, replace `https://your-api.up.railway.app` with your actual Railway API URL, then leave `VITE_API_URL` empty on Vercel. This makes all API calls same-origin, so session cookies are first-party — fixing login in iOS Safari (which blocks third-party `SameSite=None` cookies).
 
 ## Deployment checklist (Railway + Vercel)
 
@@ -101,10 +101,14 @@ Production builds call the API cross-origin; the browser sends cookies only if t
    railway run npm run db:seed
    ```
    Set `SEED_*` variables in Railway if you do not want the seed script defaults.
-4. **API service**: `JWT_SECRET`, `FRONTEND_URL` (your Vercel URL), `NODE_ENV=production`, Redis vars if you use Upstash.
-5. **Vercel**: `VITE_API_URL` = your Railway API **public** URL.
+4. **API service**: `JWT_SECRET`, `FRONTEND_URL` (your Vercel URL, e.g. `https://your-app.vercel.app`), `NODE_ENV=production`, Redis vars if you use Upstash.
+5. **Vercel proxy (required for iOS Safari)**: In `frontend/vercel.json`, replace `https://your-api.up.railway.app` with your Railway API public URL. Leave `VITE_API_URL` unset (or empty) on Vercel — the proxy handles routing.
+6. **Verify**: After deploy, open `https://your-api.up.railway.app/api/auth/cookie-check` in Safari. You should see `"sameSite":"none"`, `"secure":true`, and `"nodeEnv":"production"`. This endpoint also shows whether Safari is sending your session cookies back, which is the key diagnostic for login failures.
 
-If you see **401 Unauthorized** after login on production, almost always: wrong `FRONTEND_URL`, wrong `VITE_API_URL`, or migrations never applied (less common for session, but breaks other flows).
+If you see **401 Unauthorized** after login on production:
+- Check Railway startup log: `frontendUrl` must match your Vercel URL exactly (no trailing slash, correct scheme).
+- The startup log also shows `cookie.sameSite` and `cookie.secure` — must be `none` and `true` in production.
+- If using the Vercel proxy, confirm `VITE_API_URL` is empty on Vercel so calls go to `/api` (same-origin), not to Railway directly (cross-origin).
 
 ## Logging and errors
 
