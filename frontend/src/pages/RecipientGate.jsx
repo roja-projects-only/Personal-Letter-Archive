@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PageShell from '../components/PageShell'
+import PaperCard from '../components/ui/PaperCard'
 import PrimaryButton from '../components/ui/PrimaryButton'
 import PinInput from '../components/PinInput'
 import WaxSeal from '../components/ui/WaxSeal'
 import FloralDivider from '../components/ui/FloralDivider'
-import CornerOrnament from '../components/ui/CornerOrnament'
 import { verifyRecipient } from '../api/recipient'
 
 export default function RecipientGate() {
@@ -90,11 +90,7 @@ export default function RecipientGate() {
   return (
     <PageShell maxWidthClassName="max-w-sm" centered>
       <div className="animate-fade-up flex flex-col items-center py-6">
-        <div className="paper-texture paper-card-ribbon relative flex w-full flex-col items-center gap-4 rounded-3xl border border-gold-soft px-8 py-10 shadow-xl" style={{backgroundColor: '#ede0c6'}}>
-          <CornerOrnament position="tl" />
-          <CornerOrnament position="tr" />
-          <CornerOrnament position="bl" />
-          <CornerOrnament position="br" />
+        <PaperCard ribbon corners className="flex w-full flex-col items-center gap-4 px-8 py-10">
 
           <WaxSeal size={80} letter="♡" />
 
@@ -180,7 +176,7 @@ export default function RecipientGate() {
               {attemptsLeft} attempt{attemptsLeft !== 1 ? 's' : ''} remaining
             </p>
           )}
-        </div>
+        </PaperCard>
       </div>
     </PageShell>
   )

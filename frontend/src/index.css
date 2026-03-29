@@ -48,91 +48,63 @@
   --gold-faint: #f0e4c8;
   --green-soft: #e4f0e4;
   --green-text: #3d7048;
+
+  /* ─── Motion tokens ────────────────────────────────── */
+  --motion-dur-sm:  0.2s;
+  --motion-dur-md:  0.35s;
+  --motion-dur-lg:  0.5s;
+  --motion-ease-out:      ease;
+  --motion-ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Used as inline animationDelay in list stagger — kept in JS as LIST_STAGGER_MS */
+  --motion-stagger-step: 60ms;
 }
 
 /* ─── Keyframes ─────────────────────────────────────────────────────────── */
 
+/* Page-level entrance: moderate lift for full-page content wrappers */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card entrance: used by both hero letter cards and list cards (different timing) */
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  20% {
-    transform: translateX(-8px);
-  }
-  40% {
-    transform: translateX(8px);
-  }
-  60% {
-    transform: translateX(-6px);
-  }
-  80% {
-    transform: translateX(6px);
-  }
+  0%,  100% { transform: translateX(0); }
+  20%        { transform: translateX(-8px); }
+  40%        { transform: translateX(8px); }
+  60%        { transform: translateX(-6px); }
+  80%        { transform: translateX(6px); }
 }
 
 @keyframes pulsePop {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-@keyframes letterReveal {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInCard {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0%,  100% { transform: scale(1); }
+  50%        { transform: scale(1.05); }
 }
 
 @keyframes sealAppear {
-  from {
-    opacity: 0;
-    transform: scale(0.75) rotate(-6deg);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
+  from { opacity: 0; transform: scale(0.75) rotate(-6deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
 @keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+  0%,  100% { opacity: 1; }
+  50%        { opacity: 0; }
+}
+
+/* Toast slide-up enter / slide-down exit */
+@keyframes toastEnter {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+@keyframes toastExit {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(6px); }
 }
 
 /* Scattered background petals — only when user allows motion */
@@ -179,53 +151,108 @@
 
 /* ─── Animation utilities ────────────────────────────────────────────────── */
 
+/* Tier 1 — page-level entrance (full-page content wrappers) */
 .animate-fade-up {
-  animation: fadeUp 0.4s ease both;
+  animation: fadeUp var(--motion-dur-md) var(--motion-ease-out) both;
 }
 
-.animate-shake {
-  animation: shake 0.4s ease;
-}
-
-.animate-pulse-pop {
-  animation: pulsePop 0.2s ease;
-}
-
+/* Tier 2 — card entrances (hero: slower; list: faster) */
 .animate-letter-reveal {
-  animation: letterReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: cardReveal var(--motion-dur-lg) var(--motion-ease-emphasis) both;
 }
 
 .animate-slide-in-card {
-  animation: slideInCard 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: cardReveal var(--motion-dur-md) var(--motion-ease-emphasis) both;
 }
 
+/* Error feedback */
+.animate-shake {
+  animation: shake 0.4s var(--motion-ease-out);
+}
+
+/* PIN cell feedback */
+.animate-pulse-pop {
+  animation: pulsePop var(--motion-dur-sm) var(--motion-ease-out);
+}
+
+/* Seal */
 .animate-seal-appear {
-  animation: sealAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: sealAppear 0.6s var(--motion-ease-spring) both;
 }
 
+/* Cursor blink */
 .animate-blink {
   animation: blink 1s step-start infinite;
 }
 
 @keyframes sealPulse {
-  0%,
-  100% {
-    opacity: 0.85;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.04);
-  }
+  0%,  100% { opacity: 0.85; transform: scale(1); }
+  50%        { opacity: 1;    transform: scale(1.04); }
 }
 
 .animate-seal-pulse {
   animation: sealPulse 1.4s ease-in-out infinite;
 }
 
+/* Toast enter/exit */
+.toast-enter {
+  animation: toastEnter 0.22s var(--motion-ease-out) both;
+}
+
+.toast-exit {
+  animation: toastExit 0.18s ease-in both;
+}
+
+/* GPU hint for staggered list items — only when motion is desired */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-slide-in-card {
+    will-change: transform, opacity;
+  }
+}
+
+/* ─── Reduced motion overrides ───────────────────────────────────────────── */
+
 @media (prefers-reduced-motion: reduce) {
+  /* Entrance animations: remove movement, keep instant opacity reveal */
+  .animate-fade-up,
+  .animate-letter-reveal,
+  .animate-slide-in-card,
+  .animate-seal-appear {
+    animation: none;
+    opacity: 1;
+  }
+
+  /* Error shake: no vestibular movement — remove entirely */
+  .animate-shake {
+    animation: none;
+  }
+
+  /* PIN cell pulse: no scale feedback */
+  .animate-pulse-pop {
+    animation: none;
+  }
+
+  /* Cursor blink: keep visible but static */
+  .animate-blink {
+    animation: none;
+    opacity: 1;
+  }
+
+  /* Infinite pulse: off */
   .animate-seal-pulse {
     animation: none;
+  }
+
+  /* Toast: instant appear/disappear, no movement */
+  .toast-enter,
+  .toast-exit {
+    animation: none;
+    opacity: 1;
+  }
+
+  /* Button press: skip transform for users who prefer no motion */
+  button:active {
+    transform: none !important;
   }
 }
 

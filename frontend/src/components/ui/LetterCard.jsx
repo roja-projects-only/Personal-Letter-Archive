@@ -3,6 +3,10 @@ import TagReplied from './TagReplied'
 import GhostButton from './GhostButton'
 import CornerOrnament from './CornerOrnament'
 
+// Two-tier ornament scale shared across card variants
+const ORNAMENT_SM = 20
+const ORNAMENT_MD = 24
+
 function formatDate(iso) {
   if (!iso) return ''
   try {
@@ -39,7 +43,7 @@ export default function LetterCard({
         className={`paper-card paper-card-ribbon paper-texture animate-slide-in-card relative mb-3 flex items-stretch gap-0 overflow-hidden transition-all duration-200 hover:shadow-md hover:border-gold ${className}`}
         style={delayStyle}
       >
-        <CornerOrnament position="tr" size={22} />
+        <CornerOrnament position="tr" size={ORNAMENT_SM} />
         <button
           type="button"
           onClick={onCardClick}
@@ -84,8 +88,8 @@ export default function LetterCard({
       className={`paper-card paper-texture animate-slide-in-card relative mb-3 w-full p-5 text-left transition-all duration-200 hover:shadow-md hover:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${className}`}
       style={delayStyle}
     >
-      <CornerOrnament position="tr" size={24} />
-      <CornerOrnament position="bl" size={24} />
+      <CornerOrnament position="tr" size={ORNAMENT_MD} />
+      <CornerOrnament position="bl" size={ORNAMENT_MD} />
       <div className="mb-1.5 flex items-start justify-between gap-2">
         <span className="font-serif text-base italic text-ink leading-snug pr-2">
           {title?.trim() || 'Untitled letter'}

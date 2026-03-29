@@ -9,6 +9,7 @@ import { listLetters } from '../api/letters'
 import { recipientLogout } from '../api/recipient'
 import { letterExcerpt } from '../lib/excerpt'
 import { normalizeLetterList } from '../lib/letters'
+import { LIST_STAGGER_MS } from '../lib/motion'
 
 export default function RecipientLetterList() {
   const navigate = useNavigate()
@@ -78,7 +79,7 @@ export default function RecipientLetterList() {
               viewedAt={l.viewedAt}
               replyCount={l.replyCount ?? 0}
               onCardClick={() => navigate(`/letters/${l.id}`)}
-              animationDelay={`${i * 60}ms`}
+              animationDelay={`${i * LIST_STAGGER_MS}ms`}
             />
           ))}
         </div>

@@ -8,6 +8,9 @@ import FloralDivider from '../components/ui/FloralDivider'
 import PaperCard from '../components/ui/PaperCard'
 import CornerOrnament from '../components/ui/CornerOrnament'
 import { listLetters } from '../api/letters'
+
+const ORNAMENT_SM = 20
+import { LIST_STAGGER_MS } from '../lib/motion'
 import { logout } from '../api/auth'
 import { normalizeLetterList } from '../lib/letters'
 import { useToast } from '../hooks/useToast'
@@ -90,7 +93,7 @@ export default function WriterDashboard() {
             { value: loading ? '—' : daysSinceFirst, label: 'days', color: 'text-gold' },
           ].map(({ value, label, color }) => (
             <PaperCard key={label} className="relative p-4 text-center">
-              <CornerOrnament position="tr" size={20} />
+              <CornerOrnament position="tr" size={ORNAMENT_SM} />
               <p className={`font-display text-3xl font-semibold italic ${color}`}>{value}</p>
               <p className="mt-1 font-sans text-[11px] uppercase tracking-widest text-ink-muted">
                 {label}
@@ -135,7 +138,7 @@ export default function WriterDashboard() {
                 replyCount={l.replyCount ?? 0}
                 onCardClick={() => navigate(`/write/letters/${l.id}`)}
                 onEditClick={() => navigate(`/write/letters/${l.id}?mode=edit`)}
-                animationDelay={`${i * 50}ms`}
+                animationDelay={`${i * LIST_STAGGER_MS}ms`}
               />
             ))}
         </div>

@@ -191,9 +191,9 @@ export default function WriterLetterDetail() {
               className="mb-3 w-full border-0 bg-transparent font-display text-[28px] font-semibold italic text-ink outline-none placeholder:text-ink-muted focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             />
             <FloralDivider ornament="❧" className="mb-5" />
-            <div className="paper-card paper-texture rounded-2xl p-5 sm:p-7">
+            <PaperCard className="p-5 sm:p-7">
               <Editor content={content} onChange={setContent} placeholder="begin here…" />
-            </div>
+            </PaperCard>
             <div className="mt-6">
               {!confirmDelete ? (
                 <button

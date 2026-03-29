@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PageShell from '../components/PageShell'
 import GhostButton from '../components/ui/GhostButton'
+import PaperCard from '../components/ui/PaperCard'
 import PrimaryButton from '../components/ui/PrimaryButton'
 import FloralDivider from '../components/ui/FloralDivider'
 import Editor from '../components/Editor'
@@ -126,9 +127,9 @@ export default function WriterNewLetter() {
         <FloralDivider ornament="❧" className="mb-5" />
 
         {/* Editor */}
-        <div className="paper-card paper-texture rounded-2xl p-5 sm:p-7">
+        <PaperCard className="p-5 sm:p-7">
           <Editor content={content} onChange={setContent} placeholder="begin here…" />
-        </div>
+        </PaperCard>
 
         {error && <p className="mt-3 font-serif text-sm italic text-rose-deep">{error}</p>}
       </div>

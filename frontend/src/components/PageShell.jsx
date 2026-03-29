@@ -1,5 +1,13 @@
 import BackgroundScene from './BackgroundScene'
 
+/**
+ * Root layout wrapper for every routed page.
+ *
+ * Page entrance convention: every page's top-level content div should carry
+ * `className="animate-fade-up"` so routes consistently fade in on navigation.
+ * This is intentionally kept as a per-page class (not applied here) so pages
+ * can opt in with their own timing and stagger without a shared transition layer.
+ */
 export default function PageShell({
   children,
   maxWidthClassName = 'max-w-xl',
