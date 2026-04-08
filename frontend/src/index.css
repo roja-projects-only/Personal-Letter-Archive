@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Base palette — warm yellow-amber system */
-  --color-cream: #fffcf0;
-  --color-cream-dark: #f5eecc;
-  --color-parchment: #ede8b0;
-  --color-blush: #fef3c0;
-  --color-rose: #c49a0a;
-  --color-rose-deep: #9a7808;
+  /* Base palette — bright yellow accent on warm beige surfaces */
+  --color-cream: #fdf6f0;
+  --color-cream-dark: #f0e6d8;
+  --color-parchment: #ede0c6;
+  --color-blush: #fef9e8;
+  --color-rose: #f5c400;
+  --color-rose-deep: #c49a0a;
   --color-rose-light: #fefce8;
   --color-amber: #e8a020;
-  --color-amber-soft: #fde68a;
-  --color-ink: #1a1200;
-  --color-ink-muted: #6b5510;
-  --color-ink-faint: #c8b870;
-  --color-card: #fffcf0;
-  --color-border: #d4c060;
-  --color-gold: #7a6408;
-  --color-gold-soft: #d4b840;
-  --color-gold-faint: #f5edb0;
+  --color-amber-soft: #f0d4b0;
+  --color-ink: #1e100a;
+  --color-ink-muted: #6b4840;
+  --color-ink-faint: #c8b4a8;
+  --color-card: #fdf6f0;
+  --color-border: #d4b896;
+  --color-gold: #8a6820;
+  --color-gold-soft: #d4a860;
+  --color-gold-faint: #f0e4c8;
   --color-green-soft: #e4f0e4;
   --color-green-text: #3d7048;
 
@@ -29,23 +29,23 @@
 }
 
 :root {
-  --cream: #fffcf0;
-  --cream-dark: #f5eecc;
-  --parchment: #ede8b0;
-  --blush: #fef3c0;
-  --rose: #c49a0a;
-  --rose-deep: #9a7808;
+  --cream: #fdf6f0;
+  --cream-dark: #f0e6d8;
+  --parchment: #ede0c6;
+  --blush: #fef9e8;
+  --rose: #f5c400;
+  --rose-deep: #c49a0a;
   --rose-light: #fefce8;
   --amber: #e8a020;
-  --amber-soft: #fde68a;
-  --ink: #1a1200;
-  --ink-muted: #6b5510;
-  --ink-faint: #c8b870;
-  --card: #fffcf0;
-  --border: #d4c060;
-  --gold: #7a6408;
-  --gold-soft: #d4b840;
-  --gold-faint: #f5edb0;
+  --amber-soft: #f0d4b0;
+  --ink: #1e100a;
+  --ink-muted: #6b4840;
+  --ink-faint: #c8b4a8;
+  --card: #fdf6f0;
+  --border: #d4b896;
+  --gold: #8a6820;
+  --gold-soft: #d4a860;
+  --gold-faint: #f0e4c8;
   --green-soft: #e4f0e4;
   --green-text: #3d7048;
 
@@ -274,7 +274,7 @@
 .paper-texture {
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
-    linear-gradient(160deg, #ede8b0 0%, #e5e090 100%);
+    linear-gradient(160deg, #f2dfc4 0%, #e8d4b2 100%);
 }
 
 /* ─── Base styles ────────────────────────────────────────────────────────── */
@@ -372,12 +372,12 @@
 /* ─── Paper card ─────────────────────────────────────────────────────────── */
 
 .paper-card {
-  background-color: #ede8b0;
-  border: 1px solid #d4c060;
+  background-color: #ede0c6;
+  border: 1px solid #d4b896;
   border-radius: 1rem;
   box-shadow:
-    0 2px 10px rgba(26, 18, 0, 0.1),
-    0 1px 3px rgba(196, 154, 10, 0.14);
+    0 2px 10px rgba(30, 16, 10, 0.1),
+    0 1px 3px rgba(180, 120, 60, 0.14);
 }
 
 .paper-card-ribbon {
@@ -386,13 +386,13 @@
 
 /* Main content surface — cream panel lifted off the dark wine background */
 .page-panel {
-  background-color: #fffcf0;
-  border: 1px solid rgba(212, 192, 96, 0.5);
+  background-color: #fdf6f0;
+  border: 1px solid rgba(212, 184, 150, 0.5);
   border-radius: 1.25rem;
   padding: 1.25rem 1.25rem 1.75rem;
   box-shadow:
     0 8px 60px rgba(14, 10, 0, 0.55),
-    0 2px 16px rgba(196, 154, 10, 0.18),
+    0 2px 16px rgba(245, 196, 0, 0.18),
     0 1px 4px rgba(14, 10, 0, 0.3);
 }
 
