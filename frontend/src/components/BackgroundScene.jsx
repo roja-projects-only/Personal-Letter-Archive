@@ -38,13 +38,13 @@ function RoseBloom({ cx, cy, scale = 1 }) {
           cy={-s * 0.55}
           rx={s * 0.22}
           ry={s * 0.48}
-          fill="rgba(245,196,0,0.45)"
+          fill="rgba(255,220,0,0.55)"
           transform={`rotate(${(360 / petals) * i})`}
           opacity={0.9}
         />
       ))}
-      <circle cx={0} cy={0} r={s * 0.2} fill="rgba(245,196,0,0.7)" opacity={0.9} />
-      <circle cx={0} cy={0} r={s * 0.08} fill="rgba(255,240,100,0.5)" opacity={0.5} />
+      <circle cx={0} cy={0} r={s * 0.2} fill="rgba(255,214,0,0.8)" opacity={0.9} />
+      <circle cx={0} cy={0} r={s * 0.08} fill="rgba(255,245,120,0.6)" opacity={0.6} />
     </g>
   )
 }
@@ -56,7 +56,7 @@ function Leaf({ x, y, rot, flip = false }) {
       <path
         d="M0 0 Q12 -18 28 -8 Q18 4 0 0 M0 0 Q8 14 22 10"
         fill="none"
-        stroke="rgba(245,196,0,0.55)"
+        stroke="rgba(255,214,0,0.65)"
         strokeWidth={1.4}
         strokeLinecap="round"
         opacity={0.8}
@@ -64,7 +64,7 @@ function Leaf({ x, y, rot, flip = false }) {
       <path
         d="M2 -2 Q14 -12 24 -6"
         fill="none"
-        stroke="rgba(255,215,0,0.4)"
+        stroke="rgba(255,224,0,0.5)"
         strokeWidth={0.8}
         strokeLinecap="round"
         opacity={0.6}
@@ -79,14 +79,14 @@ function BranchSpray({ x, y, rot }) {
       <path
         d="M0 0 Q-8 40 -4 85 Q0 110 12 130"
         fill="none"
-        stroke="rgba(245,196,0,0.5)"
+        stroke="rgba(255,214,0,0.6)"
         strokeWidth={1.6}
         strokeLinecap="round"
         opacity={0.7}
       />
-      <ellipse cx={-6} cy={35} rx={8} ry={14} fill="rgba(245,196,0,0.32)" opacity={0.8} transform="rotate(-25 -6 35)" />
-      <ellipse cx={4} cy={72} rx={7} ry={12} fill="rgba(245,196,0,0.28)" opacity={0.7} transform="rotate(18 4 72)" />
-      <circle cx={8} cy={105} r={5} fill="rgba(245,196,0,0.4)" opacity={0.7} />
+      <ellipse cx={-6} cy={35} rx={8} ry={14} fill="rgba(255,214,0,0.42)" opacity={0.8} transform="rotate(-25 -6 35)" />
+      <ellipse cx={4} cy={72} rx={7} ry={12} fill="rgba(255,214,0,0.36)" opacity={0.7} transform="rotate(18 4 72)" />
+      <circle cx={8} cy={105} r={5} fill="rgba(255,214,0,0.5)" opacity={0.7} />
     </g>
   )
 }
@@ -106,7 +106,7 @@ function MicroPetal({ x, y, r, rot, driftIndex, durationSec, delaySec, allowMoti
 
   return (
     <g transform={`translate(${x},${y}) rotate(${rot})`}>
-      <ellipse cx={0} cy={0} rx={r} ry={r * 1.6} fill="rgba(245,196,0,0.45)" opacity={0.9} style={motionStyle} />
+      <ellipse cx={0} cy={0} rx={r} ry={r * 1.6} fill="rgba(255,214,0,0.6)" opacity={0.9} style={motionStyle} />
     </g>
   )
 }
@@ -131,21 +131,21 @@ export default function BackgroundScene() {
       >
         <defs>
           <linearGradient id="bgRoseFade" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(245,196,0,0.35)" stopOpacity="1" />
-            <stop offset="100%" stopColor="rgba(200,155,0,0.2)" stopOpacity="1" />
+            <stop offset="0%" stopColor="rgba(255,214,0,0.45)" stopOpacity="1" />
+            <stop offset="100%" stopColor="rgba(220,170,0,0.28)" stopOpacity="1" />
           </linearGradient>
         </defs>
 
-        {/* Large soft glows — very subtle depth halos */}
-        <circle cx={200} cy={450} r={180} fill="rgba(245,196,0,0.07)" opacity={1} />
-        <circle cx={1240} cy={500} r={200} fill="rgba(240,192,0,0.06)" opacity={1} />
-        <circle cx={720} cy={120} r={140} fill="rgba(245,200,0,0.06)" opacity={1} />
+        {/* Large soft glows — warm amber-yellow depth halos */}
+        <circle cx={200} cy={450} r={180} fill="rgba(255,214,0,0.12)" opacity={1} />
+        <circle cx={1240} cy={500} r={200} fill="rgba(255,210,0,0.10)" opacity={1} />
+        <circle cx={720} cy={120} r={140} fill="rgba(255,214,0,0.10)" opacity={1} />
 
         {/* Top vine border */}
         <path
           d="M0 40 Q180 20 360 45 T720 35 T1080 50 T1440 38"
           fill="none"
-          stroke="rgba(245,196,0,0.45)"
+          stroke="rgba(255,214,0,0.55)"
           strokeWidth={1.2}
           strokeLinecap="round"
           opacity={1}
@@ -153,7 +153,7 @@ export default function BackgroundScene() {
         <path
           d="M0 55 Q200 75 400 50 T800 60 T1200 48 T1440 58"
           fill="none"
-          stroke="rgba(255,215,0,0.3)"
+          stroke="rgba(255,220,0,0.4)"
           strokeWidth={0.9}
           strokeLinecap="round"
           opacity={1}
@@ -163,7 +163,7 @@ export default function BackgroundScene() {
         <path
           d="M0 860 Q220 880 440 855 T880 865 T1320 850 L1440 862"
           fill="none"
-          stroke="rgba(245,196,0,0.45)"
+          stroke="rgba(255,214,0,0.55)"
           strokeWidth={1.2}
           strokeLinecap="round"
           opacity={1}
@@ -171,7 +171,7 @@ export default function BackgroundScene() {
         <path
           d="M0 845 Q240 820 480 840 T960 830 T1440 848"
           fill="none"
-          stroke="rgba(255,215,0,0.3)"
+          stroke="rgba(255,220,0,0.4)"
           strokeWidth={0.9}
           strokeLinecap="round"
           opacity={1}
@@ -230,20 +230,20 @@ export default function BackgroundScene() {
         </g>
 
         {/* Upper side accents */}
-        <g opacity={0.45} transform="translate(0, 200)">
+        <g opacity={0.55} transform="translate(0, 200)">
           <path
             d="M40 0 Q120 30 180 0 Q140 80 60 100 Q20 50 40 0"
             fill="url(#bgRoseFade)"
-            stroke="rgba(245,196,0,0.5)"
+            stroke="rgba(255,214,0,0.6)"
             strokeWidth={0.9}
             opacity={0.8}
           />
         </g>
-        <g opacity={0.45} transform="translate(1260, 240)">
+        <g opacity={0.55} transform="translate(1260, 240)">
           <path
             d="M180 0 Q100 40 40 0 Q80 90 160 110 Q200 60 180 0"
             fill="url(#bgRoseFade)"
-            stroke="rgba(245,196,0,0.5)"
+            stroke="rgba(255,214,0,0.6)"
             strokeWidth={0.9}
             opacity={0.8}
           />

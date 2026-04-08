@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Base palette — bright yellow accent on warm beige surfaces */
-  --color-cream: #fdf6f0;
-  --color-cream-dark: #f0e6d8;
-  --color-parchment: #ede0c6;
-  --color-blush: #fef9e8;
-  --color-rose: #f5c400;
-  --color-rose-deep: #c49a0a;
-  --color-rose-light: #fefce8;
-  --color-amber: #e8a020;
-  --color-amber-soft: #f0d4b0;
-  --color-ink: #1e100a;
-  --color-ink-muted: #6b4840;
-  --color-ink-faint: #c8b4a8;
-  --color-card: #fdf6f0;
-  --color-border: #d4b896;
-  --color-gold: #8a6820;
-  --color-gold-soft: #d4a860;
-  --color-gold-faint: #f0e4c8;
+  /* Base palette — bright yellow accent on warm yellow-cream surfaces */
+  --color-cream: #fffef5;
+  --color-cream-dark: #fff7dc;
+  --color-parchment: #fff3c4;
+  --color-blush: #fffde7;
+  --color-rose: #ffd600;
+  --color-rose-deep: #b8860b;
+  --color-rose-light: #fffde0;
+  --color-amber: #f59f00;
+  --color-amber-soft: #ffe08a;
+  --color-ink: #1a1200;
+  --color-ink-muted: #5c4500;
+  --color-ink-faint: #c8ae48;
+  --color-card: #fffef5;
+  --color-border: #ddb830;
+  --color-gold: #9a7000;
+  --color-gold-soft: #ddb830;
+  --color-gold-faint: #fff5cc;
   --color-green-soft: #e4f0e4;
   --color-green-text: #3d7048;
 
@@ -29,23 +29,23 @@
 }
 
 :root {
-  --cream: #fdf6f0;
-  --cream-dark: #f0e6d8;
-  --parchment: #ede0c6;
-  --blush: #fef9e8;
-  --rose: #f5c400;
-  --rose-deep: #c49a0a;
-  --rose-light: #fefce8;
-  --amber: #e8a020;
-  --amber-soft: #f0d4b0;
-  --ink: #1e100a;
-  --ink-muted: #6b4840;
-  --ink-faint: #c8b4a8;
-  --card: #fdf6f0;
-  --border: #d4b896;
-  --gold: #8a6820;
-  --gold-soft: #d4a860;
-  --gold-faint: #f0e4c8;
+  --cream: #fffef5;
+  --cream-dark: #fff7dc;
+  --parchment: #fff3c4;
+  --blush: #fffde7;
+  --rose: #ffd600;
+  --rose-deep: #b8860b;
+  --rose-light: #fffde0;
+  --amber: #f59f00;
+  --amber-soft: #ffe08a;
+  --ink: #1a1200;
+  --ink-muted: #5c4500;
+  --ink-faint: #c8ae48;
+  --card: #fffef5;
+  --border: #ddb830;
+  --gold: #9a7000;
+  --gold-soft: #ddb830;
+  --gold-faint: #fff5cc;
   --green-soft: #e4f0e4;
   --green-text: #3d7048;
 
@@ -274,7 +274,7 @@
 .paper-texture {
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
-    linear-gradient(160deg, #f2dfc4 0%, #e8d4b2 100%);
+    linear-gradient(160deg, #fff3c4 0%, #ffe898 100%);
 }
 
 /* ─── Base styles ────────────────────────────────────────────────────────── */
@@ -283,10 +283,10 @@
   body {
     @apply m-0 min-h-screen font-sans text-ink antialiased;
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    background-color: #1e1600;
+    background-color: #120900;
     background-image:
-      radial-gradient(ellipse 80% 60% at 15% 15%, #3d2e0a 0%, transparent 65%),
-      radial-gradient(ellipse 70% 50% at 85% 85%, #120e00 0%, transparent 60%);
+      radial-gradient(ellipse 80% 60% at 15% 15%, #2e2000 0%, transparent 65%),
+      radial-gradient(ellipse 70% 50% at 85% 85%, #1e1400 0%, transparent 60%);
   }
 
   #root {
@@ -372,12 +372,12 @@
 /* ─── Paper card ─────────────────────────────────────────────────────────── */
 
 .paper-card {
-  background-color: #ede0c6;
-  border: 1px solid #d4b896;
+  background-color: #fff3c4;
+  border: 1px solid #ddb830;
   border-radius: 1rem;
   box-shadow:
-    0 2px 10px rgba(30, 16, 10, 0.1),
-    0 1px 3px rgba(180, 120, 60, 0.14);
+    0 2px 10px rgba(26, 18, 0, 0.1),
+    0 1px 3px rgba(200, 160, 0, 0.14);
 }
 
 .paper-card-ribbon {
@@ -386,14 +386,14 @@
 
 /* Main content surface — cream panel lifted off the dark wine background */
 .page-panel {
-  background-color: #fdf6f0;
-  border: 1px solid rgba(212, 184, 150, 0.5);
+  background-color: #fffef5;
+  border: 1px solid rgba(221, 184, 48, 0.5);
   border-radius: 1.25rem;
   padding: 1.25rem 1.25rem 1.75rem;
   box-shadow:
-    0 8px 60px rgba(14, 10, 0, 0.55),
-    0 2px 16px rgba(245, 196, 0, 0.18),
-    0 1px 4px rgba(14, 10, 0, 0.3);
+    0 8px 60px rgba(18, 9, 0, 0.55),
+    0 2px 16px rgba(255, 214, 0, 0.22),
+    0 1px 4px rgba(18, 9, 0, 0.3);
 }
 
 @media (min-width: 640px) {
