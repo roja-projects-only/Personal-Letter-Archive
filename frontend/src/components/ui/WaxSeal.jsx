@@ -20,7 +20,7 @@ export default function WaxSeal({ size = 72, letter = '✦', className = '' }) {
             <stop offset="100%" stopColor="#c49000" />
           </radialGradient>
           <filter id="sealShadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#1a1200" floodOpacity="0.35" />
+            <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#7A5500" floodOpacity="0.35" />
           </filter>
         </defs>
 
