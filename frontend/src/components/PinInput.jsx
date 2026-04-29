@@ -25,7 +25,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
 
   return (
     <div
-      className={`relative mx-auto w-full max-w-[15rem] rounded-2xl p-1 transition-all duration-200 hover:ring-2 hover:ring-gold/40 ${focused ? 'ring-2 ring-rose/50' : ''} ${shake ? 'animate-shake' : ''}`}
+      className={`relative w-full rounded-2xl p-1 transition-all duration-200 hover:ring-2 hover:ring-gold/40 ${focused ? 'ring-2 ring-rose/50' : ''} ${shake ? 'animate-shake' : ''}`}
     >
       <div className="relative flex justify-center">
         {/* Real input: opens numeric keyboard on mobile */}
@@ -45,7 +45,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
         />
 
         {/* Visual cells (non-interactive; taps hit the overlay input) */}
-        <div className="pointer-events-none relative z-10 flex justify-center gap-3">
+        <div className="pointer-events-none relative z-10 flex justify-center gap-2.5">
           {cells.map((i) => {
             const filled = i < value.length
             const isActive = focused && i === activeIdx
@@ -58,7 +58,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
             return (
               <div
                 key={i}
-                className={`flex h-12 w-12 select-none items-center justify-center rounded-xl border-[1.5px] transition-all duration-200 ${cellClass} ${pulsingIndex === i ? 'animate-pulse-pop' : ''}`}
+                className={`flex h-14 w-14 select-none items-center justify-center rounded-xl border-[1.5px] transition-all duration-200 ${cellClass} ${pulsingIndex === i ? 'animate-pulse-pop' : ''}`}
               >
                 {filled ? (
                   <span className="block h-2.5 w-2.5 rounded-full bg-amber opacity-90" />

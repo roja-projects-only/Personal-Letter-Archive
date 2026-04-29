@@ -85,9 +85,9 @@ export default function RecipientGate() {
   const canSubmit = !locked && !submitting && pin.length === 4 && name.trim().length > 0
 
   return (
-    <PageShell maxWidthClassName="max-w-xs" centered>
+    <PageShell maxWidthClassName="max-w-sm" centered>
       <div className="animate-fade-up flex flex-col items-center py-4 sm:py-6">
-        <PaperCard corners className="flex w-full flex-col items-center px-8 py-12 sm:px-10 sm:py-14">
+        <PaperCard corners className="flex w-full flex-col items-center px-9 py-12 sm:px-12 sm:py-14">
 
           {/* ── Seal + title: one unit ── */}
           <WaxSeal size={110} letter="♡" />
