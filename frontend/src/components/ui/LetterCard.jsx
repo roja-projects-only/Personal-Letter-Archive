@@ -66,7 +66,7 @@ export default function LetterCard({
             )}
           </p>
         </button>
-        <div className="flex shrink-0 items-center border-l border-gold-soft/60 pr-2 pl-1">
+        <div className="flex shrink-0 items-center bg-cream-dark/50 px-2">
           <GhostButton
             type="button"
             onClick={(e) => {

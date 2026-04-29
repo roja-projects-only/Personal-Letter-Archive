@@ -103,7 +103,7 @@ export default function WriterDashboard() {
           )}
           {!loading && letters.length === 0 && (
             <div className="flex flex-col items-center py-14 text-center">
-              <PaperCard className="animate-letter-reveal max-w-sm p-8">
+              <PaperCard corners className="animate-letter-reveal max-w-sm p-8">
                 <p className="font-serif text-base italic leading-relaxed text-ink-muted">
                   your desk is quiet — begin with a first letter.
                 </p>

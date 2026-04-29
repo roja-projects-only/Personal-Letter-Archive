@@ -130,7 +130,7 @@ export default function WriterNewLetter() {
         <FloralDivider ornament="❧" className="mb-5" />
 
         {/* Editor */}
-        <PaperCard className="p-5 sm:p-7">
+        <PaperCard corners className="p-5 sm:p-7">
           <Editor content={content} onChange={setContent} placeholder="begin here…" />
         </PaperCard>
 

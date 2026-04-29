@@ -116,7 +116,7 @@ export default function RecipientLetterDetail() {
 
         {/* Letter body */}
         <PaperCard corners className="animate-letter-reveal p-6 sm:p-8" style={{ animationDelay: '260ms' }}>
-          <div className="font-serif text-base leading-[1.8] text-ink whitespace-pre-wrap">
+          <div className="font-serif text-base italic leading-[1.8] text-ink whitespace-pre-wrap">
             {letter.content}
           </div>
         </PaperCard>

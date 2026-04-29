@@ -10,15 +10,6 @@ import Editor from '../components/Editor'
 import { deleteLetter, getLetter, listReplies, updateLetter } from '../api/letters'
 import { useToast } from '../hooks/useToast'
 
-function formatTs(iso) {
-  if (!iso) return ''
-  try {
-    return new Date(iso).toLocaleString()
-  } catch {
-    return ''
-  }
-}
-
 function formatDate(iso) {
   if (!iso) return ''
   try {
@@ -170,7 +161,7 @@ export default function WriterLetterDetail() {
             </h1>
             <FloralDivider ornament="❧" className="mb-7" />
             <PaperCard corners className="animate-letter-reveal p-6 sm:p-8">
-              <div className="font-serif text-base leading-[1.8] text-ink whitespace-pre-wrap">
+              <div className="mx-auto max-w-[65ch] font-serif text-base italic leading-[1.8] text-ink whitespace-pre-wrap">
                 {letter.content}
               </div>
             </PaperCard>
@@ -239,7 +230,7 @@ export default function WriterLetterDetail() {
                 {sortedReplies.map((r, i) => (
                   <PaperCard key={r.id} className="animate-slide-in-card p-4" style={{ animationDelay: `${i * 60}ms` }}>
                     <p className="font-sans text-[11px] text-gold tracking-wide">
-                      {formatTs(r.createdAt)}
+                      {formatDate(r.createdAt)}
                     </p>
                     <p className="mt-1.5 font-serif text-sm italic leading-relaxed text-ink-muted">
                       {r.content}

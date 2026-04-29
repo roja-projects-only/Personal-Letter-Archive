@@ -163,7 +163,7 @@ export default function RecipientGate() {
                     autoCapitalize="words"
                     autoCorrect="off"
                     enterKeyHint="done"
-                    className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 text-center font-serif text-base italic text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                    className="w-full rounded-xl border border-gold-soft bg-parchment/95 px-4 py-3.5 text-center font-serif text-base italic text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   />
                 </div>
                 <PrimaryButton type="submit" disabled={locked || !name.trim()} className="w-full">

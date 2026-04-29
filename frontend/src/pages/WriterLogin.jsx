@@ -92,7 +92,7 @@ export default function WriterLogin() {
                 spellCheck={false}
                 enterKeyHint="next"
                 disabled={submitting}
-                className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-60"
+                className="w-full rounded-xl border border-gold-soft bg-parchment/95 px-4 py-3.5 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-60"
               />
             </div>
             <div>
@@ -108,7 +108,7 @@ export default function WriterLogin() {
                   autoComplete="current-password"
                   enterKeyHint="go"
                   disabled={submitting}
-                  className="w-full rounded-xl border border-gold-soft bg-white px-4 py-3.5 pr-14 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-60"
+                  className="w-full rounded-xl border border-gold-soft bg-parchment/95 px-4 py-3.5 pr-14 font-sans text-base text-ink outline-none transition-colors focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:opacity-60"
                 />
                 <button
                   type="button"

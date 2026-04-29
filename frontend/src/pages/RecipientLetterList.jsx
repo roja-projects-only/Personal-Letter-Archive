@@ -10,9 +10,11 @@ import { recipientLogout } from '../api/recipient'
 import { letterExcerpt } from '../lib/excerpt'
 import { normalizeLetterList } from '../lib/letters'
 import { LIST_STAGGER_MS } from '../lib/motion'
+import { useRecipientSession } from '../hooks/useRecipientSession'
 
 export default function RecipientLetterList() {
   const navigate = useNavigate()
+  const { recipient } = useRecipientSession()
   const [letters, setLetters] = useState([])
   const [loading, setLoading] = useState(true)
   const [confirmLeave, setConfirmLeave] = useState(false)
@@ -47,7 +49,7 @@ export default function RecipientLetterList() {
             letters written
           </p>
           <h1 className="font-display text-[34px] font-semibold italic leading-tight text-ink">
-            for her
+            for {recipient?.name || 'you'}
           </h1>
           <FloralDivider ornament="✦" className="mx-auto mt-3 mb-3 w-48" />
           <p className="font-sans text-xs text-ink-muted">
