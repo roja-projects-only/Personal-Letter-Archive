@@ -40,7 +40,7 @@ export default function LetterCard({
   if (variant === 'horizontal') {
     return (
       <div
-        className={`paper-card paper-texture animate-slide-in-card relative mb-3 flex items-stretch gap-0 overflow-hidden transition-all duration-200 hover:shadow-md hover:border-gold ${className}`}
+        className={`paper-card paper-texture animate-slide-in-card relative mb-3 flex items-stretch gap-0 overflow-hidden transition-all duration-200 hover:-translate-y-px hover:shadow-md hover:border-gold ${className}`}
         style={delayStyle}
       >
         <CornerOrnament position="tr" size={ORNAMENT_SM} />
@@ -85,7 +85,7 @@ export default function LetterCard({
     <button
       type="button"
       onClick={onCardClick}
-      className={`paper-card paper-texture animate-slide-in-card relative mb-3 w-full p-5 text-left transition-all duration-200 hover:shadow-md hover:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${className}`}
+      className={`paper-card paper-texture animate-slide-in-card relative mb-3 w-full p-5 text-left transition-all duration-200 hover:-translate-y-px hover:shadow-md hover:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${className}`}
       style={delayStyle}
     >
       <CornerOrnament position="tr" size={ORNAMENT_MD} />

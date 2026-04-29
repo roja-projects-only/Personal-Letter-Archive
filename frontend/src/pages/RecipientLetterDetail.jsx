@@ -93,10 +93,10 @@ export default function RecipientLetterDetail() {
 
   return (
     <PageShell maxWidthClassName="max-w-lg">
-      <div className="animate-fade-up pb-10">
+      <div className="pb-10">
 
         {/* Nav row */}
-        <div className="mb-8 flex items-center justify-between pt-2">
+        <div className="animate-fade-up mb-8 flex items-center justify-between pt-2">
           <Link to="/letters">
             <GhostButton type="button">← back</GhostButton>
           </Link>
@@ -104,29 +104,31 @@ export default function RecipientLetterDetail() {
         </div>
 
         {/* Letter number + title */}
-        <p className="mb-1 font-sans text-xs uppercase tracking-[3px] text-gold">
-          letter no. {letterNo}
-        </p>
-        <h1 className="mb-3 font-display text-[30px] font-semibold italic leading-snug text-ink">
-          {letter.title?.trim() || 'Letter'}
-        </h1>
-        <FloralDivider ornament="❧" className="mb-7" />
+        <div className="animate-fade-up" style={{ animationDelay: '100ms' }}>
+          <p className="mb-1 font-sans text-xs uppercase tracking-[3px] text-gold">
+            letter no. {letterNo}
+          </p>
+          <h1 className="mb-3 font-display text-[30px] font-semibold italic leading-snug text-ink">
+            {letter.title?.trim() || 'Letter'}
+          </h1>
+          <FloralDivider ornament="❧" className="mb-7" />
+        </div>
 
         {/* Letter body */}
-        <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
+        <PaperCard corners className="animate-letter-reveal p-6 sm:p-8" style={{ animationDelay: '260ms' }}>
           <div className="font-serif text-base leading-[1.8] text-ink whitespace-pre-wrap">
             {letter.content}
           </div>
         </PaperCard>
 
         {/* Replies + reply box */}
-        <div className="mt-10">
+        <div className="animate-fade-up mt-10" style={{ animationDelay: '420ms' }}>
           <FloralDivider ornament="✦" className="mb-7 opacity-60" />
 
           {sortedReplies.length > 0 && (
             <div className="mb-6 space-y-3">
-              {sortedReplies.map((r) => (
-                <PaperCard key={r.id} className="p-4">
+              {sortedReplies.map((r, i) => (
+                <PaperCard key={r.id} className="animate-slide-in-card p-4" style={{ animationDelay: `${i * 60}ms` }}>
                   <p className="font-serif text-sm italic leading-relaxed text-ink-muted">
                     {r.content}
                   </p>

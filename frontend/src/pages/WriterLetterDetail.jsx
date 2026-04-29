@@ -161,7 +161,7 @@ export default function WriterLetterDetail() {
 
         {/* View mode */}
         {!editMode ? (
-          <>
+          <div key="view" className="animate-panel-in">
             <p className="mb-1 font-sans text-xs uppercase tracking-[3px] text-gold">
               {formatDate(letter.createdAt)}
             </p>
@@ -169,15 +169,15 @@ export default function WriterLetterDetail() {
               {letter.title?.trim() || 'Letter'}
             </h1>
             <FloralDivider ornament="❧" className="mb-7" />
-            <PaperCard corners ribbon className="animate-letter-reveal p-6 sm:p-8">
+            <PaperCard corners className="animate-letter-reveal p-6 sm:p-8">
               <div className="font-serif text-base leading-[1.8] text-ink whitespace-pre-wrap">
                 {letter.content}
               </div>
             </PaperCard>
-          </>
+          </div>
         ) : (
           /* Edit mode */
-          <>
+          <div key="edit" className="animate-panel-in">
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -222,7 +222,7 @@ export default function WriterLetterDetail() {
                 </div>
               )}
             </div>
-          </>
+          </div>
         )}
 
         {/* Her replies */}
@@ -236,8 +236,8 @@ export default function WriterLetterDetail() {
               <p className="font-serif text-sm italic text-ink-muted">no replies yet.</p>
             ) : (
               <div className="space-y-3">
-                {sortedReplies.map((r) => (
-                  <PaperCard key={r.id} className="p-4">
+                {sortedReplies.map((r, i) => (
+                  <PaperCard key={r.id} className="animate-slide-in-card p-4" style={{ animationDelay: `${i * 60}ms` }}>
                     <p className="font-sans text-[11px] text-gold tracking-wide">
                       {formatTs(r.createdAt)}
                     </p>
