@@ -40,20 +40,20 @@ export default function LetterCard({
   if (variant === 'horizontal') {
     return (
       <div
-        className={`paper-card paper-texture animate-slide-in-card relative mb-3 flex items-stretch gap-0 overflow-hidden transition-all duration-200 hover:-translate-y-px hover:shadow-md hover:border-gold ${className}`}
+        className={`paper-card paper-texture animate-slide-in-card relative mb-3 flex items-stretch gap-0 overflow-hidden transition-all duration-200 hover:-translate-y-px hover:border-gold hover:shadow-[0_4px_16px_rgba(180,120,0,0.15),0_1px_4px_rgba(200,160,0,0.18)] ${className}`}
         style={delayStyle}
       >
         <CornerOrnament position="tr" size={ORNAMENT_SM} />
         <button
           type="button"
           onClick={onCardClick}
-          className="min-w-0 flex-1 cursor-pointer p-4 text-left transition-colors hover:bg-white/25 focus-visible:z-[1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-rose/50"
+          className="min-w-0 flex-1 cursor-pointer p-4 text-left transition-colors hover:bg-cream/30 focus-visible:z-[1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-rose/50"
         >
-          <p className="font-serif text-sm italic text-ink">
+          <p className="font-display text-[16px] font-semibold italic leading-snug text-ink">
             {title?.trim() || 'Untitled letter'}
           </p>
-          <p className="mt-0.5 font-sans text-xs text-ink-muted">{formatDate(createdAt)}</p>
-          <p className="mt-1 font-sans text-[11px] text-ink-muted">
+          <p className="mt-1 font-sans text-[10px] uppercase tracking-[0.18em] text-ink-muted">{formatDate(createdAt)}</p>
+          <p className="mt-1.5 font-sans text-[11px] text-ink-muted">
             {replyCount > 0 ? (
               <>
                 <span className="text-rose-deep">
@@ -66,7 +66,7 @@ export default function LetterCard({
             )}
           </p>
         </button>
-        <div className="flex shrink-0 items-center bg-cream-dark/50 px-2">
+        <div className="flex shrink-0 items-center bg-cream-dark/40 px-2">
           <GhostButton
             type="button"
             onClick={(e) => {
@@ -85,22 +85,22 @@ export default function LetterCard({
     <button
       type="button"
       onClick={onCardClick}
-      className={`paper-card paper-texture animate-slide-in-card relative mb-3 w-full p-5 text-left transition-all duration-200 hover:-translate-y-px hover:shadow-md hover:border-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${className}`}
+      className={`paper-card paper-texture animate-slide-in-card relative mb-3 w-full p-5 text-left transition-all duration-200 hover:-translate-y-px hover:border-gold hover:shadow-[0_4px_16px_rgba(180,120,0,0.15),0_1px_4px_rgba(200,160,0,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${className}`}
       style={delayStyle}
     >
       <CornerOrnament position="tr" size={ORNAMENT_MD} />
       <CornerOrnament position="bl" size={ORNAMENT_MD} />
-      <div className="mb-1.5 flex items-start justify-between gap-2">
-        <span className="font-serif text-base italic text-ink leading-snug pr-2">
+      <div className="mb-2 flex items-start justify-between gap-2">
+        <span className="pr-2 font-display text-[18px] font-semibold italic leading-snug text-ink">
           {title?.trim() || 'Untitled letter'}
         </span>
-        <span className="shrink-0">
+        <span className="shrink-0 pt-0.5">
           {showReplied ? <TagReplied /> : showNew ? <TagNew /> : null}
         </span>
       </div>
-      <p className="mb-2 font-sans text-xs text-gold tracking-wide">{formatDate(createdAt)}</p>
+      <p className="mb-3 font-sans text-[10.5px] uppercase tracking-[0.18em] text-ink-muted">{formatDate(createdAt)}</p>
       {excerpt != null && (
-        <p className="font-serif text-sm leading-relaxed text-ink-muted italic">{excerpt}</p>
+        <p className="line-clamp-2 font-serif text-[13px] italic leading-relaxed text-ink-muted/80">{excerpt}</p>
       )}
     </button>
   )
