@@ -25,7 +25,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
 
   return (
     <div
-      className={`relative w-full rounded-2xl p-1 transition-all duration-200 hover:ring-2 hover:ring-gold/40 ${focused ? 'ring-2 ring-rose/50' : ''} ${shake ? 'animate-shake' : ''}`}
+      className={`group relative w-full rounded-2xl p-1 transition-all duration-200 ${focused ? 'ring-2 ring-rose/50' : ''} ${shake ? 'animate-shake' : ''}`}
     >
       <div className="relative flex justify-center">
         {/* Real input: opens numeric keyboard on mobile */}
@@ -53,7 +53,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
               ? 'border-rose bg-rose-light shadow-sm'
               : isActive
                 ? 'border-rose bg-rose-light ring-2 ring-rose/30 shadow-sm'
-                : 'border-gold-soft bg-parchment'
+                : 'border-gold-soft bg-parchment group-hover:border-gold/70 group-hover:bg-cream/50 group-hover:shadow-[0_1px_4px_rgba(180,120,0,0.12)]'
 
             return (
               <div

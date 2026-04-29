@@ -129,7 +129,7 @@ export default function RecipientGate() {
                   autoCorrect="off"
                   enterKeyHint="next"
                   style={{ fontSize: 'max(16px, 1rem)' }}
-                  className="w-full rounded-xl border border-gold-soft bg-parchment/95 px-4 py-3.5 text-center font-serif italic text-ink outline-none transition-colors placeholder:text-ink-muted/60 focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment disabled:opacity-50"
+                  className="w-full rounded-xl border border-gold-soft bg-parchment/95 px-4 py-3.5 text-center font-serif italic text-ink outline-none transition-all duration-200 placeholder:text-ink-muted/60 hover:border-gold hover:bg-parchment hover:shadow-[0_1px_6px_rgba(180,120,0,0.13)] focus:border-rose focus:bg-cream focus-visible:ring-2 focus-visible:ring-rose/50 focus-visible:ring-offset-2 focus-visible:ring-offset-parchment disabled:opacity-50"
                 />
               </div>
 
