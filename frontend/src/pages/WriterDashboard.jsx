@@ -6,10 +6,7 @@ import PrimaryButton from '../components/ui/PrimaryButton'
 import LetterCard from '../components/ui/LetterCard'
 import FloralDivider from '../components/ui/FloralDivider'
 import PaperCard from '../components/ui/PaperCard'
-import CornerOrnament from '../components/ui/CornerOrnament'
 import { listLetters } from '../api/letters'
-
-const ORNAMENT_SM = 20
 import { LIST_STAGGER_MS } from '../lib/motion'
 import { logout } from '../api/auth'
 import { normalizeLetterList } from '../lib/letters'
@@ -84,24 +81,16 @@ export default function WriterDashboard() {
             </Link>
           </div>
           <FloralDivider ornament="✦" className="mt-5" />
+          {!loading && letters.length > 0 && (
+            <p className="mt-3 text-center font-sans text-[11px] uppercase tracking-widest text-ink-muted">
+              {letters.length} {letters.length === 1 ? 'letter' : 'letters'}
+              {totalReplies > 0 && (
+                <> · {totalReplies} {totalReplies === 1 ? 'reply' : 'replies'}</>
+              )}
+              {daysSinceFirst > 0 && <> · {daysSinceFirst} days</>}
+            </p>
+          )}
         </header>
-
-        {/* Stat cards */}
-        <div className="mb-8 grid grid-cols-3 gap-3">
-          {[
-            { value: loading ? '—' : letters.length, label: 'letters', color: 'text-rose-deep' },
-            { value: loading ? '—' : totalReplies, label: 'replies', color: 'text-gold' },
-            { value: loading ? '—' : daysSinceFirst, label: 'days', color: 'text-gold' },
-          ].map(({ value, label, color }) => (
-            <PaperCard key={label} className="relative p-4 text-center">
-              <CornerOrnament position="tr" size={ORNAMENT_SM} />
-              <p className={`font-display text-3xl font-semibold italic ${color}`}>{value}</p>
-              <p className="mt-1 font-sans text-[11px] uppercase tracking-widest text-ink-muted">
-                {label}
-              </p>
-            </PaperCard>
-          ))}
-        </div>
 
         {/* Recent letters */}
         <div className="mb-2 flex items-center gap-3">
@@ -114,7 +103,7 @@ export default function WriterDashboard() {
           )}
           {!loading && letters.length === 0 && (
             <div className="flex flex-col items-center py-14 text-center">
-              <PaperCard ribbon className="max-w-sm p-8">
+              <PaperCard className="max-w-sm p-8">
                 <p className="font-serif text-base italic leading-relaxed text-ink-muted">
                   your desk is quiet — begin with a first letter.
                 </p>
