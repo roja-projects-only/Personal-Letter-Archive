@@ -40,7 +40,7 @@ export default function LetterCard({
   if (variant === 'horizontal') {
     return (
       <div
-        className={`paper-card paper-card-ribbon paper-texture animate-slide-in-card relative mb-3 flex items-stretch gap-0 overflow-hidden transition-all duration-200 hover:shadow-md hover:border-gold ${className}`}
+        className={`paper-card paper-texture animate-slide-in-card relative mb-3 flex items-stretch gap-0 overflow-hidden transition-all duration-200 hover:shadow-md hover:border-gold ${className}`}
         style={delayStyle}
       >
         <CornerOrnament position="tr" size={ORNAMENT_SM} />

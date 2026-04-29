@@ -65,7 +65,7 @@ export default function WriterLogin() {
 
         <FloralDivider className="mb-7 w-36" />
 
-        <PaperCard ribbon corners className={`w-full p-6 pb-safe ${shake ? 'animate-shake' : ''}`}>
+        <PaperCard corners className={`w-full p-6 pb-safe ${shake ? 'animate-shake' : ''}`}>
           <form onSubmit={handleSubmit} noValidate className="space-y-4">
             {error && (
               <div

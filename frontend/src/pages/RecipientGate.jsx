@@ -107,7 +107,7 @@ export default function RecipientGate() {
   return (
     <PageShell maxWidthClassName="max-w-sm" centered>
       <div className="animate-fade-up flex flex-col items-center py-6">
-        <PaperCard ribbon corners className="flex w-full flex-col items-center gap-4 px-8 py-10">
+        <PaperCard corners className="flex w-full flex-col items-center gap-4 px-8 py-10">
 
           <WaxSeal size={80} letter="♡" />
 
