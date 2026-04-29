@@ -89,8 +89,8 @@ export default function WriterDashboard() {
         {/* Stat cards */}
         <div className="mb-8 grid grid-cols-3 gap-3">
           {[
-            { value: loading ? '—' : letters.length, label: 'letters', color: 'text-rose' },
-            { value: loading ? '—' : totalReplies, label: 'replies', color: 'text-amber' },
+            { value: loading ? '—' : letters.length, label: 'letters', color: 'text-rose-deep' },
+            { value: loading ? '—' : totalReplies, label: 'replies', color: 'text-gold' },
             { value: loading ? '—' : daysSinceFirst, label: 'days', color: 'text-gold' },
           ].map(({ value, label, color }) => (
             <PaperCard key={label} className="relative p-4 text-center">

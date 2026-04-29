@@ -48,7 +48,6 @@ export function ToastProvider({ children }) {
                 ? 'border-green-text/30 bg-green-soft text-green-text'
                 : 'border-rose-deep/30 bg-rose-light text-rose-deep'
             }`}
-            role="status"
           >
             {t.message}
           </div>

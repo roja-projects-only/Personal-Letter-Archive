@@ -29,26 +29,6 @@
 }
 
 :root {
-  --cream: #fffef5;
-  --cream-dark: #fff7dc;
-  --parchment: #fff3c4;
-  --blush: #fffde7;
-  --rose: #ffd600;
-  --rose-deep: #7A5500;
-  --rose-light: #fffde0;
-  --amber: #f59f00;
-  --amber-soft: #ffe08a;
-  --ink: #3B2800;
-  --ink-muted: #6B4400;
-  --ink-faint: #A07800;
-  --card: #fffef5;
-  --border: #ddb830;
-  --gold: #9a7000;
-  --gold-soft: #ddb830;
-  --gold-faint: #fff5cc;
-  --green-soft: #e4f0e4;
-  --green-text: #3d7048;
-
   /* ─── Motion tokens ────────────────────────────────── */
   --motion-dur-sm:  0.2s;
   --motion-dur-md:  0.35s;
@@ -273,7 +253,7 @@
 .paper-texture {
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
-    linear-gradient(160deg, #fff3c4 0%, #ffe898 100%);
+    linear-gradient(160deg, var(--color-parchment) 0%, #ffe898 100%);
 }
 
 /* ─── Base styles ────────────────────────────────────────────────────────── */
@@ -355,7 +335,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--rose);
+  color: var(--color-rose);
   font-size: 0.75rem;
   letter-spacing: 0.2em;
 }
@@ -365,14 +345,14 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold-soft), transparent);
+  background: linear-gradient(to right, transparent, var(--color-gold-soft), transparent);
 }
 
 /* ─── Paper card ─────────────────────────────────────────────────────────── */
 
 .paper-card {
-  background-color: #fff3c4;
-  border: 1px solid #ddb830;
+  background-color: var(--color-parchment);
+  border: 1px solid var(--color-border);
   border-radius: 1rem;
   box-shadow:
     0 2px 10px rgba(180, 120, 0, 0.10),
@@ -381,8 +361,8 @@
 
 /* Main content surface — cream panel lifted off the dark wine background */
 .page-panel {
-  background-color: #fffef5;
-  border: 1px solid rgba(221, 184, 48, 0.5);
+  background-color: var(--color-cream);
+  border: 1px solid color-mix(in oklab, var(--color-border) 50%, transparent);
   border-radius: 1.25rem;
   padding: 1.25rem 1.25rem 1.75rem;
   box-shadow:
@@ -406,7 +386,7 @@
 
 /* Global: subtle wine/gold tone on the main scrollable window */
 html {
-  scrollbar-color: var(--gold-soft) transparent;
+  scrollbar-color: var(--color-gold-soft) transparent;
   scrollbar-width: thin;
 }
 
@@ -421,17 +401,17 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--gold-soft);
+  background-color: var(--color-gold-soft);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--rose);
+  background-color: var(--color-rose);
 }
 
 /* Editor textarea — slightly thinner, more intimate scrollbar */
 .letter-editor {
-  scrollbar-color: var(--gold-soft) transparent;
+  scrollbar-color: var(--color-gold-soft) transparent;
   scrollbar-width: thin;
 }
 
@@ -444,10 +424,10 @@ html {
 }
 
 .letter-editor::-webkit-scrollbar-thumb {
-  background-color: var(--gold-soft);
+  background-color: var(--color-gold-soft);
   border-radius: 999px;
 }
 
 .letter-editor::-webkit-scrollbar-thumb:hover {
-  background-color: var(--rose);
+  background-color: var(--color-rose);
 }

@@ -56,7 +56,7 @@ export default function LetterCard({
           <p className="mt-1 font-sans text-[11px] text-ink-muted">
             {replyCount > 0 ? (
               <>
-                <span className="text-rose">
+                <span className="text-rose-deep">
                   {replyCount} {replyCount === 1 ? 'reply' : 'replies'}
                 </span>{' '}
                 ♡
