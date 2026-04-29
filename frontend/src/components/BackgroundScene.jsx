@@ -136,10 +136,9 @@ export default function BackgroundScene() {
           </linearGradient>
         </defs>
 
-        {/* Large soft glows — warm amber-yellow depth halos */}
-        <circle cx={200} cy={450} r={180} fill="rgba(255,214,0,0.12)" opacity={1} />
-        <circle cx={1240} cy={500} r={200} fill="rgba(255,210,0,0.10)" opacity={1} />
-        <circle cx={720} cy={120} r={140} fill="rgba(255,214,0,0.10)" opacity={1} />
+        {/* Candlelight halo — single warm source, candle between writer and page */}
+        <ellipse cx={720} cy={340} rx={520} ry={310} fill="rgba(255,183,28,0.09)" opacity={1} />
+        <ellipse cx={720} cy={310} rx={260} ry={155} fill="rgba(255,208,60,0.07)" opacity={1} />
 
         {/* Top vine border */}
         <path
@@ -178,19 +177,19 @@ export default function BackgroundScene() {
         />
 
         {/* Left-center and right-center large roses */}
-        <g opacity={0.55} transform="translate(50, 420) rotate(-12)">
+        <g opacity={0.38} transform="translate(50, 420) rotate(-12)">
           <RoseBloom cx={0} cy={0} scale={1.5} />
           <Leaf x={-50} y={20} rot={-30} />
           <Leaf x={45} y={15} rot={40} flip />
         </g>
-        <g opacity={0.55} transform="translate(1390, 460) rotate(8)">
+        <g opacity={0.38} transform="translate(1390, 460) rotate(8)">
           <RoseBloom cx={0} cy={0} scale={1.45} />
           <Leaf x={-40} y={-25} rot={-140} />
           <Leaf x={35} y={28} rot={50} flip />
         </g>
 
         {/* Top-left cluster */}
-        <g opacity={0.7} transform="translate(80, 70) rotate(-8)">
+        <g opacity={0.50} transform="translate(80, 70) rotate(-8)">
           <RoseBloom cx={0} cy={0} scale={1.35} />
           <Leaf x={-45} y={25} rot={-40} />
           <Leaf x={38} y={18} rot={55} flip />
@@ -198,21 +197,21 @@ export default function BackgroundScene() {
         </g>
 
         {/* Top-right cluster */}
-        <g opacity={0.7} transform="translate(1360, 90) rotate(12)">
+        <g opacity={0.50} transform="translate(1360, 90) rotate(12)">
           <RoseBloom cx={0} cy={0} scale={1.25} />
           <Leaf x={-42} y={22} rot={-35} />
           <Leaf x={35} y={30} rot={48} flip />
         </g>
 
         {/* Bottom-left cluster */}
-        <g opacity={0.7} transform="translate(100, 820) rotate(5)">
+        <g opacity={0.50} transform="translate(100, 820) rotate(5)">
           <RoseBloom cx={0} cy={0} scale={1.15} />
           <Leaf x={40} y={-35} rot={140} flip />
           <Leaf x={-35} y={-28} rot={-120} />
         </g>
 
         {/* Bottom-right cluster */}
-        <g opacity={0.7} transform="translate(1320, 780) rotate(-6)">
+        <g opacity={0.50} transform="translate(1320, 780) rotate(-6)">
           <RoseBloom cx={0} cy={0} scale={1.3} />
           <Leaf x={-40} y={-30} rot={-135} />
           <Leaf x={38} y={-22} rot={125} flip />
@@ -220,12 +219,12 @@ export default function BackgroundScene() {
         </g>
 
         {/* Left edge spray */}
-        <g opacity={0.55}>
+        <g opacity={0.42}>
           <BranchSpray x={-20} y={380} rot={8} />
         </g>
 
         {/* Right edge spray */}
-        <g opacity={0.55}>
+        <g opacity={0.42}>
           <BranchSpray x={1460} y={420} rot={172} />
         </g>
 

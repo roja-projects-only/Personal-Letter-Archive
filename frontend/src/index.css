@@ -262,10 +262,13 @@
   body {
     @apply m-0 min-h-screen font-sans text-ink antialiased;
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    background-color: #FFF9C4;
+    /* Deep warm mahogany — the room around the writing desk */
+    background-color: #1c0b00;
     background-image:
-      radial-gradient(ellipse 80% 60% at 15% 15%, #FFE082 0%, transparent 65%),
-      radial-gradient(ellipse 70% 50% at 85% 85%, #FFF176 0%, transparent 60%);
+      /* Candlelight from above-center: single warm light source */
+      radial-gradient(ellipse 68% 52% at 50% 34%, rgba(255,182,24,0.26) 0%, rgba(165,78,0,0.11) 50%, transparent 74%),
+      /* Warm amber floor glow — reflected heat from the desk surface */
+      radial-gradient(ellipse 130% 80% at 50% 64%, rgba(44,12,0,0.50) 0%, transparent 70%);
   }
 
   #root {
@@ -365,10 +368,11 @@
   border: 1px solid color-mix(in oklab, var(--color-border) 50%, transparent);
   border-radius: 1.25rem;
   padding: 1.25rem 1.25rem 1.75rem;
+  /* Warm-paper glow against the dark desk: cream panel radiates candlelight */
   box-shadow:
-    0 8px 60px rgba(180, 120, 0, 0.18),
-    0 2px 16px rgba(255, 214, 0, 0.22),
-    0 1px 4px rgba(180, 120, 0, 0.12);
+    0 20px 90px rgba(150, 80, 0, 0.45),
+    0 6px 36px rgba(230, 165, 0, 0.32),
+    0 1px 6px rgba(180, 120, 0, 0.22);
 }
 
 @media (min-width: 640px) {
