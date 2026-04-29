@@ -50,7 +50,7 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
             const filled = i < value.length
             const isActive = focused && i === activeIdx
             const cellClass = filled
-              ? 'border-rose bg-rose-light shadow-rose/10'
+              ? 'border-rose bg-rose-light shadow-sm'
               : isActive
                 ? 'border-rose bg-rose-light ring-2 ring-rose/30 shadow-sm'
                 : 'border-gold-soft bg-parchment'
@@ -58,9 +58,13 @@ export default function PinInput({ value, onChange, shake, onFilledPulseIndex, p
             return (
               <div
                 key={i}
-                className={`flex h-14 w-12 select-none items-center justify-center rounded-xl border-[1.5px] font-serif text-2xl text-rose-deep shadow-sm transition-all duration-200 ${cellClass} ${pulsingIndex === i ? 'animate-pulse-pop' : ''}`}
+                className={`flex h-12 w-12 select-none items-center justify-center rounded-xl border-[1.5px] transition-all duration-200 ${cellClass} ${pulsingIndex === i ? 'animate-pulse-pop' : ''}`}
               >
-                {filled ? '•' : isActive ? <span className="animate-blink leading-none">|</span> : null}
+                {filled ? (
+                  <span className="block h-2.5 w-2.5 rounded-full bg-amber opacity-90" />
+                ) : isActive ? (
+                  <span className="animate-blink block h-5 w-px rounded-full bg-rose-deep" />
+                ) : null}
               </div>
             )
           })}
